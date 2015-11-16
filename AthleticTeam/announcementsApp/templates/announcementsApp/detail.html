@@ -1,0 +1,12 @@
+<h1>{{ announcement.announcement_text }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'announcementsApp:vote' announcement.id %}" method="post">
+{% csrf_token %}
+{% for comment in announcement.comment_set.all %}
+    <input type="radio" name="commnet" id="commnet{{ forloop.counter }}" value="{{ commnet.id }}" />
+    <label for="commnet{{ forloop.counter }}">{{ commnet.commnet_text }}</label><br />
+{% endfor %}
+<input type="submit" value="Vote" />
+</form>

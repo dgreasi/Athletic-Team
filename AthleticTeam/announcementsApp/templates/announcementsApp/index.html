@@ -1,0 +1,18 @@
+{% extends "announcementsApp/root.html" %}
+
+{% block head %}
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'announcementsApp/css/style.css' %}" />
+{% endblock %}
+
+{% block body %}
+{% if latest_Announcement_list %}
+    <ul>
+    {% for announcement in latest_Announcement_list %}
+        <li><a href="{% url 'announcementsApp:detail' announcement.id %}">{{ announcement.announcement_text }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No announcements are available.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,9 @@
+<h1>{{ announcement.announcement_text }}</h1>
+
+<ul>
+{% for comment in announcement.comment_set.all %}
+    <li>{{ comment.comment_text }} -- {{ comment.votes }} vote{{ comment.votes|pluralize }}</li>
+{% endfor %}
+</ul>
+
+<a href="{% url 'announcementsApp:detail' announcement.id %}">Vote again A?</a>
