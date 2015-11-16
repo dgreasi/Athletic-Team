@@ -3,9 +3,11 @@
 {% block head %}
 {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'announcementsApp/css/style.css' %}" />
+<h1>Current announcement and his comments</h1>
 {% endblock %}
 
-<h1>{{ announcement.announcement_text }}</h1>
+
+<b>{{ announcement.announcement_text }}</b>
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
@@ -16,4 +18,5 @@
     <label for="comment{{ forloop.counter }}">{{ comment.comment_text }}</label><br />
 {% endfor %}
 <input type="submit" value="Vote" />
+<input type="button" value="Comment" />
 </form>
