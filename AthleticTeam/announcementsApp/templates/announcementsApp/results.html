@@ -1,3 +1,8 @@
+{% block head %}
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'announcementsApp/css/style.css' %}" />
+{% endblock %}
+
 <h1>{{ announcement.announcement_text }}</h1>
 
 <ul>

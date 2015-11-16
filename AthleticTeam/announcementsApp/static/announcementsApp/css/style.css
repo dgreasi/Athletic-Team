@@ -3,5 +3,9 @@ li a {
 }
 
 body {
-	background: white url("../images/sima.jpg") no-repeat right top;
+	background: white url("../images/dark_embroidery.png") repeat right top;
+}
+
+a {
+	color: green;
 }
