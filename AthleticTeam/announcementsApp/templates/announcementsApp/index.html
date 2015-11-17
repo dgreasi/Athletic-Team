@@ -3,6 +3,10 @@
 {% block head %}
 {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'announcementsApp/css/style.css' %}" />
+<head>
+  <title>Index</title>
+  <meta charset="UTF-8">
+</head>
 <h1>Recent Announcements</h1>
 {% endblock %}
 
@@ -12,6 +16,7 @@
     <ul>
     {% for announcement in latest_Announcement_list %}
         <li><a href="{% url 'announcementsApp:detail' announcement.id %}">{{ announcement.announcement_text }}</a></li>
+        <hr>
     {% endfor %}
     </ul>
 {% else %}

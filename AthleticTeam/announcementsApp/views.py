@@ -22,6 +22,7 @@ class IndexView(generic.ListView):
         Return the last five published Announcements (not including those set to be
         published in the future).
         """
+        #showing 3 recent announcements
         return Announcement.objects.filter(
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')[:3]

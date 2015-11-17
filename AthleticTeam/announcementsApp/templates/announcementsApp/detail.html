@@ -3,20 +3,33 @@
 {% block head %}
 {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'announcementsApp/css/style.css' %}" />
+<head>
+  <title>Detail</title>
+  <meta charset="UTF-8">
+</head>
 <h1>Current announcement and his comments</h1>
 {% endblock %}
 
 
-<b>{{ announcement.announcement_text }}</b>
-
+<li>{{ announcement.announcement_text }}</li>
+<hr>
+<hr>
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 <form action="{% url 'announcementsApp:vote' announcement.id %}" method="post">
+<!-- creating list of the comments -->
 {% csrf_token %}
 {% for comment in announcement.comment_set.all %}
     <input type="radio" name="comment" id="comment{{ forloop.counter }}" value="{{ comment.id }}" />
     <label for="comment{{ forloop.counter }}">{{ comment.comment_text }}</label><br />
+    <hr>
 {% endfor %}
 <input type="submit" value="Vote" />
-<input type="button" value="Comment" />
+
+<p><a href="http://127.0.0.1:8000/announcementsApp/1">Make a comment</a></p>
+<p><a href="{% url 'announcementsApp:results' announcement.id %}">View comments and and votes</a></p>
+<p><a href="{% url 'announcementsApp:index' %}">Go to recent announcements</a></p>
+<p><input type="button" href="{% url 'announcementsApp:results' announcement.id %}" value="Comment" /></p>
+
 </form>
+

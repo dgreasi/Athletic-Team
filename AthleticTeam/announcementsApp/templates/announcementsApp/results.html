@@ -1,14 +1,22 @@
 {% block head %}
 {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'announcementsApp/css/style.css' %}" />
+<head>
+  <title>Results</title>
+  <meta charset="UTF-8">
+</head>
 {% endblock %}
 
-<h1>{{ announcement.announcement_text }}</h1>
+<h1>Current announcement with his comments and votes</h1>
+<li>{{ announcement.announcement_text }}</li>
 
 <ul>
 {% for comment in announcement.comment_set.all %}
     <li>{{ comment.comment_text }} -- {{ comment.votes }} vote{{ comment.votes|pluralize }}</li>
+    <hr>
 {% endfor %}
 </ul>
 
-<a href="{% url 'announcementsApp:detail' announcement.id %}">Vote again A?</a>
+<p><a href="{% url 'announcementsApp:detail' announcement.id %}">Vote a comment or make one</a></p>
+<p><a href="{% url 'announcementsApp:index' %}">Go to recent announcements</a></p>
+
