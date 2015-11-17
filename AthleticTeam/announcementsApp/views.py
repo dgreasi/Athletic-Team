@@ -6,6 +6,26 @@ from django.utils import timezone
 
 from .models import Comment, Announcement
 
+class FullView(generic.ListView):
+    template_name = 'announcementsApp/index.html'
+    #For DetailView the Announcement variable is provided automatically 
+    #since we are using a Django model (Announcement), Django is able to 
+    #determine an appropriate name for the context variable. However, 
+    #for ListView, the automatically generated context variable 
+    #is Announcement_list. To override this we provide the context_object_name attribute,
+    # specifying that we want to use latest_Announcement_list instead
+    context_object_name = 'latest_Announcement_list'
+
+    def get_queryset(self):
+        """
+        Return the last five published Announcements (not including those set to be
+        published in the future).
+        """
+        #showing all announcements
+        return Announcement.objects.filter(
+            pub_date__lte=timezone.now()
+        ).order_by('-pub_date')
+
 
 class IndexView(generic.ListView):
     template_name = 'announcementsApp/index.html'
