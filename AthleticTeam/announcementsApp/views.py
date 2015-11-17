@@ -7,7 +7,7 @@ from django.utils import timezone
 from .models import Comment, Announcement
 
 class FullView(generic.ListView):
-    template_name = 'announcementsApp/index.html'
+    template_name = 'announcementsApp/full.html'
     #For DetailView the Announcement variable is provided automatically 
     #since we are using a Django model (Announcement), Django is able to 
     #determine an appropriate name for the context variable. However, 
