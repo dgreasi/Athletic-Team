@@ -1,4 +1,4 @@
-{% extends "announcementsApp/root.html" %}
+{% extends "announcementsApp/container.html" %}
 
 {% block head %}
 {% load staticfiles %}
@@ -8,7 +8,7 @@
 {% endblock %}
 
 
-{% block body %}
+{% block container %}
 <h1>Recent Announcements</h1>
 {% if latest_Announcement_list %}
     <ul>
@@ -20,26 +20,23 @@
     <p><a href="{% url 'announcementsApp:full' %}">View all announcements</a></p>
 
     <!-- Make new Announcement -->
-    <h2>Create new announcement</h3>
+    <h2>Create new announcement</h2>
     
-    <h3>Enter Title</h4>
-    <!-- Text area for Title-->
-    <textarea class="text_title" id="my_text_title"></textarea>
-    <br />   
-    
+    <h3>Enter Title</h3>
 
-    <h3>Enter announcement</h5>
-    <!-- Buttons: B, I, U -->
-    <input type="button" class="btn btn-primary" value="B" onclick="mod_selection('[b]','[/b]')" />
-    <input type="button" class="btn btn-primary" value="I" onclick="mod_selection('[i]','[/i]')" />
-    <input type="button" class="btn btn-primary" value="U" onclick="mod_selection('[u]','[/u]')" />
-    <br />
-    
-    <!-- Text area --> 
-    <textarea class="text_edit" id="my_text"></textarea>
+    <form action="{% url 'announcementsApp:announce'  %}" method="post">
+        {% csrf_token %}
+        <!-- Text area for Title-->
+        <input type="text" class="text_title" id="my_text_title" name="title"/>
+        <br />   
+        
+        <h3>Enter announcement</h3>
 
-    <!-- Submit button -->
-    <p><input type="button" value="Submit" onclick="view_text()" /><p>
+        <input type="textarea" class="text_edit" id="my_text" name="text"/>
+        <br />
+
+        <input type="submit" name="submit" value="Submit" class="btn btn-success" />
+    </form>
 
     
 {% else %}

@@ -1,5 +1,5 @@
 li a {
-    color: green;
+	color: green;
 }
 
 body {
@@ -34,4 +34,26 @@ h2 {
 	width: 500px;
 }
 
+html, body {
+    height: 100%;
+    min-height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
 
+#page-container {
+	height: auto;
+	min-height: 100%;
+	margin-bottom: -51px;
+}
+
+#page-container > .container {
+	padding-bottom: 61px; /* 51 + 10 aera */
+}
+
+#page-footer {
+	border-top: 1px solid #999;
+	background-color: #FFF;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}

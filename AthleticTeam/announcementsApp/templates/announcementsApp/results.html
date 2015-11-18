@@ -1,4 +1,4 @@
-{% extends "announcementsApp/root.html" %}
+{% extends "announcementsApp/container.html" %}
 
 {% block head %}
 {% load staticfiles %}
@@ -8,7 +8,7 @@
 {% endblock %}
 
 
-{% block body %}
+{% block container %}
 <h1>Current announcement with his comments and votes</h1>
 <h2>Title : {{ announcement.announcement_title}}</h2>
 <p>{{ announcement.announcement_text }}</p>

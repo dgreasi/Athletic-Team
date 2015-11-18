@@ -1,4 +1,4 @@
-{% extends "announcementsApp/root.html" %}
+{% extends "announcementsApp/container.html" %}
 
 {% block head %}
 {% load staticfiles %}
@@ -6,10 +6,10 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" type="text/css" href="{% static 'announcementsApp/css/style.css' %}" />
   <script type="text/javascript" src="{% static 'announcementsApp/js/myscript.js' %}"></script> 
+{% endblock %}
 
-{% block body %}
+{% block container %}
     <h1>Current announcement and his comments</h1>
-    {% endblock %}
 
     <h2>Title : {{ announcement.announcement_title}}</h2>
     <p>{{ announcement.announcement_text }}</p>
@@ -30,24 +30,16 @@
 
     <!-- Making a comment -->
     <h3>Make a comment</h3>
-    <!-- Buttons: B, I, U -->
-    <input type="button" value="B" onclick="mod_selection('[b]','[/b]')" />
-    <input type="button" value="I" onclick="mod_selection('[i]','[/i]')" />
-    <input type="button" value="U" onclick="mod_selection('[u]','[/u]')" />
-    <br />
+    <form action="{% url 'announcementsApp:comment' %}" method="post">
+        {% csrf_token %}
         
-    <!-- Text area -->
-    <textarea class="text_edit" id="my_text"></textarea>
-    <br />
-        
-    <!-- Submit button -->
-    <input type="button" value="Submit" onclick="view_text()" />
-    
+        <input type="text" class="text_edit" id="comment" name="text"/>
+        <br />   
+
+        <input type="submit" name="submit" value="Submit" class="btn btn-success" />
+    </form>
     
     <p><a href="{% url 'announcementsApp:results' announcement.id %}">View results</a></p>
     <p><a href="{% url 'announcementsApp:index' %}">Go to recent announcements</a></p>
 
-    
-
-</body>
 {% endblock %}
