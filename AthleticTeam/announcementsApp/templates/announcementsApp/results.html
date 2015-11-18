@@ -8,7 +8,8 @@
 {% endblock %}
 
 <h1>Current announcement with his comments and votes</h1>
-<li>{{ announcement.announcement_text }}</li>
+<h2>Title : {{ announcement.announcement_title}}</h2>
+<p>{{ announcement.announcement_text }}</p>
 
 <ul>
 {% for comment in announcement.comment_set.all %}

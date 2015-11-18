@@ -10,8 +10,8 @@
 <h1>Current announcement and his comments</h1>
 {% endblock %}
 
-
-<li>{{ announcement.announcement_text }}</li>
+<h2>Title : {{ announcement.announcement_title}}</h2>
+<p>{{ announcement.announcement_text }}</p>
 <hr>
 <hr>
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
@@ -27,9 +27,8 @@
 <input type="submit" value="Vote" />
 
 <p><a href="http://127.0.0.1:8000/announcementsApp/1">Make a comment(TO DO)</a></p>
-<p><a href="{% url 'announcementsApp:results' announcement.id %}">View comments and and votes</a></p>
+<p><a href="{% url 'announcementsApp:results' announcement.id %}">View results</a></p>
 <p><a href="{% url 'announcementsApp:index' %}">Go to recent announcements</a></p>
-<p><input type="button" href="{% url 'announcementsApp:results' announcement.id %}" value="Comment(TO DO)" /></p>
 
 </form>
 

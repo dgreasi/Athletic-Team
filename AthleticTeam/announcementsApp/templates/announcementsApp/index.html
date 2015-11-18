@@ -15,7 +15,7 @@
 {% if latest_Announcement_list %}
     <ul>
     {% for announcement in latest_Announcement_list %}
-        <li><a href="{% url 'announcementsApp:detail' announcement.id %}">{{ announcement.announcement_text }}</a></li>
+        <li><a href="{% url 'announcementsApp:detail' announcement.id %}">{{ announcement.announcement_title }}</a></li>
         <hr>
     {% endfor %}
     </ul>
