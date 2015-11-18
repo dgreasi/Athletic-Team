@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+
+
+<html>
+<head>	
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Text editor</title>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+
+	<script type="text/javascript" src="myscript.js">
+	</script> 
+	
+</head>
+<body>
+	
+	<!-- Buttons: B, I, U -->
+	<input type="button" value="B" onclick="mod_selection('[b]','[/b]')" />
+	<input type="button" value="I" onclick="mod_selection('[i]','[/i]')" />
+	<input type="button" value="U" onclick="mod_selection('[u]','[/u]')" />
+	<br />
+	
+	<!-- Text area -->
+	<textarea class="text_edit" id="my_text"></textarea>
+	<br />
+	
+	<!-- Submit button -->
+	<input type="button" value="Show text" onclick="view_text()" />
+	
+
+	
+	<!-- Empty div to put the text in -->
+	<div id="view_text">
+	</div>
+
+</body>
+</html>
+
+

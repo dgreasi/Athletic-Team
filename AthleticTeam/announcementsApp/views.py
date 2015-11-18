@@ -18,10 +18,9 @@ class FullView(generic.ListView):
 
     def get_queryset(self):
         """
-        Return the last five published Announcements (not including those set to be
+        Return all published Announcements (not including those set to be
         published in the future).
         """
-        #showing all announcements
         return Announcement.objects.filter(
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')
@@ -39,10 +38,9 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """
-        Return the last five published Announcements (not including those set to be
+        Return the last three published Announcements (not including those set to be
         published in the future).
         """
-        #showing 3 recent announcements
         return Announcement.objects.filter(
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')[:3]
@@ -79,3 +77,17 @@ def vote(request, announcement_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('announcementsApp:results', args=(p.id,)))
+
+def announce(request, title, text):
+    temp = Announcement(announcement_title=title, announcement_text = text, pub_date=timezone.now())
+    temp.save()
+
+    return HttpResponseRedirect(reverse('announcementsApp:index'))
+
+def comment(request, text, announcement_id):
+    q = Announcement.objects.get(pk=announcement_id)
+
+    temp = q.comment_set.create(comment_text=text, votes=0)
+    temp.save()
+    
+    return HttpResponseRedirect(reverse('announcementsApp/results.html', args=(q.id,)))

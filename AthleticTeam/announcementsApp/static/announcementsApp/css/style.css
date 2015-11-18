@@ -13,3 +13,25 @@ a {
 h1 {
 	color: blue;
 }
+
+h2 {
+	color: blue;
+}
+
+.text_title {
+	width: 600px;
+	height: 40px;
+	resize: none;
+}
+
+.text_edit {
+	width: 600px;
+	height: 100px;
+	resize: none;
+}
+
+#view_text {
+	width: 500px;
+}
+
+

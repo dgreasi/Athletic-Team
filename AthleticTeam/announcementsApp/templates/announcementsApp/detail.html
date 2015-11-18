@@ -2,33 +2,53 @@
 
 {% block head %}
 {% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{% static 'announcementsApp/css/style.css' %}" />
 <head>
   <title>Detail</title>
   <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="{% static 'announcementsApp/css/style.css' %}" />
+  <script type="text/javascript" src="{% static 'announcementsApp/js/myscript.js' %}"></script> 
 </head>
-<h1>Current announcement and his comments</h1>
-{% endblock %}
+<body>
 
-<h2>Title : {{ announcement.announcement_title}}</h2>
-<p>{{ announcement.announcement_text }}</p>
-<hr>
-<hr>
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    <h1>Current announcement and his comments</h1>
+    {% endblock %}
 
-<form action="{% url 'announcementsApp:vote' announcement.id %}" method="post">
-<!-- creating list of the comments -->
-{% csrf_token %}
-{% for comment in announcement.comment_set.all %}
-    <input type="radio" name="comment" id="comment{{ forloop.counter }}" value="{{ comment.id }}" />
-    <label for="comment{{ forloop.counter }}">{{ comment.comment_text }}</label><br />
+    <h2>Title : {{ announcement.announcement_title}}</h2>
+    <p>{{ announcement.announcement_text }}</p>
     <hr>
-{% endfor %}
-<input type="submit" value="Vote" />
+    <hr>
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-<p><a href="http://127.0.0.1:8000/announcementsApp/1">Make a comment(TO DO)</a></p>
-<p><a href="{% url 'announcementsApp:results' announcement.id %}">View results</a></p>
-<p><a href="{% url 'announcementsApp:index' %}">Go to recent announcements</a></p>
+    <form action="{% url 'announcementsApp:vote' announcement.id %}" method="post">
+    <!-- creating list of the comments -->
+    {% csrf_token %}
+    {% for comment in announcement.comment_set.all %}
+        <input type="radio" name="comment" id="comment{{ forloop.counter }}" value="{{ comment.id }}" />
+        <label for="comment{{ forloop.counter }}">{{ comment.comment_text }}</label><br />
+        <hr>
+    {% endfor %}
+    <input type="submit" value="Vote" />
+    </form>
 
-</form>
+    <!-- Making a comment -->
+    <h3>Make a comment</h3>
+    <!-- Buttons: B, I, U -->
+    <input type="button" value="B" onclick="mod_selection('[b]','[/b]')" />
+    <input type="button" value="I" onclick="mod_selection('[i]','[/i]')" />
+    <input type="button" value="U" onclick="mod_selection('[u]','[/u]')" />
+    <br />
+        
+    <!-- Text area -->
+    <textarea class="text_edit" id="my_text"></textarea>
+    <br />
+        
+    <!-- Submit button -->
+    <input type="button" value="Submit" onclick="view_text()" />
+    
+    
+    <p><a href="{% url 'announcementsApp:results' announcement.id %}">View results</a></p>
+    <p><a href="{% url 'announcementsApp:index' %}">Go to recent announcements</a></p>
 
+    
+
+</body>
