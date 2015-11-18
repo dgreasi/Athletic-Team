@@ -78,16 +78,20 @@ def vote(request, announcement_id):
         # user hits the Back button.
         return HttpResponseRedirect(reverse('announcementsApp:results', args=(p.id,)))
 
-def announce(request, title, text):
+def announce(request):
+    title = request.POST['title']
+    text = request.POST['text']
     temp = Announcement(announcement_title=title, announcement_text = text, pub_date=timezone.now())
     temp.save()
 
     return HttpResponseRedirect(reverse('announcementsApp:index'))
 
-def comment(request, text, announcement_id):
-    q = Announcement.objects.get(pk=announcement_id)
+def comment(request, announcement_id):
+    text = request.POST['text']
 
-    temp = q.comment_set.create(comment_text=text, votes=0)
+    temp = get_object_or_404(Announcement, pk=announcement_id)
+
+    temp = temp.comment_set.create(comment_text=text, votes=0)
     temp.save()
     
-    return HttpResponseRedirect(reverse('announcementsApp/results.html', args=(q.id,)))
+    return HttpResponseRedirect(reverse('announcementsApp/results.html', args=(temp.id,)))

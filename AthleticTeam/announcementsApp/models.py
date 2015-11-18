@@ -1,6 +1,7 @@
 import datetime
 
 from django.db import models
+from django.contrib.auth.models import User
 from django.utils import timezone
 # Create your models here.
 
@@ -12,6 +13,8 @@ class Announcement(models.Model):
     announcement_text = models.TextField()
     #Date of publication
     pub_date = models.DateTimeField('date published')
+
+    owner = models.ForeignKey(User, null=True)
 
     #Display recent annoucements and not future
     #create better form of object in base
@@ -32,6 +35,11 @@ class Comment(models.Model):
     comment_text = models.TextField()
     #field of vote
     votes = models.IntegerField(default=0)
+
+    owner = models.ForeignKey(User, null=True)
+
+    from django.contrib.auth.models import User
+
     #create better form of object in base
     def __str__(self):              # __unicode__ on Python 2
         return self.comment_text
