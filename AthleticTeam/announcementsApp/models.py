@@ -6,6 +6,8 @@ from django.utils import timezone
 
 #Announcements
 class Announcement(models.Model):
+    #Title of announcement
+    announcement_title = models.CharField(max_length=50)
     #Text to be announced
     announcement_text = models.TextField()
     #Date of publication
