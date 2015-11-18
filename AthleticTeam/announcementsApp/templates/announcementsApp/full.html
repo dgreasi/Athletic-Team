@@ -1,46 +1,53 @@
+{% extends "announcementsApp/root.html" %}
+
 {% block head %}
 {% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{% static 'announcementsApp/css/style.css' %}" />
-<head>
   <title>Full List</title>
-  <meta charset="UTF-8">
-</head>
-<h1>Recent Announcements</h1>
+  <link rel="stylesheet" type="text/css" href="{% static 'announcementsApp/css/style.css' %}" />
 {% endblock %}
 
 
 {% block body %}
+<h1>Recent Announcements</h1>
 {% if latest_Announcement_list %}
     <ul>
     {% for announcement in latest_Announcement_list %}
         <li><a href="{% url 'announcementsApp:detail' announcement.id %}">{{ announcement.announcement_title }}</a></li>
-        <hr>
     {% endfor %}
     </ul>
+        <!-- <hr> -->
 
     <!-- Make new Announcement -->
     <h2>Create new announcement</h3>
     
     <h3>Enter Title</h4>
-    <!-- Text area for Title-->
-    <textarea class="text_title" id="my_text_title"></textarea>
-    <br />   
-    
 
-    <h3>Enter announcement</h5>
-    <!-- Buttons: B, I, U -->
-    <input type="button" value="B" onclick="mod_selection('[b]','[/b]')" />
-    <input type="button" value="I" onclick="mod_selection('[i]','[/i]')" />
-    <input type="button" value="U" onclick="mod_selection('[u]','[/u]')" />
-    <br />
-    
-    <!-- Text area --> 
-    <textarea class="text_edit" id="my_text"></textarea>
-    <br />
+
+
+    <form action="{% url 'announcementsApp:announce'  %}" method="post">
+        {% csrf_token %}
+        <!-- Text area for Title-->
+        <input type="text" class="text_title" id="my_text_title" name="title"/>
+        <br />   
         
-    <!-- Submit button -->
-    <input type="button" value="Submit" onclick="view_text()" />
+        <h3>Enter announcement</h5>
+        <!-- Buttons: B, I, U 
+        <input type="button" value="B" onclick="mod_selection('[b]','[/b]')" />
+        <input type="button" value="I" onclick="mod_selection('[i]','[/i]')" />
+        <input type="button" value="U" onclick="mod_selection('[u]','[/u]')" />
+        <br />
+        -->
+        <!-- Text area --> 
+        <input type="textarea" class="text_edit" id="my_text" name="text"/>
+        <br />
 
+        <input type="submit" name="submit" value="Submit" class="btn btn-success" />
+    </form>
+
+
+    <!-- Submit button 
+    <input type="button" value="Submit" onclick="view_text()" />
+    -->
 {% else %}
     <p>No announcements are available.</p>
 {% endif %}

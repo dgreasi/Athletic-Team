@@ -1,15 +1,13 @@
-
+{% extends "announcementsApp/root.html" %}
 
 {% block head %}
 {% load staticfiles %}
-<head>
   <title>Detail</title>
   <meta charset="UTF-8">
   <link rel="stylesheet" type="text/css" href="{% static 'announcementsApp/css/style.css' %}" />
   <script type="text/javascript" src="{% static 'announcementsApp/js/myscript.js' %}"></script> 
-</head>
-<body>
 
+{% block body %}
     <h1>Current announcement and his comments</h1>
     {% endblock %}
 
@@ -25,8 +23,8 @@
     {% for comment in announcement.comment_set.all %}
         <input type="radio" name="comment" id="comment{{ forloop.counter }}" value="{{ comment.id }}" />
         <label for="comment{{ forloop.counter }}">{{ comment.comment_text }}</label><br />
-        <hr>
     {% endfor %}
+        <!-- <hr> -->
     <input type="submit" value="Vote" />
     </form>
 
@@ -52,3 +50,4 @@
     
 
 </body>
+{% endblock %}

@@ -2,24 +2,22 @@
 
 {% block head %}
 {% load staticfiles %}
-<head>
-  <title>Index</title>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" type="text/css" href="{% static 'announcementsApp/css/style.css' %}" />
-  <script type="text/javascript" src="{% static 'announcementsApp/js/myscript.js' %}"></script>
-</head>
-<h1>Recent Announcements</h1>
+<title>Index</title>
+<link rel="stylesheet" type="text/css" href="{% static 'announcementsApp/css/style.css' %}" />
+<script type="text/javascript" src="{% static 'announcementsApp/js/myscript.js' %}"></script>
 {% endblock %}
 
 
 {% block body %}
+<h1>Recent Announcements</h1>
 {% if latest_Announcement_list %}
     <ul>
     {% for announcement in latest_Announcement_list %}
         <li><a href="{% url 'announcementsApp:detail' announcement.id %}">{{ announcement.announcement_title }}</a></li>
-        <hr>
     {% endfor %}
     </ul>
+        <!-- <hr> -->
+    <p><a href="{% url 'announcementsApp:full' %}">View all announcements</a></p>
 
     <!-- Make new Announcement -->
     <h2>Create new announcement</h3>
@@ -32,9 +30,9 @@
 
     <h3>Enter announcement</h5>
     <!-- Buttons: B, I, U -->
-    <input type="button" value="B" onclick="mod_selection('[b]','[/b]')" />
-    <input type="button" value="I" onclick="mod_selection('[i]','[/i]')" />
-    <input type="button" value="U" onclick="mod_selection('[u]','[/u]')" />
+    <input type="button" class="btn btn-primary" value="B" onclick="mod_selection('[b]','[/b]')" />
+    <input type="button" class="btn btn-primary" value="I" onclick="mod_selection('[i]','[/i]')" />
+    <input type="button" class="btn btn-primary" value="U" onclick="mod_selection('[u]','[/u]')" />
     <br />
     
     <!-- Text area --> 
@@ -43,7 +41,7 @@
     <!-- Submit button -->
     <p><input type="button" value="Submit" onclick="view_text()" /><p>
 
-    <p><a href="{% url 'announcementsApp:full' %}">View all announcements</a></p>
+    
 {% else %}
     <p>No announcements are available.</p>
 {% endif %}

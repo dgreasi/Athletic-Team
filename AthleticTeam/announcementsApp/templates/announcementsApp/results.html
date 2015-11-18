@@ -1,13 +1,14 @@
+{% extends "announcementsApp/root.html" %}
+
 {% block head %}
 {% load staticfiles %}
-<head>
   <title>Results</title>
-  <meta charset="UTF-8">
   <link rel="stylesheet" type="text/css" href="{% static 'announcementsApp/css/style.css' %}" />
   <script type="text/javascript" src="{% static 'announcementsApp/js/myscript.js' %}"></script> 
-</head>
 {% endblock %}
 
+
+{% block body %}
 <h1>Current announcement with his comments and votes</h1>
 <h2>Title : {{ announcement.announcement_title}}</h2>
 <p>{{ announcement.announcement_text }}</p>
@@ -21,4 +22,4 @@
 
 <p><a href="{% url 'announcementsApp:detail' announcement.id %}">Vote a comment or make one</a></p>
 <p><a href="{% url 'announcementsApp:index' %}">Go to recent announcements</a></p>
-
+{% endblock %}
