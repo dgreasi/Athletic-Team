@@ -30,7 +30,7 @@
 
     <!-- Making a comment -->
     <h3>Make a comment</h3>
-    <form action="{% url 'announcementsApp:comment' %}" method="post">
+    <form action="{% url 'announcementsApp:comment' announcement.id %}" method="post">
         {% csrf_token %}
         
         <input type="text" class="text_edit" id="comment" name="text"/>

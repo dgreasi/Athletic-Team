@@ -90,8 +90,8 @@ def comment(request, announcement_id):
     text = request.POST['text']
 
     temp = get_object_or_404(Announcement, pk=announcement_id)
-
+    p = temp
     temp = temp.comment_set.create(comment_text=text, votes=0)
     temp.save()
     
-    return HttpResponseRedirect(reverse('announcementsApp/results.html', args=(temp.id,)))
+    return HttpResponseRedirect(reverse('announcementsApp:results', args=(p.id,)))
