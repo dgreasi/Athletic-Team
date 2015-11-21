@@ -79,19 +79,20 @@ def vote(request, announcement_id):
         return HttpResponseRedirect(reverse('announcementsApp:results', args=(p.id,)))
 
 def announce(request):
+    owner_user = request.user
     title = request.POST['title']
     text = request.POST['text']
-    temp = Announcement(announcement_title=title, announcement_text = text, pub_date=timezone.now())
+    temp = Announcement(announcement_title=title, announcement_text = text, pub_date=timezone.now(), owner=owner_user)
     temp.save()
 
     return HttpResponseRedirect(reverse('announcementsApp:index'))
 
 def comment(request, announcement_id):
     text = request.POST['text']
-
+    owner_user = request.user
     temp = get_object_or_404(Announcement, pk=announcement_id)
     p = temp
-    temp = temp.comment_set.create(comment_text=text, votes=0)
+    temp = temp.comment_set.create(comment_text=text, votes=0, owner=owner_user)
     temp.save()
     
     return HttpResponseRedirect(reverse('announcementsApp:results', args=(p.id,)))
