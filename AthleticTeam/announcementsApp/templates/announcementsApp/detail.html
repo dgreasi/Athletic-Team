@@ -25,7 +25,8 @@
     {% csrf_token %}
     {% for comment in announcement.comment_set.all %}
         <input type="radio" name="comment" id="comment{{ forloop.counter }}" value="{{ comment.id }}" />
-        <label for="comment{{ forloop.counter }}">{{ comment.comment_text }}</label><br />
+        <label for="comment{{ forloop.counter }}">{{ comment.comment_text }} ----------- Published by: {{ comment.owner }}</label>
+        <br/>
     {% endfor %}
         <!-- <hr> -->
     <input type="submit" value="Vote" />

@@ -11,7 +11,7 @@ class CommentInline(admin.TabularInline):
 
 class AnnouncementAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None,               {'fields': ['announcement_title', 'announcement_text']}),
+        (None,               {'fields': ['announcement_title', 'announcement_text', 'owner']}),
         ('Date information', {'fields': ['pub_date'], 'classes': ['collapse']}),
     ]
     #display comments in line
