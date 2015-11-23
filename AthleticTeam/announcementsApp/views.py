@@ -116,6 +116,7 @@ def delete(request, announcement_id):
     except (KeyError, Comment.DoesNotExist):
         # Redisplay the Announcement voting form.
         return render(request, 'announcementsApp/results.html', {
+            'announcement': p,
             'error_message': "You didn't select a Comment.",
         })
     else:
@@ -127,17 +128,17 @@ def delete(request, announcement_id):
 
 
 def deleteAnnouncement(request):
-    p = request.POST['announcement']
+    p = Announcement.objects.all()
     try:
-        p
-    except (KeyError, p.DoesNotExist):
-        # Redisplay the Announcement voting form.
+        selected_announcement = get_object_or_404(Announcement, pk=request.POST['announcement'])
+    except (KeyError, Announcement.DoesNotExist):
+        # Redisplay the delete Announcement form.
         return render(request, 'announcementsApp/myannouncements.html', {
             'announcement': p,
             'error_message': "You didn't select an Announcement.",
         })
     else:
-        p.delete()
+        selected_announcement.delete()
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.

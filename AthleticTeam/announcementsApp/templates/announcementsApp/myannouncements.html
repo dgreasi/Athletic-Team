@@ -9,9 +9,7 @@
 
 {% block container %}
 <h1>My Announcements</h1>
-{% if latest_Announcement_list %}
-    
-
+  
     <form action="{% url 'announcementsApp:deleteAnnouncement' %}" method="post">
         <!-- delete one of ur announcements -->
         {% csrf_token %}
@@ -40,13 +38,17 @@
         
         <h3>Enter announcement</h3>
 
-        <textarea type="textarea" class="text_edit" id="my_text" name="text"></textarea>
-        <br />
-        
+        <p><textarea type="textarea" class="text_edit" id="my_text" name="text"></textarea></p>
+
         <input type="submit" name="submit" value="Submit" class="btn btn-success" />
     </form>
-
+    <br />
+    <p><a href="{% url 'announcementsApp:myannouncements' %}">Refresh</a></p>
+    <p><a href="{% url 'announcementsApp:index' %}">Go to recent announcements</a></p>
+<!--
+{% if latest_Announcement_list %}
 {% else %}
     <p>You have not done any announcement yet.</p>
 {% endif %}
+-->
 {% endblock %}
