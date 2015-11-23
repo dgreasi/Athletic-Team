@@ -103,7 +103,7 @@ def delete(request, announcement_id):
         selected_comment = p.comment_set.get(pk=request.POST['comment'])
     except (KeyError, Comment.DoesNotExist):
         # Redisplay the Announcement voting form.
-        return render(request, 'announcementsApp/detail.html', {
+        return render(request, 'announcementsApp/results.html', {
             'announcement': p,
             'error_message': "You didn't select a Comment.",
         })
