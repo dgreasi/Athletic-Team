@@ -45,6 +45,18 @@ class IndexView(generic.ListView):
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')[:3]
 
+class MyannouncementsView(generic.ListView):
+    template_name = 'announcementsApp/myannouncements.html'
+
+    context_object_name = 'latest_Announcement_list'
+    def get_queryset(self):
+        """
+        Return all published Announcements (not including those set to be
+        published in the future).
+        """
+        return Announcement.objects.filter(
+            pub_date__lte=timezone.now()
+        ).order_by('-pub_date')
 
 class DetailView(generic.DetailView):
     model = Announcement
@@ -104,7 +116,6 @@ def delete(request, announcement_id):
     except (KeyError, Comment.DoesNotExist):
         # Redisplay the Announcement voting form.
         return render(request, 'announcementsApp/results.html', {
-            'announcement': p,
             'error_message': "You didn't select a Comment.",
         })
     else:
@@ -112,4 +123,22 @@ def delete(request, announcement_id):
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
-        return HttpResponseRedirect(reverse('announcementsApp:results', args=(p.id,)))    
+        return HttpResponseRedirect(reverse('announcementsApp:results', args=(p.id,)))
+
+
+def deleteAnnouncement(request):
+    p = request.POST['announcement']
+    try:
+        p
+    except (KeyError, p.DoesNotExist):
+        # Redisplay the Announcement voting form.
+        return render(request, 'announcementsApp/myannouncements.html', {
+            'announcement': p,
+            'error_message': "You didn't select an Announcement.",
+        })
+    else:
+        p.delete()
+        # Always return an HttpResponseRedirect after successfully dealing
+        # with POST data. This prevents data from being posted twice if a
+        # user hits the Back button.
+        return HttpResponseRedirect(reverse('announcementsApp:myannouncements'))    
