@@ -96,3 +96,20 @@ def comment(request, announcement_id):
     temp.save()
     
     return HttpResponseRedirect(reverse('announcementsApp:results', args=(p.id,)))
+
+def delete(request, announcement_id):
+    p = get_object_or_404(Announcement, pk=announcement_id)
+    try:
+        selected_comment = p.comment_set.get(pk=request.POST['comment'])
+    except (KeyError, Comment.DoesNotExist):
+        # Redisplay the Announcement voting form.
+        return render(request, 'announcementsApp/detail.html', {
+            'announcement': p,
+            'error_message': "You didn't select a Comment.",
+        })
+    else:
+        selected_comment.delete()
+        # Always return an HttpResponseRedirect after successfully dealing
+        # with POST data. This prevents data from being posted twice if a
+        # user hits the Back button.
+        return HttpResponseRedirect(reverse('announcementsApp:results', args=(p.id,)))    

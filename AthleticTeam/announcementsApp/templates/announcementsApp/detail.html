@@ -16,8 +16,7 @@
     <p>Published by {{ announcement.owner }}</p>
     <hr>
 
-    <h3>Comments</h3>
-    <hr>
+    <h3>Vote a Comment</h3>
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
     <form action="{% url 'announcementsApp:vote' announcement.id %}" method="post">
@@ -25,12 +24,13 @@
     {% csrf_token %}
     {% for comment in announcement.comment_set.all %}
         <input type="radio" name="comment" id="comment{{ forloop.counter }}" value="{{ comment.id }}" />
-        <label for="comment{{ forloop.counter }}">{{ comment.comment_text }} ----------- Published by: {{ comment.owner }}</label>
+        <label for="comment{{ forloop.counter }}">{{ comment.comment_text }}</label>
         <br/>
     {% endfor %}
         <!-- <hr> -->
     <input type="submit" value="Vote" />
     </form>
+    
 
     <!-- Making a comment -->
     <h3>Make a comment</h3>
