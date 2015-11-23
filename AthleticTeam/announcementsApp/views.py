@@ -67,6 +67,14 @@ class DetailView(generic.DetailView):
         """
         return Announcement.objects.filter(pub_date__lte=timezone.now())
 
+class EditAnnView(generic.DetailView):
+    model = Announcement
+    template_name = 'announcementsApp/edit_announcement.html'
+    def get_queryset(self):
+        """
+        Excludes any Announcements that aren't published yet.
+        """
+        return Announcement.objects.filter(pub_date__lte=timezone.now())
 
 class ResultsView(generic.DetailView):
     model = Announcement

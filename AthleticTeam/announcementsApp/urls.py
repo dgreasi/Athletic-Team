@@ -8,7 +8,8 @@ urlpatterns = [
 
     url(r'^announce/$', views.announce, name='announce'),
     url(r'^myannouncements/$', views.MyannouncementsView.as_view(), name='myannouncements'),
-    
+
+    url(r'^(?P<announcement_id>[0-9]+)/edit_announcement/$', views.EditAnnView.as_view(), name='edit_announcement'),
     url(r'^deleteAnnouncement/$', views.deleteAnnouncement, name='deleteAnnouncement'),
     
     url(r'^(?P<announcement_id>[0-9]+)/delete/$', views.delete, name='delete'),
