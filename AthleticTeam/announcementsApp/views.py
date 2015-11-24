@@ -70,11 +70,6 @@ class DetailView(generic.DetailView):
 class EditAnnView(generic.DetailView):
     model = Announcement
     template_name = 'announcementsApp/edit_announcement.html'
-    def get_queryset(self):
-        """
-        Excludes any Announcements that aren't published yet.
-        """
-        return Announcement.objects.filter(pub_date__lte=timezone.now())
 
 class ResultsView(generic.DetailView):
     model = Announcement
@@ -146,8 +141,12 @@ def deleteAnnouncement(request):
             'error_message': "You didn't select an Announcement.",
         })
     else:
-        selected_announcement.delete()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse('announcementsApp:myannouncements'))    
+        if 'delete' in request.POST:
+            selected_announcement.delete()
+            # Always return an HttpResponseRedirect after successfully dealing
+            # with POST data. This prevents data from being posted twice if a
+            # user hits the Back button.
+            return HttpResponseRedirect(reverse('announcementsApp:myannouncements'))
+        elif 'edit' in request.POST:
+            return HttpResponseRedirect(reverse('announcementsApp:edit_announcement', args=(selected_announcement.id,)))
+
