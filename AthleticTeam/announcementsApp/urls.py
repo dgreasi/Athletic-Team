@@ -15,6 +15,8 @@ urlpatterns = [
     
     
     url(r'^(?P<announcement_id>[0-9]+)/delete/$', views.delete, name='delete'),
+    url(r'^(?P<announcement_id>[0-9]+)/edit_comment/$', views.MyeditcommentView.as_view, name='edit_comment'),
+    
     url(r'^(?P<pk>[0-9]+)/$', views.DetailView.as_view(), name='detail'),
     
     url(r'^(?P<announcement_id>[0-9]+)/comment/$', views.comment, name='comment'),

@@ -4,8 +4,9 @@ from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils import timezone
 
-from .models import Comment, Announcement
+from announcementsApp.models import Comment, Announcement
 
+#View all announcements
 class FullView(generic.ListView):
     template_name = 'announcementsApp/full.html'
     #For DetailView the Announcement variable is provided automatically 
@@ -25,7 +26,7 @@ class FullView(generic.ListView):
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')
 
-
+#View recent announcements
 class IndexView(generic.ListView):
     template_name = 'announcementsApp/index.html'
     #For DetailView the Announcement variable is provided automatically 
@@ -45,6 +46,7 @@ class IndexView(generic.ListView):
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')[:3]
 
+#View my announcements
 class MyannouncementsView(generic.ListView):
     template_name = 'announcementsApp/myannouncements.html'
 
@@ -58,6 +60,12 @@ class MyannouncementsView(generic.ListView):
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')
 
+#View a comment and edit it
+class MyeditcommentView(generic.ListView):
+    model = Comment
+    template_name = 'announcementsApp/edit_comment.html'
+
+#View announcement , vote a comment
 class DetailView(generic.DetailView):
     model = Announcement
     template_name = 'announcementsApp/detail.html'
@@ -67,14 +75,17 @@ class DetailView(generic.DetailView):
         """
         return Announcement.objects.filter(pub_date__lte=timezone.now())
 
+#View and edit an announcement
 class EditAnnView(generic.DetailView):
     model = Announcement
     template_name = 'announcementsApp/edit_announcement.html'
 
+#View announcement with his results
 class ResultsView(generic.DetailView):
     model = Announcement
     template_name = 'announcementsApp/results.html'
 
+#Vote a comment
 def vote(request, announcement_id):
     p = get_object_or_404(Announcement, pk=announcement_id)
     try:
@@ -93,6 +104,7 @@ def vote(request, announcement_id):
         # user hits the Back button.
         return HttpResponseRedirect(reverse('announcementsApp:results', args=(p.id,)))
 
+#Make an announcement
 def announce(request):
     owner_user = request.user
     title = request.POST['title']
@@ -102,6 +114,7 @@ def announce(request):
 
     return HttpResponseRedirect(reverse('announcementsApp:index'))
 
+#Make a comment
 def comment(request, announcement_id):
     text = request.POST['text']
     owner_user = request.user
@@ -112,6 +125,7 @@ def comment(request, announcement_id):
     
     return HttpResponseRedirect(reverse('announcementsApp:results', args=(p.id,)))
 
+#Delete an announcement
 def delete(request, announcement_id):
     p = get_object_or_404(Announcement, pk=announcement_id)
     try:
@@ -129,7 +143,7 @@ def delete(request, announcement_id):
         # user hits the Back button.
         return HttpResponseRedirect(reverse('announcementsApp:results', args=(p.id,)))
 
-
+#Delete an announcement
 def deleteAnnouncement(request):
     p = Announcement.objects.all()
     try:
@@ -150,6 +164,7 @@ def deleteAnnouncement(request):
         elif 'edit' in request.POST:
             return HttpResponseRedirect(reverse('announcementsApp:edit_announcement', args=(selected_announcement.id,)))
 
+#Edit announcement
 def edit_announce(request, announcement_id):
     temp = get_object_or_404(Announcement, pk=announcement_id)
 
@@ -162,4 +177,16 @@ def edit_announce(request, announcement_id):
     temp.save()
 
     return HttpResponseRedirect(reverse('announcementsApp:index'))
+
+#Edit comment
+def edit_comm(request, comment_id):
+    temp = get_object_or_404(Comment, pk=comment_id)
+
+    text = request.POST['text']
+    
+    temp.comment_text = text
+    temp.save()
+
+    return HttpResponseRedirect(reverse('announcementsApp:index'))
+
 

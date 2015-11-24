@@ -36,6 +36,7 @@
         <br />
         {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
         <input type="submit" name="delete" value="Delete comment" class="btn btn-success" />
+        <input type="submit" name="edit" value="Edit comment" class="btn btn-success" />
     </form>  
     <br />
     <p><a href="{% url 'announcementsApp:detail' announcement.id %}">Vote a comment or make one</a></p>
