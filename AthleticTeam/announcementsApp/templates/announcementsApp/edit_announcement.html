@@ -16,15 +16,15 @@
     
     <hr>
 
-    <h3>Enter Title</h3>
+    <h3>Enter New Title</h3>
 
-    <form action="{% url 'announcementsApp:announce'  %}" method="post">
+    <form action="{% url 'announcementsApp:edit_announce' announcement.id %}" method="post">
         {% csrf_token %}
         
         <input type="text" class="text_title" id="my_text_title" name="title"/>
         <br />   
         
-        <h3>Enter announcement</h3>
+        <h3>Enter New Body</h3>
 
         <p><textarea type="textarea" class="text_edit" id="my_text" name="text"></textarea></p>
         

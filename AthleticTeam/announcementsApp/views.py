@@ -97,7 +97,7 @@ def announce(request):
     owner_user = request.user
     title = request.POST['title']
     text = request.POST['text']
-    temp = Announcement(announcement_title=title, announcement_text = text, pub_date=timezone.now(), owner=owner_user)
+    temp = Announcement(announcement_title=title, announcement_text=text, pub_date=timezone.now(), owner=owner_user)
     temp.save()
 
     return HttpResponseRedirect(reverse('announcementsApp:index'))
@@ -149,4 +149,17 @@ def deleteAnnouncement(request):
             return HttpResponseRedirect(reverse('announcementsApp:myannouncements'))
         elif 'edit' in request.POST:
             return HttpResponseRedirect(reverse('announcementsApp:edit_announcement', args=(selected_announcement.id,)))
+
+def edit_announce(request, announcement_id):
+    temp = get_object_or_404(Announcement, pk=announcement_id)
+
+    title = request.POST['title']
+    text = request.POST['text']
+    
+    temp.announcement_title = title
+    temp.announcement_text = text
+    temp.pub_date = timezone.now()
+    temp.save()
+
+    return HttpResponseRedirect(reverse('announcementsApp:index'))
 
