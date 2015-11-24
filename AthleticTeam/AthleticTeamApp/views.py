@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import generic
-from AthleticTeamApp.models import Player, Match
+from AthleticTeamApp.models import Player, Match,Team
 
 
 # Create your views here.
@@ -23,3 +23,13 @@ class ShowMatches(generic.ListView):
 class ShowMatch(generic.DetailView):
     model = Match
     template_name = 'match/show.html'
+    
+# Create your views here.
+class ShowTeams(generic.ListView):
+    model = Team
+    template_name = 'team/showall.html'
+
+
+class ShowTeam(generic.DetailView):
+    model = Team
+    template_name = 'team/show.html'    
