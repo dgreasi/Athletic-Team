@@ -2,11 +2,32 @@ from django.db import models
 
 
 # Create your models here.
+class Person(models.Model):
+    first_name = models.CharField(max_length=30, blank=True)
+    last_name = models.CharField(max_length=30, blank=True)
+    info = models.TextField(blank=True)
+
+    class Meta:
+        abstract = True
+
+
 class Team(models.Model):
     pass
 
 
-class Player(models.Model):
+class CoachingStaffMember(Person):
+    # model fields
+    position = models.CharField(blank=True, max_length=30)
+    # image = models.ImageField() TODO
+
+    # model relationships
+    team = models.ForeignKey(Team)
+
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self)) for field in CoachingStaff._meta.fields]
+
+
+class Player(Person):
     # model fields
     PG = 'PG'
     SG = 'SG'
@@ -21,23 +42,22 @@ class Player(models.Model):
                             (CE, 'Center'),
                         )
 
-    first_name = models.CharField(max_length=30, blank=True)
-    last_name = models.CharField(max_length=30, blank=True)
     height = models.DecimalField(blank=True, max_digits=3, decimal_places=2, null=True)
     weight = models.PositiveSmallIntegerField(blank=True, null=True)
     birth_date = models.DateField(blank=True, null=True)
     primary_position = models.CharField(max_length=2, choices=available_positions, blank=True)
     secondary_positions = models.CharField(max_length=30, blank=True)
     number = models.PositiveSmallIntegerField(blank=True, null=True)
-    info = models.TextField(blank=True)
+
     nationality = models.CharField(max_length=30, blank=True)
-    # image = models.ImageField()
+    # image = models.ImageField() TODO
 
     # model relationships
     team = models.ForeignKey(Team)
 
     def get_fields(self):
         return [(field.name, field.value_to_string(self)) for field in Player._meta.fields]
+
 
 class Match(models.Model):
     # model fields

@@ -1,15 +1,20 @@
 from django.contrib import admin
-from AthleticTeamApp.models import MatchPlayerStatistics, Match, Player, Team
+from AthleticTeamApp.models import MatchPlayerStatistics, Match, Player, Team, CoachingStaffMember
 
 
 # Register your models here.
+class CoachingStaffMemberInline(admin.TabularInline):
+    model = CoachingStaffMember
+    extra = 1
+
+
 class PlayerInline(admin.TabularInline):
     model = Player
     extra = 1
 
 
 class TeamAdmin(admin.ModelAdmin):
-    inlines = [PlayerInline]
+    inlines = [PlayerInline, CoachingStaffMemberInline]
 
 
 class MatchPlayerStatisticsInline(admin.TabularInline):
