@@ -61,7 +61,7 @@ class MyannouncementsView(generic.ListView):
         ).order_by('-pub_date')
 
 #View a comment and edit it
-class MyeditcommentView(generic.ListView):
+class MyeditcommentView(generic.DetailView):
     model = Comment
     template_name = 'announcementsApp/edit_comment.html'
 
@@ -125,7 +125,7 @@ def comment(request, announcement_id):
     
     return HttpResponseRedirect(reverse('announcementsApp:results', args=(p.id,)))
 
-#Delete an announcement
+#Delete a comment, or go to edit_comment to edit it
 def delete(request, announcement_id):
     p = get_object_or_404(Announcement, pk=announcement_id)
     try:
@@ -137,13 +137,16 @@ def delete(request, announcement_id):
             'error_message': "You didn't select a Comment.",
         })
     else:
-        selected_comment.delete()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse('announcementsApp:results', args=(p.id,)))
+        if 'delete' in request.POST:
+            selected_comment.delete()
+            # Always return an HttpResponseRedirect after successfully dealing
+            # with POST data. This prevents data from being posted twice if a
+            # user hits the Back button.
+            return HttpResponseRedirect(reverse('announcementsApp:results', args=(p.id,)))
+        elif 'edit' in request.POST:
+            return HttpResponseRedirect(reverse('announcementsApp:edit_comment', args=(selected_comment.id,)))
 
-#Delete an announcement
+#Delete an announcement,  or go to edit_announcement to edit it
 def deleteAnnouncement(request):
     p = Announcement.objects.all()
     try:

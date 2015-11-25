@@ -25,9 +25,9 @@
     {% for comment in announcement.comment_set.all %}
         <input type="radio" name="comment" id="comment{{ forloop.counter }}" value="{{ comment.id }}" />
         <label for="comment{{ forloop.counter }}">{{ comment.comment_text }}</label>
-        <br/>
+        <br />
     {% endfor %}
-        <!-- <hr> -->
+    <p></p>
     <input type="submit" name="submit" value="+1" class="btn btn-success" />
     </form>
     
