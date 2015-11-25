@@ -1,0 +1,7 @@
+<ul>
+{% for name, value in training.get_fields %}
+{#  {% if value %}#}
+    <li>{{ name }} => {{ value }}</li>
+{#  {% endif %}#}
+{% endfor %}
+</ul>

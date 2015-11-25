@@ -6,6 +6,8 @@ from django.db import models
 class Team(models.Model):
   team_name = models.CharField(max_length=30,blank=True)
 
+  def get_fields(self):
+    return [(field.name, field.value_to_string(self)) for field in Team._meta.fields]  
 class Player(models.Model):
     # model fields
     PG = 'PG'
@@ -90,3 +92,6 @@ class Training(models.Model):
   training_facility = models.CharField(max_length=30, blank=True)
   
   team = models.ForeignKey(Team,null=True)
+     
+  def get_fields(self):
+    return [(field.name, field.value_to_string(self)) for field in Training._meta.fields]

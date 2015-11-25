@@ -1,0 +1,9 @@
+{% if training_list %}
+    <ul>
+    {% for training in training_list %}
+        <li><a href="{% url 'ShowTraining' training.id %}">{{ training.id}}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No matches are available.</p>
+{% endif %}
