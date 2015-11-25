@@ -16,7 +16,16 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
+from AthleticTeam import settings
+
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('AthleticTeamApp.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += [
+        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+            'document_root': settings.MEDIA_ROOT,
+        }),
+    ]
