@@ -2,18 +2,9 @@ from django.db import models
 
 
 
-class Training(models.Model):
-
-  date = models.DateTimeField(blank=True, null=True)
-  duration =models.DurationField(blank=True, null=True) #mporei na min douleuei auto (mono me postgres paizei swsta)
-  training_facility = models.CharField(max_length=30, blank=True)
-  
-  #team = models.OneToOneField(Team, primary_key=True)
-
 # Create your models here.
 class Team(models.Model):
-    pass
-
+  team_name = models.CharField(max_length=30,blank=True)
 
 class Player(models.Model):
     # model fields
@@ -91,3 +82,11 @@ class MatchPlayerStatistics(models.Model):
 
     def get_fields(self):
         return [(field.name, field.value_to_string(self)) for field in MatchPlayerStatistics._meta.fields]
+
+class Training(models.Model):
+
+  date = models.DateTimeField(blank=True, null=True)
+  duration =models.DurationField(blank=True, null=True) #mporei na min douleuei auto (mono me postgres paizei swsta)
+  training_facility = models.CharField(max_length=30, blank=True)
+  
+  team = models.ForeignKey(Team,null=True)
