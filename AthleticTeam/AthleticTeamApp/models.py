@@ -12,8 +12,13 @@ class Person(models.Model):
 
 
 class Team(models.Model):
-    pass
-
+  team_name = models.CharField(max_length=30, blank=True)
+    
+  def __str__(self):              # __unicode__ on Python 2
+    return self.team_name
+  
+  def get_fields(self):
+    return [(field.name, field.value_to_string(self)) for field in Team._meta.fields]
 
 class CoachingStaffMember(Person):
     # model fields

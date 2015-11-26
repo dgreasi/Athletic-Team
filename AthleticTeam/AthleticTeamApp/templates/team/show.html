@@ -1,0 +1,7 @@
+<ul>
+{% for name, value in team.get_fields %}
+{#  {% if value %}#}
+    <li>{{ name }} => {{ value }}</li>
+{#  {% endif %}#}
+{% endfor %}
+</ul>
