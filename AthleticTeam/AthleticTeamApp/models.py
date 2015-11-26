@@ -20,6 +20,7 @@ class Team(models.Model):
   def get_fields(self):
     return [(field.name, field.value_to_string(self)) for field in Team._meta.fields]
 
+
 class CoachingStaffMember(Person):
     # model fields
     position = models.CharField(blank=True, max_length=30)
@@ -29,7 +30,7 @@ class CoachingStaffMember(Person):
     team = models.ForeignKey(Team)
 
     def get_fields(self):
-        return [(field.name, field.value_to_string(self)) for field in CoachingStaff._meta.fields]
+        return [(field.name, field.value_to_string(self)) for field in CoachingStaffMember._meta.fields]
 
 
 class Player(Person):
