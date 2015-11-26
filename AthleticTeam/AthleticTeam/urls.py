@@ -18,5 +18,8 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+
+	url(r'^announcementsApp/', include('announcementsApp.urls', namespace="announcementsApp")),
+
     url(r'^', include('AthleticTeamApp.urls')),
 ]
