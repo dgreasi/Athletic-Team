@@ -23,5 +23,5 @@ urlpatterns = [
 
     url(r'^', include('AthleticTeamApp.urls')),
 
-    url(r'^Login/', include('Login.urls', namespace="Login")),
+    url(r'^Login/', include('Login.urls')),
 ]

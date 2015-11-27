@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views import generic
 
-from AthleticTeamApp.models import Player, Match, CoachingStaffMembe, Team
+from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team
 
 
 # Create your views here.

@@ -3,9 +3,10 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils import timezone
+from django.views.generic import TemplateView
 
 
 # Create your views here.
-class IndexView(generic.ListView):
+class IndexView(TemplateView):
 	#model = User
 	template_name = 'Login/index.html'
