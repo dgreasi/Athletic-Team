@@ -10,3 +10,7 @@ from django.views.generic import TemplateView
 class IndexView(TemplateView):
 	#model = User
 	template_name = 'Login/index.html'
+
+class HomeView(TemplateView):
+	template_name = 'Login/base_site.html'
+
