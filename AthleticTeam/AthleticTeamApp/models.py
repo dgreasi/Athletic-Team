@@ -6,6 +6,7 @@ class Person(models.Model):
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
     info = models.TextField(blank=True)
+    image = models.ImageField(upload_to='photos/', blank=True)
 
     class Meta:
         abstract = True
@@ -24,7 +25,6 @@ class Team(models.Model):
 class CoachingStaffMember(Person):
     # model fields
     position = models.CharField(blank=True, max_length=30)
-    # image = models.ImageField() TODO
 
     # model relationships
     team = models.ForeignKey(Team)
@@ -56,7 +56,6 @@ class Player(Person):
     number = models.PositiveSmallIntegerField(blank=True, null=True)
 
     nationality = models.CharField(max_length=30, blank=True)
-    # image = models.ImageField() TODO
 
     # model relationships
     team = models.ForeignKey(Team)

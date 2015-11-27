@@ -1,8 +1,12 @@
 <ul>
 {% for name, value in player.get_fields %}
-{#  {% if value %}#}
-    <li>{{ name }} => {{ value }}</li>
-{#  {% endif %}#}
+  {% if value %}
+    {% if name == 'image' %}
+        <li><img src={{ player.image.url }}></li>
+    {% else %}
+        <li>{{ name }} => {{ value }}</li>
+    {% endif %}
+  {% endif %}
 {% endfor %}
 </ul>
 
