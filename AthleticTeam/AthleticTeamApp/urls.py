@@ -12,4 +12,6 @@ urlpatterns = [
     url(r'^teams$', views.ShowTeams.as_view(), name='ShowTeams'),
     url(r'^team/(?P<pk>[0-9]+)$', views.ShowTeam.as_view(), name='ShowTeam'),
 	url(r'^home/$', views.HomeView.as_view(), name='home'),
+	url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^login/$', views.login_user, name='login_user'),
 ]

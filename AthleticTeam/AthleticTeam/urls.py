@@ -21,7 +21,6 @@ urlpatterns = [
 
 	url(r'^announcements/', include('announcementsApp.urls', namespace="announcementsApp")),
 
-    url(r'^', include('AthleticTeamApp.urls')),
+    url(r'^', include('AthleticTeamApp.urls', namespace="AthleticTeamApp")),
 
-    url(r'^login/', include('Login.urls')),
 ]
