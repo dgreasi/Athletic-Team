@@ -47,7 +47,7 @@ html, body {
 #page-container {
 	height: auto;
 	min-height: 100%;
-	margin-bottom: -51px;
+	margin-bottom: -11px;
 }
 
 #page-container > .container {
