@@ -11,4 +11,5 @@ urlpatterns = [
     url(r'^match/(?P<pk>[0-9]+)$', views.ShowMatch.as_view(), name='ShowMatch'),
     url(r'^teams$', views.ShowTeams.as_view(), name='ShowTeams'),
     url(r'^team/(?P<pk>[0-9]+)$', views.ShowTeam.as_view(), name='ShowTeam'),
+	url(r'^home/$', views.HomeView.as_view(), name='home'),
 ]

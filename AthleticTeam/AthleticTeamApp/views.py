@@ -3,6 +3,8 @@ from django.views import generic
 
 from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team
 
+from django.views.generic import TemplateView
+
 
 # Create your views here.
 class ShowCoachingStaffMembers(generic.ListView):
@@ -42,4 +44,7 @@ class ShowTeams(generic.ListView):
 
 class ShowTeam(generic.DetailView):
     model = Team
-    template_name = 'team/show.html'    
+    template_name = 'team/show.html'
+
+class HomeView(TemplateView):
+	template_name = 'home/base_site.html'
