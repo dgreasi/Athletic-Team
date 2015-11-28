@@ -20,10 +20,9 @@ from AthleticTeam import settings
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-
-	url(r'^announcementsApp/', include('announcementsApp.urls', namespace="announcementsApp")),
-
-    url(r'^', include('AthleticTeamApp.urls')),
+    url(r'^announcementsApp/', include('announcementsApp.urls', namespace="announcementsApp")),
+    url(r'^pages/', include('SinglePagesApp.urls', namespace='SinglePagesApp')),
+    url(r'^', include('AthleticTeamApp.urls', namespace='AthleticTeamApp')),
 ]
 
 if settings.DEBUG:

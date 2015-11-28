@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'AthleticTeamApp',
     'announcementsApp',
+    'SinglePagesApp',
 )
 
 MIDDLEWARE_CLASSES = (
