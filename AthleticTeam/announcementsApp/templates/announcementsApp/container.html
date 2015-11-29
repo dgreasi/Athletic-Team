@@ -1,4 +1,4 @@
-{% extends "announcementsApp/root.html" %}
+{% extends "home/root.html" %}
 
 {% block body %}
 <nav class="navbar navbar-default" role="navigation">
@@ -18,10 +18,10 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="dropdown">
-                    <a aria-expanded="false" href="#" class="dropdown-toggle" data-toggle="dropdown" title="Our Collection of Templates &amp; Themes">Themes <b class="caret"></b></a>
+                    <a aria-expanded="false" href="#" class="dropdown-toggle" data-toggle="dropdown" title="Our Collection of Templates &amp; Themes">Teams <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="/template-categories/all"><i class="fa fa-globe fa-fw"></i> K21 &amp; K18/a>
+                            <a href="/template-categories/all"><i class="fa fa-globe fa-fw"></i> K21 &amp; K18</a>
                         </li>
                         <li>
                             <a href="/template-categories/popular"><i class="fa fa-star fa-fw"></i> Most Popular</a>
@@ -41,21 +41,17 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                 {% if user %}
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <!-- <i class="fa fa-star text-yellow"></i> -->
+                    <a href="#" class="dropdown-toggle glyphicon glyphicon-user" data-toggle="dropdown">
                         {{ user.username }}
                         <b class="caret"></b>
                     </a>
                 {% endif %}
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu btn-info">
                         <li>
-                            <a href="#">Profile</a>
-                        </li>
-                        <li>
-                            <!-- <form action="logout" method="post">
-                                <button type="button" name="logout" class="btn">Logout</button>
-                            </form> -->
-                            <a href="#">Logout</a>
+                            <form action="{% url 'AthleticTeamApp:logout' %}"  method="post">
+                                {% csrf_token %}
+                                <input type="submit" name="logout" value="Logout" class="btn btn-primary btn-block"/>
+                            </form>
                         </li>
                     </ul>
                 </li>

@@ -18,6 +18,20 @@ h2 {
 	color: blue;
 }
 
+.submenu {
+	background: #fff;
+	position: absolute;
+	top: -12px;
+	left: -20px;
+	z-index: 100;
+	width: 135px;
+	display: none;
+	margin-left: 10px;
+	padding: 40px 0 5px;
+	border-radius: 6px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+}
+
 .text_title {
 	width: 600px;
 	height: 40px;

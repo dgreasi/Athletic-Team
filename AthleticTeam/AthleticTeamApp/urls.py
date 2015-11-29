@@ -14,4 +14,5 @@ urlpatterns = [
 	url(r'^home/$', views.HomeView.as_view(), name='home'),
 	url(r'^$', views.IndexView.as_view(), name='index'),
     url(r'^login/$', views.login_user, name='login_user'),
+    url(r'^logout/$', views.logout_view, name='logout'),
 ]

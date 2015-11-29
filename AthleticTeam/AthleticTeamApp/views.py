@@ -6,6 +6,7 @@ from django.http import *
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
+from django.core.urlresolvers import reverse_lazy
 
 from django.views.generic import TemplateView
 from django.core.urlresolvers import reverse
@@ -66,6 +67,10 @@ def login_user(request):
     return HttpResponseRedirect(reverse('AthleticTeamApp:index'))
 
     #, context_instance=RequestContext(request)
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('AthleticTeamApp:index'))
 
 #@login_required(login_url='/login/')
 #@method_decorator(login_required, name='login_user')
