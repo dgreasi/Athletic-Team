@@ -17,10 +17,7 @@ class Migration(migrations.Migration):
                 ('first_name', models.CharField(max_length=30, blank=True)),
                 ('last_name', models.CharField(max_length=30, blank=True)),
                 ('info', models.TextField(blank=True)),
-<<<<<<< HEAD
                 ('image', models.ImageField(upload_to=b'photos/', blank=True)),
-=======
->>>>>>> origin/login
                 ('position', models.CharField(max_length=30, blank=True)),
             ],
             options={
@@ -69,10 +66,7 @@ class Migration(migrations.Migration):
                 ('first_name', models.CharField(max_length=30, blank=True)),
                 ('last_name', models.CharField(max_length=30, blank=True)),
                 ('info', models.TextField(blank=True)),
-<<<<<<< HEAD
                 ('image', models.ImageField(upload_to=b'photos/', blank=True)),
-=======
->>>>>>> origin/login
                 ('height', models.DecimalField(null=True, max_digits=3, decimal_places=2, blank=True)),
                 ('weight', models.PositiveSmallIntegerField(null=True, blank=True)),
                 ('birth_date', models.DateField(null=True, blank=True)),
