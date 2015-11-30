@@ -3,6 +3,8 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils import timezone
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 from announcementsApp.models import Comment, Announcement
 
@@ -26,6 +28,11 @@ class FullView(generic.ListView):
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')
 
+    #U can come here only if u are logged in
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(FullView, self).dispatch(*args, **kwargs)
+
 #View recent announcements
 class IndexView(generic.ListView):
     template_name = 'announcementsApp/index.html'
@@ -46,6 +53,12 @@ class IndexView(generic.ListView):
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')[:3]
 
+    #U can come here only if u are logged in
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(IndexView, self).dispatch(*args, **kwargs)
+
+
 #View my announcements
 class MyannouncementsView(generic.ListView):
     template_name = 'announcementsApp/myannouncements.html'
@@ -60,10 +73,21 @@ class MyannouncementsView(generic.ListView):
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')
 
+    #U can come here only if u are logged in
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(MyannouncementsView, self).dispatch(*args, **kwargs)
+
+
 #View a comment and edit it
 class MyeditcommentView(generic.DetailView):
     model = Comment
     template_name = 'announcementsApp/edit_comment.html'
+
+    #U can come here only if u are logged in
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(MyeditcommentView, self).dispatch(*args, **kwargs)
 
 #View announcement , vote a comment
 class DetailView(generic.DetailView):
@@ -75,15 +99,30 @@ class DetailView(generic.DetailView):
         """
         return Announcement.objects.filter(pub_date__lte=timezone.now())
 
+    #U can come here only if u are logged in
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(DetailView, self).dispatch(*args, **kwargs)
+
 #View and edit an announcement
 class EditAnnView(generic.DetailView):
     model = Announcement
     template_name = 'announcementsApp/edit_announcement.html'
 
+    #U can come here only if u are logged in
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(EditAnnView, self).dispatch(*args, **kwargs)
+
 #View announcement with his results
 class ResultsView(generic.DetailView):
     model = Announcement
     template_name = 'announcementsApp/results.html'
+
+    #U can come here only if u are logged in
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ResultsView, self).dispatch(*args, **kwargs)
 
 #Vote a comment
 def vote(request, announcement_id):
