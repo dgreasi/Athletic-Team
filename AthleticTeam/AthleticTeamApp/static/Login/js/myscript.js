@@ -1,3 +1,7 @@
+$('#visitor').click(function() {
+  window.location='/home';
+});
+
 function view_text () {
 	// Find html elements.
 	var textTitle = document.getElementById('my_text_title');

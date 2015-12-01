@@ -43,13 +43,15 @@
           </label>
         </div>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Log in as visitor</button>
+        <button class="btn btn-lg btn-primary btn-block" name="login" type="submit">Sign in</button>
+        <!-- Using Jquery-->
+        <button class="btn btn-lg btn-primary btn-block" name="visitor" id="visitor" type="submit">Log in as visitor</button>  
       </form>
 
     </div> <!-- /container -->
-
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script type="text/javascript"  src="{% static 'Login/js/ie10-viewport-bug-workaround.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript"  src="{% static 'Login/js/myscript.js' %}"></script>
   </body>
 </html>

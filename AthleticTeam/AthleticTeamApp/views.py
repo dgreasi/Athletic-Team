@@ -56,17 +56,20 @@ class ShowTeam(generic.DetailView):
     template_name = 'team/show.html'
 
 def login_user(request):
-    logout(request)
-    username = password = ''
-    if request.POST:
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+    if 'login' in request.POST:
+        logout(request)
+        username = password = ''
+        if request.POST:
+            username = request.POST.get('username')
+            password = request.POST.get('password')
 
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
+    elif 'visitor' in request.POST:
+        return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
     return HttpResponseRedirect(reverse('AthleticTeamApp:index'))
 
     #, context_instance=RequestContext(request)
@@ -81,10 +84,32 @@ class HomeView(TemplateView):
     template_name = 'home/base_site.html'
 
     #U can come here only if u are logged in
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(HomeView, self).dispatch(*args, **kwargs)
+    #@method_decorator(login_required)
+    #def dispatch(self, *args, **kwargs):
+    #    return super(HomeView, self).dispatch(*args, **kwargs)
 
 class IndexView(TemplateView):
     #model = User
     template_name = 'Login/index.html'
+
+class AboutUs(TemplateView):
+    template_name = 'home/about.html'
+
+
+class ProfileView(TemplateView):
+    template_name = 'home/profile.html'
+    
+    #U can come here only if u are logged in
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ProfileView, self).dispatch(*args, **kwargs)
+
+
+class ChangePassView(TemplateView):
+    template_name = 'home/change_pass.html'
+
+    #U can come here only if u are logged in
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ChangePassView, self).dispatch(*args, **kwargs)
+

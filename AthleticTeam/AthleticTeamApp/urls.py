@@ -15,4 +15,7 @@ urlpatterns = [
 	url(r'^$', views.IndexView.as_view(), name='index'),
     url(r'^login/$', views.login_user, name='login_user'),
     url(r'^logout/$', views.logout_view, name='logout'),
+    url(r'^about/$', views.AboutUs.as_view(), name='about'),
+    url(r'^profile/$', views.ProfileView.as_view(), name='profile'),
+    url(r'^change_info/$', views.ChangePassView.as_view(), name='change_pass'),
 ]

@@ -1,0 +1,79 @@
+{% extends "home/container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Round About</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/bootstrap.min.css' %}" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/round-about.css' %}" />
+{% endblock %}
+
+{% block container %}
+    <!-- Page Content -->
+    <div class="container">
+
+        <!-- Introduction Row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">About Us
+                    <small>It's Nice to Meet You!</small>
+                </h1>
+                <p>Some things about our creators. From greece in the city of Volos!</p>
+            </div>
+        </div>
+
+        <!-- Team Members Row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="page-header">Our Team</h2>
+            </div>
+            <div class="col-lg-4 col-sm-6 text-center">
+                <img class="img-circle img-responsive img-center" src="http://placehold.it/200x200" alt="">
+                <h3>Nick Oikonomou
+                    <small>Software Developer</small>
+                </h3>
+                <p>Embeded systems, Lalis, Cda, complilers!</p>
+            </div>
+            <div class="col-lg-4 col-sm-6 text-center">
+                <img class="img-circle img-responsive img-center" src="http://placehold.it/200x200" alt="">
+                <h3>Jim Greasidis
+                    <small>Software Developer</small>
+                </h3>
+                <p>PAOK and music!</p>
+            </div>
+            <div class="col-lg-4 col-sm-6 text-center">
+                <img class="img-circle img-responsive img-center" src="http://placehold.it/200x200" alt="">
+                <h3>Steph Papanastasiou
+                    <small>Software Developer</small>
+                </h3>
+                <p>FPGAS, AEK, vespa!</p>
+            </div>
+            <div class="col-lg-4 col-sm-6 text-center">
+                <img class="img-circle img-responsive img-center" src="http://placehold.it/200x200" alt="">
+                <h3>Nick Kotoulas
+                    <small>Software Developer</small>
+                </h3>
+                <p>MOONdanos on AIR</p>
+            </div>
+            <div class="col-lg-4 col-sm-6 text-center">
+                <img class="img-circle img-responsive img-center" src="http://placehold.it/200x200" alt="">
+                <h3>Kathrin Nikolaidou
+                    <small>Software Developer</small>
+                </h3>
+                <p>Only woman in the team</p>
+            </div>
+        </div>
+
+        <hr>
+    </div>
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="{% static 'home/js/jquery.js' %}"></script>
+{% endblock %}
+
