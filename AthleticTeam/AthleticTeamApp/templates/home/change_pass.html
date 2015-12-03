@@ -9,18 +9,20 @@
 
 
 {% block container %}
-    <p>Enter new password<p>
-    <!--form-->   
-    <p><textarea type="textarea" class="text" id="text_a" name="text_a"></textarea></p>
+    <!-- CHANGING PASSWORD -->
+    <form action="{% url 'AthleticTeamApp:change_pass_def' %}" method="post">
+        {% csrf_token %}
+        <p>Enter new password<p>
+        <p><input type="password" class="form-control" id="my_text" name="text_a" placeholder="Password" required name="password" /></p>   
+        
+        <p>Re-enter new password<p>
+        <p><input type="password" class="form-control" id="my_text" name="text_b" placeholder="Password" required name="password" /></p>
 
-    <!--input type="submit" name="submit" value="Submit" class="btn btn-success" /-->
+        <input type="submit" name="submit" value="Submit" class="btn btn-primary" />
+    </form>
 
-    <p>Re-enter new password<p>
-    <p><textarea type="textarea" class="text" id="text_b" name="text_b"></textarea></p>
-
-
-    <button class="btn btn-primary" type="submit" id="change_pass">Submit</button>
-
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script type="text/javascript"  src="{% static 'home/js/myscript.js' %}"></script>
 {% endblock %}

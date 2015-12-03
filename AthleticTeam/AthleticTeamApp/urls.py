@@ -17,5 +17,6 @@ urlpatterns = [
     url(r'^logout/$', views.logout_view, name='logout'),
     url(r'^about/$', views.AboutUs.as_view(), name='about'),
     url(r'^profile/$', views.ProfileView.as_view(), name='profile'),
-    url(r'^change_info/$', views.ChangePassView.as_view(), name='change_pass'),
+    url(r'^change_info/$', views.ChangePassView.as_view(), name='changePass'),
+    url(r'^change_info_def/$', views.change_pass, name='change_pass_def'),
 ]

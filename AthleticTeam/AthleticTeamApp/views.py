@@ -113,3 +113,18 @@ class ChangePassView(TemplateView):
     def dispatch(self, *args, **kwargs):
         return super(ChangePassView, self).dispatch(*args, **kwargs)
 
+
+def change_pass(request):
+    logged_user = request.user
+    text_a = request.POST['text_a']
+    text_b = request.POST['text_b']
+
+    if text_a == text_b:
+        #change password
+        logged_user.set_password(text_b) 
+        logged_user.save()
+        logout(request)
+        return HttpResponseRedirect(reverse('AthleticTeamApp:index'))
+    else:
+        #prin error mesg MESSAGES DJANGO
+        return HttpResponseRedirect(reverse('AthleticTeamApp:changePass'))
