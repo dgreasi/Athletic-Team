@@ -14,7 +14,12 @@ from django.views.generic import TemplateView
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
 
+
 # Create your views here.
+def gui(request):
+    return render(request, 'gui.html')
+
+
 class ShowCoachingStaffMembers(generic.ListView):
     model = CoachingStaffMember
     template_name = 'coaching_staff_member/showall.html'

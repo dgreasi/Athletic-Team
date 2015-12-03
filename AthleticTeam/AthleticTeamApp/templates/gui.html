@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Test</title>
+        <script src="/static/js/snap.svg-min.js"></script>
+        <style>
+            svg {
+                border:1px solid red;
+            }
+        </style>
+    </head>
+    <body>
+        <svg id="svg" width="800" height="500"></svg>
+
+        <button id="create_player">create player</button>
+
+        <script>
+            var svgData;
+            svgData = init();
+            function init(){
+                var svgData;
+                var s = Snap('#svg');
+                var svg = document.getElementById('svg');
+
+                svgData = {//all variables about svg + s for snap object + some configData
+                    's':s,
+                    'svg' : svg,
+                    'width' : svg.getAttribute('width'),
+                    'height' : svg.getAttribute('height'),
+                    'configData' : {
+                        'r' : 20,
+                        'offColor' : 'blue',
+                        'defColor' : 'red'
+                    }
+                };
+                var image = s.image('../image.png', 0, 0, svgData.width, svgData.height);
+                image.drag(function(){});//disabling drag utility for the bg image
+                svgData['players'] = createPlayers(svgData);
+                return svgData;
+            }
+
+            function createPlayers(svgData){
+                var data, players = [];
+
+                data = calcData(svgData);
+
+                for(var i=0;i<10;i++){
+                    players[i] = createPlayer(svgData, data[i]);
+                }
+                return players;
+            }
+
+            function createPlayer(svgData, data){
+                var s,x, y, svg_width, svg_height, elem, text, g, r;
+                s = svgData.s;
+                svg_width = svgData.width;
+                svg_height = svgData.height;
+                r = svgData.configData.r;
+
+                var movePlayer = function(dx, dy, posx, posy, e) {
+                    if(posx-r < 0 ){
+                        posx = r;
+                    }
+                    if(posx+r > svg_width){
+                        posx = svg_width-r;
+                    }
+                    if(posy-r < 0){
+                        posy = r;
+                    }
+                    if(posy > svg_height){
+                        posy = svg_height-r;
+                    }
+                    var elem = this.select('circle');
+                    var text = this.select('text');
+                    elem.attr({'cx': posx, 'cy':posy});
+                    text.attr({'x':posx-r/4, 'y':posy+r/4});
+                };
+
+                x = data.position.x;
+                y = data.position.y;
+
+                elem = s.circle(x,y,r);
+                text = s.text(x-r/4,y+r/4,data.label);
+                elem.attr({
+                    'fill':data.color
+                });
+                g = s.g();
+                g.add(elem,text);
+                g.drag(movePlayer);
+
+                return {
+                    'position' : data.position,
+                    'color' : data.color,
+                    'label' : data.label,
+                    'elem' : elem,
+                    'text' : text,
+                    'g' : g
+                };
+            }
+
+            function calcData(svgData){
+                var data = [], i;
+
+                if(true){
+                    for(i=0;i<10;i++){
+                        data[i] = {
+                            'position' : getDefaultPosition(svgData, i),
+                            'color' : getColor(svgData, i),
+                            'label' : i%5+1
+                        };
+                    }
+                }
+                else{
+
+                }
+
+                return data;
+            }
+
+            function getColor(svgData, index){
+                if(index < 5){
+                    return svgData.configData.offColor;
+                }
+                else{
+                    return svgData.configData.defColor;
+                }
+            }
+
+            function getDefaultPosition(svgData, index){
+                var x, y, svg_width, r;
+                svg_width = svgData.width;
+                r = svgData.configData.r;
+                y = r;
+
+                if(index < 5){
+                    x = 2 * r * index + r;
+                }
+                else {
+                    x = svg_width - 2 * r * (index%5) - r;
+                }
+                return {'x':x,'y':y};
+            }
+
+            var mouseDownX = 0;
+            var mouseDownY = 0;
+
+            //register events on document load
+//            svgData.s.mousedown(OnMouseDown);
+            svgData.s.mousedown(startDrawingPath);
+            svgData.s.mousemove(continueDrawingPath);
+            svgData.s.mouseup(endDrawingPath);
+//            svgData.s.mouseup(OnMouseUp);
+
+//            svgData.s.touchstart(startDrawingPath);
+//            svgData.s.touchmove(continueDrawingPath);
+//            svgData.s.touchend(endDrawingPath);
+
+            var svgPath;
+//
+//            function OnMouseDown(e){
+//                mouseDownX = e.clientX;
+//                mouseDownY = e.clientY;
+//
+//                svgPath.setAttribute("d", "M" + e.clientX  + "," + e.clientY);
+//            }
+//
+//            function OnMouseUp(e){
+//                var upX = e.clientX;
+//                var upY = e.clientY;
+//                DrawPath(mouseDownX, mouseDownY, upX, upY);
+//            }
+//
+//            function DrawPath(x1, y1, x2, y2){
+//                var element = svgData.s.line(x1, y1, x2, y2);
+//                element.attr({
+//                    fill: "#FFF",
+//                    stroke: "#F00"
+//                });
+//            }
+
+//
+//            var svgCanvas = document.getElementById("svgCanvas");
+//            var svgPath;
+//            svgCanvas.addEventListener("touchstart", startDrawTouch, false);
+//            svgCanvas.addEventListener("touchmove", continueDrawTouch, false);
+//            svgCanvas.addEventListener("touchend", endDrawTouch, false);
+
+            var s = 0;
+            var clicked = false;
+            function startDrawingPath(e)
+            {
+                s = 0;
+                clicked = true;
+                svgPath = svgData.s.path('');
+                svgPath.attr("fill", "none");
+                svgPath.attr("shape-rendering", "geometricPrecision");
+                svgPath.attr("stroke-linejoin", "round");
+                svgPath.attr("stroke", "#000000");
+                svgPath.attr("d", "M" + e.clientX  + "," + e.clientY);
+
+            }
+
+            function continueDrawingPath(e)
+            {
+                if(clicked){
+                    s++;
+                    if (svgPath)
+                    {
+                        var pathData = svgPath.attr("d");
+                        pathData = pathData + " L" + e.clientX + "," + e.clientY
+                        svgPath.attr("d", pathData);
+                    }
+                }
+            }
+
+            function endDrawingPath(e)
+            {
+                if (svgPath)
+                {
+                    var pathData = svgPath.attr("d");
+                    pathData = pathData + " L" + e.clientX + "," + e.clientY
+                    svgPath.attr("d", pathData);
+                    svgPath = null;
+                }
+
+                clicked = false;
+            }
+        </script>
+
+</body>
+</html>
