@@ -50,7 +50,7 @@ class ShowMatch(generic.DetailView):
 class ShowTeams(generic.ListView):
     model = Team
     template_name = 'team/showall.html'
-    context_object_name = 'teams_players_list'
+    context_object_name = 'team_players_list'
 
 class ShowTeam(generic.DetailView):
     model = Team
