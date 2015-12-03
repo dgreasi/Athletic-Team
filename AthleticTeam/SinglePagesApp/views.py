@@ -1,4 +1,4 @@
-import simplejson
+import json as simplejson
 from django.http import Http404
 from django.shortcuts import render, redirect
 # Create your views here.

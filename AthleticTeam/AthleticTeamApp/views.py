@@ -1,4 +1,4 @@
-from django.shortcuts import render, render_to_response, redirect
+from django.shortcuts import render, render_to_response, redirect,get_object_or_404
 from django.views import generic
 
 from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team
@@ -18,6 +18,7 @@ from django.utils.decorators import method_decorator
 class ShowCoachingStaffMembers(generic.ListView):
     model = CoachingStaffMember
     template_name = 'coaching_staff_member/showall.html'
+    context_object_name = 'coachingstaffmember_list'
 
 
 class ShowCoachingStaffMember(generic.DetailView):
@@ -28,7 +29,7 @@ class ShowCoachingStaffMember(generic.DetailView):
 class ShowPlayers(generic.ListView):
     model = Player
     template_name = 'player/showall.html'
-
+    context_object_name = 'players_list'
 
 class ShowPlayer(generic.DetailView):
     model = Player
@@ -38,7 +39,7 @@ class ShowPlayer(generic.DetailView):
 class ShowMatches(generic.ListView):
     model = Match
     template_name = 'match/showall.html'
-
+    context_object_name = 'matches_list'
 
 class ShowMatch(generic.DetailView):
     model = Match
@@ -49,7 +50,7 @@ class ShowMatch(generic.DetailView):
 class ShowTeams(generic.ListView):
     model = Team
     template_name = 'team/showall.html'
-
+    context_object_name = 'teams_players_list'
 
 class ShowTeam(generic.DetailView):
     model = Team

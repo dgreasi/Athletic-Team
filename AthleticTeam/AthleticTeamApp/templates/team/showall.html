@@ -1,9 +1,14 @@
-{% if team_list %}
+{% extends "container.html" %}
+
+{% block container %}
+{% if teams_players_list%}
     <ul>
-    {% for team in team_list %}
-        <li><a href="{% url 'ShowTeam' team.id %}">{{ team.id}}</a></li>
+    <h2> Teams </h2>
+    {% for team in teams_players_list %}
+        <li><a href="{% url 'AthleticTeamApp:ShowTeam' team.id %}">{{ team.team_name}}</a></li>
     {% endfor %}
     </ul>
 {% else %}
-    <p>No matches are available.</p>
+    <p>No teams are available.</p>
 {% endif %}
+{% endblock%}
