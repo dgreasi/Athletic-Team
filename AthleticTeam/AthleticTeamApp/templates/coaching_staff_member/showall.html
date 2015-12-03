@@ -1,8 +1,10 @@
+{% extends "container.html" %}
+{% block container %}
 {% if coachingstaffmember_list %}
     <ul>
     {% for coachingstaffmember in coachingstaffmember_list %}
         <li>
-            <a href="{% url 'ShowCoachingStaffMember' coachingstaffmember.id %}">
+            <a href="{% url 'AthleticTeamApp:ShowCoachingStaffMember' coachingstaffmember.id %}">
                 {{ coachingstaffmember.last_name }} {{ coachingstaffmember.first_name }}
             </a>
         </li>
@@ -11,3 +13,4 @@
 {% else %}
     <p>No Coaching Staff Members available.</p>
 {% endif %}
+{% endblock %}

@@ -1,3 +1,5 @@
+{% extends "container.html" %}
+{% block container %}
 <ul>
 {% for name, value in match.get_fields %}
 {#  {% if value %}#}
@@ -5,3 +7,4 @@
 {#  {% endif %}#}
 {% endfor %}
 </ul>
+{% endblock %}

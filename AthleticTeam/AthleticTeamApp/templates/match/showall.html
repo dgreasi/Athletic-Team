@@ -1,9 +1,13 @@
-{% if match_list %}
+{% extends "container.html" %}
+{% block container %}
+{% if matches_list%}
     <ul>
-    {% for match in match_list %}
-        <li><a href="{% url 'ShowMatch' match.id %}">{{ match.id}}</a></li>
+    <h2> Matches</h2>
+    {% for match in matches_list %}
+        <li><a href="{% url 'AthleticTeamApp:ShowMatch' match.id %}">{{ match.id}}</a></li>
     {% endfor %}
     </ul>
 {% else %}
     <p>No matches are available.</p>
 {% endif %}
+{% endblock%}
