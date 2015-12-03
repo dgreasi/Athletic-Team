@@ -55,6 +55,9 @@ class ShowTeam(generic.DetailView):
     model = Team
     template_name = 'team/show.html'
 
+class IndexRanking(TemplateView):
+    template_name = 'ranking/index.html'
+
 def login_user(request):
     if 'login' in request.POST:
         logout(request)

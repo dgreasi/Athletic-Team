@@ -1,11 +1,11 @@
 li a {
 	color: green;
 }
-
+/*
 body {
 	background: white url("../images/symphony.png") repeat right top;
 }
-
+*/
 a {
 	color: green;
 }
@@ -16,6 +16,20 @@ h1 {
 
 h2 {
 	color: blue;
+}
+
+.submenu {
+	background: #fff;
+	position: absolute;
+	top: -12px;
+	left: -20px;
+	z-index: 100;
+	width: 135px;
+	display: none;
+	margin-left: 10px;
+	padding: 40px 0 5px;
+	border-radius: 6px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
 }
 
 .text_title {
@@ -47,7 +61,7 @@ html, body {
 #page-container {
 	height: auto;
 	min-height: 100%;
-	margin-bottom: -51px;
+	margin-bottom: -11px;
 }
 
 #page-container > .container {

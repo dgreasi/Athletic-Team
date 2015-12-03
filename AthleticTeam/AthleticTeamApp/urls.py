@@ -19,4 +19,5 @@ urlpatterns = [
     url(r'^profile/$', views.ProfileView.as_view(), name='profile'),
     url(r'^change_info/$', views.ChangePassView.as_view(), name='changePass'),
     url(r'^change_info_def/$', views.change_pass, name='change_pass_def'),
+    url(r'^ranking/$', views.IndexRanking.as_view(), name='index_ranking'),
 ]
