@@ -1,5 +1,12 @@
 {% extends "container.html" %}
 
+{% block head %}
+{% load staticfiles %}
+    <title>ShowAll</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+{% endblock %}
+
 {% block container %}
 {% if team_players_list%}
     <ul>

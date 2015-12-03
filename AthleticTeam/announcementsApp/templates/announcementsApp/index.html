@@ -1,10 +1,10 @@
-{% extends "announcementsApp/container.html" %}
+{% extends "container.html" %}
 
 {% block head %}
 {% load staticfiles %}
 <title>Index</title>
-<link rel="stylesheet" type="text/css" href="{% static 'announcementsApp/css/style.css' %}" />
-<script type="text/javascript" src="{% static 'announcementsApp/js/myscript.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+<script type="text/javascript" src="{% static 'js/myscript.js' %}"></script>
 {% endblock %}
 
 
@@ -16,9 +16,10 @@
         <li><a href="{% url 'announcementsApp:detail' announcement.id %}">{{ announcement.announcement_title }}</a></li>
     {% endfor %}
     </ul>
-
     <p><a href="{% url 'announcementsApp:full' %}">View all announcements</a></p>
-
+{% else %}
+    <p>No announcements are available.</p>
+{% endif %}
     <!-- Make new Announcement -->
     <h2>Create new announcement</h2>
     
@@ -39,8 +40,4 @@
 
     <br />
     <p><a href="{% url 'announcementsApp:myannouncements' %}">View my announcements</a></p>
-    
-{% else %}
-    <p>No announcements are available.</p>
-{% endif %}
 {% endblock %}
