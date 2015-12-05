@@ -70,7 +70,8 @@ class MyannouncementsView(generic.ListView):
         published in the future).
         """
         return Announcement.objects.filter(
-            pub_date__lte=timezone.now()
+            pub_date__lte=timezone.now(),
+            owner=self.request.user
         ).order_by('-pub_date')
 
     #U can come here only if u are logged in

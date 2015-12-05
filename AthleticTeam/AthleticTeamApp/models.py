@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Person(models.Model):
@@ -107,3 +107,17 @@ class MatchPlayerStatistics(models.Model):
 
     def get_fields(self):
         return [(field.name, field.value_to_string(self)) for field in MatchPlayerStatistics._meta.fields]
+
+class Ranking(models.Model):
+    #coach = models.ForeignKey(CoachingStaffMember)
+    player = models.ForeignKey(Player)
+
+    owner = models.ForeignKey(User, null=True)
+
+    power = models.PositiveSmallIntegerField(blank=True, null=True)
+    speed = models.PositiveSmallIntegerField(blank=True, null=True)
+
+    class Meta:
+        unique_together = ("player", "owner")
+
+

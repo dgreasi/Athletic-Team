@@ -1,0 +1,26 @@
+{% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+    <title>Full List</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+{% endblock %}
+
+{% block container %}
+
+    <h2>Rates of player : {{ ranking.player.first_name }} {{ ranking.player.last_name }}</h2>
+    <br />
+    
+    <p>Coach: {{ ranking.owner }}</p>
+    <p>Power: {{ ranking.power }}</p>
+    <p>Speed: {{ ranking.speed }}</p>
+    <!--
+    <p>Overall rate:  ranking.power|algorithm:ranking.speed </p>
+-->
+    <a class="btn btn-primary " href="{% url 'AthleticTeamApp:index_ranking' ranking.player.id %}">Edit rates</a>
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

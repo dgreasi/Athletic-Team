@@ -1,5 +1,5 @@
 from django.contrib import admin
-from AthleticTeamApp.models import MatchPlayerStatistics, Match, Player, Team, CoachingStaffMember
+from AthleticTeamApp.models import MatchPlayerStatistics, Match, Player, Team, CoachingStaffMember, Ranking
 
 
 # Register your models here.
@@ -25,7 +25,17 @@ class MatchPlayerStatisticsInline(admin.TabularInline):
 class MatchAdmin(admin.ModelAdmin):
     inlines = [MatchPlayerStatisticsInline]
 
+class RankingAdmin(admin.ModelAdmin):
+	model = Ranking
+
+	#fieldsets = [
+	#	(None, {'fields': ['player', 'owner', 'power', 'speed']}),
+	#]
+
+	#list_display = ('player', 'owner', 'power', 'speed')
+
 
 admin.site.register(Team, TeamAdmin)
 admin.site.register(Match, MatchAdmin)
 admin.site.register(Player)
+admin.site.register(Ranking, RankingAdmin)

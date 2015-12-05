@@ -1,15 +1,29 @@
 {% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+<title>Players</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+{% endblock %}
+
+
 {% block container %}
+<h2>Player : {{ player.first_name }} {{ player.last_name }}</h2>
 <ul>
 {% for name, value in player.get_fields %}
   {% if value %}
     {% if name == 'image' %}
         <li><img src={{ player.image.url }}></li>
     {% else %}
-        <li>{{ name }} => {{ value }}</li>
+        <li>{{ name }} = {{ value }}</li>
     {% endif %}
   {% endif %}
 {% endfor %}
 </ul>
+
+<a class="btn btn-primary " href="{% url 'AthleticTeamApp:index_ranking' player.id %}">Rank this player</a>
+
+<a class="btn btn-primary " href="{% url 'AthleticTeamApp:rank_results' player.id %}">Show rate of this player</a>
 {% endblock %}
 

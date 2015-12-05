@@ -8,9 +8,9 @@
 {% endblock %}
 
 {% block container %}
+<h2>Teams</h2>
 {% if team_players_list%}
     <ul>
-    <h2> Teams </h2>
     {% for team in team_players_list %}
         <li><a href="{% url 'AthleticTeamApp:ShowTeam' team.id %}">{{ team.team_name}}</a></li>
     {% endfor %}

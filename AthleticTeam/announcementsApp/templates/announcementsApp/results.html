@@ -16,29 +16,34 @@
     <hr>
 
     <h3>Comments</h3>
-    <ul>
-    {% for comment in announcement.comment_set.all %}
-        <p><li>{{ comment.comment_text }} -- {{ comment.votes }} vote{{ comment.votes|pluralize }} -- By: {{ comment.owner }}</li></p>
-        
-    {% endfor %}
-    </ul>
-
-    <h3>Delete / Edit one of your comments</h3>
-    <!-- Make possible a deletion of a comment -->
-    <form action="{% url 'announcementsApp:delete' announcement.id %}" method="post">
+    {% if announcement.comment_set.all %}
+        <ul>
         {% for comment in announcement.comment_set.all %}
-            {% csrf_token %}
-            {% ifequal user comment.owner %} 
-                <input type="radio" name="comment" id="comment{{ forloop.counter }}" value="{{ comment.id }}" />
-                <label for="comment{{ forloop.counter }}">{{ comment.comment_text }}</label>
-            {% endifequal %}
-
+            <p><li>{{ comment.comment_text }} -- {{ comment.votes }} vote{{ comment.votes|pluralize }} -- By: {{ comment.owner }}</li></p>
         {% endfor %}
-        <p></p>
-        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-        <input type="submit" name="delete" value="Delete comment" class="btn btn-success" />
-        <input type="submit" name="edit" value="Edit comment" class="btn btn-success" />
-    </form>  
+        </ul>
+
+        <h3>Delete / Edit one of your comments</h3>
+        <!-- Make possible a deletion of a comment -->
+        <form action="{% url 'announcementsApp:delete' announcement.id %}" method="post">
+            {% csrf_token %}
+            <select name="comment">
+                {% for comment in announcement.comment_set.all %}
+                    <option value="{{ comment.id }}" >
+                        {{ comment.comment_text }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <div class="margin-top-small">
+                {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+                <input type="submit" name="delete" value="Delete comment" class="btn btn-success" />
+                <input type="submit" name="edit" value="Edit comment" class="btn btn-success" />
+            </div>
+        </form>
+    {% else %}
+        <p>No comments in this Announcement.</p>
+    {% endif %}
     <br />
     <p><a href="{% url 'announcementsApp:detail' announcement.id %}">Vote a comment or make one</a></p>
     <p><a href="{% url 'announcementsApp:index' %}">Go to recent announcements</a></p>

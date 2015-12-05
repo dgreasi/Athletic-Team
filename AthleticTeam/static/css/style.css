@@ -18,6 +18,18 @@ h2 {
 	color: blue;
 }
 
+.margin-top-small {
+	margin-top: 10px;
+}
+
+.margin-top-medium {
+	margin-top: 20px;
+}
+
+.margin-top-large {
+	margin-top: 40px;
+}
+
 .submenu {
 	background: #fff;
 	position: absolute;

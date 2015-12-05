@@ -1,7 +1,7 @@
 from django.shortcuts import render, render_to_response, redirect,get_object_or_404
 from django.views import generic
 
-from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team
+from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team, Ranking
 
 from django.http import *
 from django.template import RequestContext
@@ -56,8 +56,13 @@ class ShowTeam(generic.DetailView):
     model = Team
     template_name = 'team/show.html'
 
-class IndexRanking(TemplateView):
+class IndexRanking(generic.DetailView):
+    model = Player
     template_name = 'ranking/index.html'
+
+class RankingResults(generic.DetailView):
+    model = Ranking
+    template_name = 'ranking/results.html'
 
 def login_user(request):
     if 'login' in request.POST:
@@ -132,3 +137,15 @@ def change_pass(request):
     else:
         #prin error mesg MESSAGES DJANGO
         return HttpResponseRedirect(reverse('AthleticTeamApp:changePass'))
+
+def rank(request, player_id):
+    player_ranked = get_object_or_404(Player, pk=player_id)
+    owner_user = request.user
+
+    power_ranked = int(float(request.POST['power']))
+    speed_ranked = int(float(request.POST['speed']))
+
+    p = Ranking(player=player_ranked, owner=owner_user, power=power_ranked, speed=speed_ranked)
+    p.save()
+
+    return HttpResponseRedirect(reverse('AthleticTeamApp:rank_results', args=(p.player.id,)))

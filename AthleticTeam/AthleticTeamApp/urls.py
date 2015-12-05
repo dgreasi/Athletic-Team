@@ -19,5 +19,8 @@ urlpatterns = [
     url(r'^profile/$', views.ProfileView.as_view(), name='profile'),
     url(r'^change_info/$', views.ChangePassView.as_view(), name='changePass'),
     url(r'^change_info_def/$', views.change_pass, name='change_pass_def'),
-    url(r'^ranking/$', views.IndexRanking.as_view(), name='index_ranking'),
+    url(r'^ranking/(?P<pk>[0-9]+)$', views.IndexRanking.as_view(), name='index_ranking'),
+    url(r'^ranking/(?P<player_id>[0-9]+)/rank$', views.rank, name='ranking'),
+    url(r'^ranking_results/(?P<pk>[0-9]+)$', views.RankingResults.as_view(), name='rank_results'),
+
 ]

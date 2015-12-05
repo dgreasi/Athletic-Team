@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'AthleticTeamApp',
     'announcementsApp',
     'SinglePagesApp',
+    'mathfilters',
 )
 
 MIDDLEWARE_CLASSES = (
