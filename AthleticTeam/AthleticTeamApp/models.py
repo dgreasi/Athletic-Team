@@ -114,14 +114,19 @@ class Ranking(models.Model):
 
     owner = models.ForeignKey(User, null=True)
 
-    power = models.PositiveSmallIntegerField(blank=True, null=True)
+    power_arm = models.PositiveSmallIntegerField(blank=True, null=True)
+    power_body = models.PositiveSmallIntegerField(blank=True, null=True)
+    power_legs = models.PositiveSmallIntegerField(blank=True, null=True)
     speed = models.PositiveSmallIntegerField(blank=True, null=True)
+    team_play = models.PositiveSmallIntegerField(blank=True, null=True)
+    co_op = models.PositiveSmallIntegerField(blank=True, null=True)
+    rate_of_pos = models.PositiveSmallIntegerField(blank=True, null=True)
 
     class Meta:
         unique_together = ("player", "owner")
 
 
     def ranking_algo(self):
-        temp = (self.power + self.speed)/2
+        temp = (self.power_arm + self.power_legs + self.power_body + self.speed + self.team_play + self.co_op + self.rate_of_pos)/7
 
         return temp

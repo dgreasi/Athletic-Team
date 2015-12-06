@@ -15,23 +15,73 @@
         <!-- ranking -->
         {% csrf_token %}
         <div>
-            <p>1. Power</p>
+            <p>1. Power of Arms</p>
             <div>
                 <div class="ranking-slider" style="width:200px"></div>
-                <input type="number" name="power" class="ranking-slider-val" style="width:45px"></span>
+                <input type="number" name="power_arm" class="ranking-slider-val" style="width:45px"></span>
             </div>
         </div>
 
         <hr>
 
         <div>
-            <p>2. Speed</p>
+            <p>2. Power of Body</p>
+            <div>
+                <div class="ranking-slider" style="width:200px"></div>
+                <input type="number" name="power_body" class="ranking-slider-val" style="width:45px"></span>
+            </div>
+        </div>
+
+        <hr>
+
+        <div>
+            <p>3. Power of Legs</p>
+            <div>
+                <div class="ranking-slider" style="width:200px"></div>
+                <input type="number" name="power_legs" class="ranking-slider-val" style="width:45px"></span>
+            </div>
+        </div>
+
+        <hr>
+        
+        <div>
+            <p>4. Speed</p>
             <div>
                 <div class="ranking-slider" style="width:200px"></div>
                 <input type="number" name="speed" class="ranking-slider-val" style="width:45px"></span>
             </div>
         </div>
         
+        <hr>
+
+        <div>
+            <p>5. Team play</p>
+            <div>
+                <div class="ranking-slider" style="width:200px"></div>
+                <input type="number" name="team_play" class="ranking-slider-val" style="width:45px"></span>
+            </div>
+        </div>
+
+        <hr>
+
+        <div>
+            <p>6. Cooperative</p>
+            <div>
+                <div class="ranking-slider" style="width:200px"></div>
+                <input type="number" name="co_op" class="ranking-slider-val" style="width:45px"></span>
+            </div>
+        </div>
+
+        <hr>
+
+        <div>
+            <p>7. Rate for his position</p>
+            <div>
+                <div class="ranking-slider" style="width:200px"></div>
+                <input type="number" name="rate_of_pos" class="ranking-slider-val" style="width:45px"></span>
+            </div>
+        </div>
+
         <br />
 
         <input type="submit" name="submit" value="Submit" class="btn btn-primary" />
