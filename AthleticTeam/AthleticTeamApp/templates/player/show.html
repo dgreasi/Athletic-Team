@@ -22,8 +22,16 @@
 {% endfor %}
 </ul>
 
-<a class="btn btn-primary " href="{% url 'AthleticTeamApp:index_ranking' player.id %}">Rank this player</a>
 
-<a class="btn btn-primary " href="{% url 'AthleticTeamApp:rank_results' player.id %}">Show rate of this player</a>
+<div class="button-rov">
+    <a class="btn btn-primary " href="{% url 'AthleticTeamApp:index_ranking' player.id %}">Rank this player</a>
+</div>
+
+
+<div class="button-rov">
+    <form action="{% url 'AthleticTeamApp:view_rank_player' player.id %}" method="get">
+        <input type="submit" name="submit" value="Show rate of this player" class="btn btn-primary " />
+    </form>
+</div>
 {% endblock %}
 

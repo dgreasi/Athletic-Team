@@ -22,5 +22,7 @@ urlpatterns = [
     url(r'^ranking/(?P<pk>[0-9]+)$', views.IndexRanking.as_view(), name='index_ranking'),
     url(r'^ranking/(?P<player_id>[0-9]+)/rank$', views.rank, name='ranking'),
     url(r'^ranking_results/(?P<pk>[0-9]+)$', views.RankingResults.as_view(), name='rank_results'),
+    url(r'^ranking_results_view/(?P<player_id>[0-9]+)$', views.get_rank, name='view_rank_player'),
+    url(r'^first_rank/(?P<pk>[0-9]+)$', views.FirstRank.as_view(), name='firstRank'),
 
 ]

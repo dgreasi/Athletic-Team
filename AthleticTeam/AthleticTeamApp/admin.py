@@ -27,12 +27,13 @@ class MatchAdmin(admin.ModelAdmin):
 
 class RankingAdmin(admin.ModelAdmin):
 	model = Ranking
+	extra = 1
+	fieldsets = [
+		(None, {'fields': ['player', 'owner', 'power', 'speed']}),
+		('Date information', {'fields': ['pub_date'], 'classes': ['collapse']}),
+	]
 
-	#fieldsets = [
-	#	(None, {'fields': ['player', 'owner', 'power', 'speed']}),
-	#]
-
-	#list_display = ('player', 'owner', 'power', 'speed')
+	list_display = ('player', 'owner', 'power', 'speed')
 
 
 admin.site.register(Team, TeamAdmin)

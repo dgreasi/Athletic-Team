@@ -9,16 +9,20 @@
 
 {% block container %}
 
+
     <h2>Rates of player : {{ ranking.player.first_name }} {{ ranking.player.last_name }}</h2>
     <br />
     
+
     <p>Coach: {{ ranking.owner }}</p>
     <p>Power: {{ ranking.power }}</p>
     <p>Speed: {{ ranking.speed }}</p>
-    <!--
-    <p>Overall rate:  ranking.power|algorithm:ranking.speed </p>
--->
+
+    <p>Overall rate: {{ ranking.ranking_algo }}</p>
+
+
     <a class="btn btn-primary " href="{% url 'AthleticTeamApp:index_ranking' ranking.player.id %}">Edit rates</a>
+
 {% endblock %}
 
 {% block scripts %}

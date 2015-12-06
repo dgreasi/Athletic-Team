@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse_lazy
 
-
+from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import TemplateView
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
@@ -63,6 +63,10 @@ class IndexRanking(generic.DetailView):
 class RankingResults(generic.DetailView):
     model = Ranking
     template_name = 'ranking/results.html'
+
+class FirstRank(generic.DetailView):
+    model = Player
+    template_name = 'ranking/first_rank.html'
 
 def login_user(request):
     if 'login' in request.POST:
@@ -138,14 +142,39 @@ def change_pass(request):
         #prin error mesg MESSAGES DJANGO
         return HttpResponseRedirect(reverse('AthleticTeamApp:changePass'))
 
+def get_rank(request, player_id):
+    temp = Ranking.objects.filter(player_id=player_id)
+    if temp.count() == 1:
+        p = get_object_or_404(Ranking, player_id=player_id)
+        return HttpResponseRedirect(reverse('AthleticTeamApp:rank_results', args=(p.id,)))
+    else:
+        return HttpResponseRedirect(reverse('AthleticTeamApp:firstRank', args=(player_id,)))
+
 def rank(request, player_id):
+    print player_id
     player_ranked = get_object_or_404(Player, pk=player_id)
     owner_user = request.user
 
     power_ranked = int(float(request.POST['power']))
     speed_ranked = int(float(request.POST['speed']))
 
-    p = Ranking(player=player_ranked, owner=owner_user, power=power_ranked, speed=speed_ranked)
-    p.save()
 
-    return HttpResponseRedirect(reverse('AthleticTeamApp:rank_results', args=(p.player.id,)))
+    #checking if there is a rank for this player
+    temp = Ranking.objects.filter(player_id=player_id)
+    
+    if temp.count() == 1:
+        #Edit
+        print"EDITING RANK"
+        pl_ranking = get_object_or_404(Ranking, player_id=player_id)
+        pl_ranking.power = power_ranked
+        pl_ranking.speed = speed_ranked
+        pl_ranking.save()
+        return HttpResponseRedirect(reverse('AthleticTeamApp:rank_results', args=(pl_ranking.id,)))
+    else:
+        #create
+        print"CREATING RANK"
+        p = Ranking(player=player_ranked, owner=owner_user, power=power_ranked, speed=speed_ranked)
+        p.save()
+        return HttpResponseRedirect(reverse('AthleticTeamApp:rank_results', args=(p.id,)))
+
+

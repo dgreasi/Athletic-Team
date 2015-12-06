@@ -121,3 +121,7 @@ class Ranking(models.Model):
         unique_together = ("player", "owner")
 
 
+    def ranking_algo(self):
+        temp = (self.power + self.speed)/2
+
+        return temp
