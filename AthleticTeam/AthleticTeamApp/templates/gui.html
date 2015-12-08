@@ -3,7 +3,6 @@
     <head>
         <meta charset="utf-8">
         <title>Test</title>
-{#        <script src="/static/js/raphael-min.js"></script>#}
         <script src="/static/js/snap.svg-min.js"></script>
         <style>
             svg {
@@ -20,7 +19,6 @@
         </style>
     </head>
     <body>
-        Output:<span id="msg"></span>
         <div id="svg-container">
             <svg id="svg" width="800" height="500">
             </svg>
@@ -124,7 +122,8 @@
                     'elem' : elem,
                     'text' : text,
                     'g' : g,
-                    'hasTheBall' : data.hasTheBall
+                    'hasTheBall' : data.hasTheBall,
+                    'move' : null
                 };
             }
 
@@ -221,47 +220,6 @@
                 return {'x':x,'y':y};
             }
 
-            var mouseDownX = 0;
-            var mouseDownY = 0;
-
-            //register events on document load
-//            svgData.s.mousedown(OnMouseDown);
-//            svgData.s.mouseup(OnMouseUp);
-
-//            svgData.s.touchstart(startDrawingPath);
-//            svgData.s.touchmove(continueDrawingPath);
-//            svgData.s.touchend(endDrawingPath);
-
-            var svgPath;
-//
-//            function OnMouseDown(e){
-//                mouseDownX = e.clientX;
-//                mouseDownY = e.clientY;
-//
-//                svgPath.setAttribute("d", "M" + e.clientX  + "," + e.clientY);
-//            }
-//
-//            function OnMouseUp(e){
-//                var upX = e.clientX;
-//                var upY = e.clientY;
-//                DrawPath(mouseDownX, mouseDownY, upX, upY);
-//            }
-//
-//            function DrawPath(x1, y1, x2, y2){
-//                var element = svgData.s.line(x1, y1, x2, y2);
-//                element.attr({
-//                    fill: "#FFF",
-//                    stroke: "#F00"
-//                });
-//            }
-
-//
-//            var svgCanvas = document.getElementById("svgCanvas");
-//            var svgPath;
-//            svgCanvas.addEventListener("touchstart", startDrawTouch, false);
-//            svgCanvas.addEventListener("touchmove", continueDrawTouch, false);
-//            svgCanvas.addEventListener("touchend", endDrawTouch, false);
-
             function enablePlayersMovement(svgData){
                 var movePlayer = function(dx, dy, posx, posy, e) {
                     posx = posx - document.getElementById('svg-container').offsetLeft;
@@ -287,6 +245,12 @@
                     elem.attr({'cx': posx, 'cy':posy});
                     text.attr({'x':posx-r/4, 'y':posy+r/4});
                     index = decodePlayerId(this.attr('id'));
+                    if(svgData.players[index].move) {
+                        var pathData = svgData.players[index].move.elem.attr('d');
+                        pathData = 'L' + pathData.substring(1,pathData.length);
+                        pathData = 'M' + posx + ',' + posy + ' ' + pathData;
+                        svgData.players[index].move.elem.attr('d', pathData);
+                    }
                     if(svgData.players[index].hasTheBall){
                         var x = parseInt(posx) + r/2;
                         var y = parseInt(posy) + r/2;
@@ -340,15 +304,11 @@
                         posy = svg_height-r;
                     }
                     this.attr({'cx': posx, 'cy': posy});
+                    svgData.pass.attr({'x1' : posx, 'y1' : posy});
                 };
                 var startMoveBall = function(){
                     startPosition = {'cx' : svgData.ball.attr('cx'), 'cy' : svgData.ball.attr('cy')};
                     this.attr('cursor','move');
-                    if(svgData.pass){
-                        svgData.pass.remove();
-                        svgData.pass = null;
-                        svgData.receiverOfTheBall = null;
-                    }
                 };
                 var endMoveBall = function(e){
                     var posx = e.clientX - document.getElementById('svg-container').offsetLeft;
@@ -364,12 +324,26 @@
                             svgData.playerWithTheBall.hasTheBall = false;
                             player.hasTheBall = true;
                             svgData.playerWithTheBall = player;
+                            if(svgData.pass){
+                                if(svgData.playerWithTheBall === svgData.receiverOfTheBall ||
+                                        svgData.playerWithTheBall.color !== svgData.receiverOfTheBall.color) {
+                                    svgData.pass.remove();
+                                    svgData.pass = null;
+                                    svgData.receiverOfTheBall = null;
+                                }
+                                else{
+                                    svgData.pass.attr({'x1' : x, 'y1' : y});
+                                }
+                            }
                             resetBall = false;
                             break;
                         }
                     }
                     if(resetBall){
                         this.attr(startPosition);
+                        if(svgData.pass){
+                            svgData.pass.attr({'x1' : startPosition.cx, 'y1' : startPosition.cy});
+                        }
                     }
                     this.attr('cursor','grab');
                 };
@@ -382,58 +356,69 @@
                 svgData.ball.attr('cursor','default');
             }
             function enableDrawingPath(svgData){
-                var clicked = false;
-                function startDrawingPath(e) {
+                var startPosition;
+                var drawing = false;
+                var playerMoving = null;
+                var continueDrawingPath = function(e) {
                     var posx = e.clientX - document.getElementById('svg-container').offsetLeft;
                     var posy = e.clientY - document.getElementById('svg-container').offsetTop;
-                    clicked = true;
-                    svgPath = svgData.s.path('');
-                    svgPath.attr("fill", "none");
-                    svgPath.attr("stroke", "#000000");
-                    svgPath.attr("stroke-linecap", "round");
-                    svgPath.attr("stroke-dasharray", "10,10");
+                    if(drawing){
+                        var pathData = playerMoving.move.elem.attr("d");
+                        pathData = pathData + " L" + posx + "," + posy;
+                        playerMoving.move.elem.attr("d", pathData);
+                        playerMoving.move.dest = {x : posx, y : posy};
+                    }
+                };
+                var startDrawingPath = function(e){
+                    var posx = e.clientX - document.getElementById('svg-container').offsetLeft;
+                    var posy = e.clientY - document.getElementById('svg-container').offsetTop;
+                    for(var i=0;i<svgData.configData.numOfPlayers;i++){
+                        if(collidesWithPlayer(svgData, svgData.players[i], posx, posy)){
+                            playerMoving = svgData.players[i];
+                            if(playerMoving.move){
+                                playerMoving.move.elem.remove();
+                                playerMoving.move = null;
+                            }
+                            playerMoving.move = {
+                                'elem' : null,
+                                'dest' : null
+                            };
 
-                    svgPath.attr("d", "M" + posx  + "," + posy);
-                    var start = svgData.s.circle(1,1,2);
-                    svgPath.attr('marker-start', start.marker());
-{#                    var end = svgData.s.path("M 0 0 L 10 5 L 0 10 z");#} //triangle end
-{#                    svgPath.attr('markerEnd', end.marker());#}
-                    var end = svgData.s.circle(1,1,4); //circle end
-                    svgPath.attr('marker-end', end.marker());
-                }
+                            startPosition = {'cx' : playerMoving.elem.attr('cx'), 'cy' : playerMoving.elem.attr('cy')};
+                            this.attr('cursor','pointer');
+                            playerMoving.move.elem = svgData.s.path('');
+                            playerMoving.move.elem.attr("fill", "none");
+                            playerMoving.move.elem.attr("stroke", playerMoving.color);
+                            playerMoving.move.elem.attr("stroke-width", 2);
+                            playerMoving.move.elem.attr("stroke-linecap", "round");
+                            playerMoving.move.elem.attr("d", "M" + startPosition.cx  + "," + startPosition.cy);
 
-                function continueDrawingPath(e) {
-                    if(clicked){
-                        if (svgPath)
-                        {
-                            var posx = e.clientX - document.getElementById('svg-container').offsetLeft;
-                            var posy = e.clientY - document.getElementById('svg-container').offsetTop;
-                            var pathData = svgPath.attr("d");
-                            pathData = pathData + " L" + posx + "," + posy;
-                            svgPath.attr("d", pathData);
+                            var end = svgData.s.circle(0,0,2);
+                            playerMoving.move.elem.attr('markerEnd', end.marker());
+                            playerMoving.move.dest = {x : startPosition.cx, y : startPosition.cy};
+                            drawing = true;
                         }
                     }
-                }
-
-                function endDrawingPath(e) {
-                    if(clicked) {
-                        if (svgPath) {
-                            {# var pathData = svgPath.attr("d");#}
-                            {# pathData = pathData + " L" + e.clientX + "," + e.clientY;#}
-                            {# svgPath.attr("d", pathData);#}
-                            svgPath = null;
-                        }
-                    }
-                    clicked = false;
-                }
+                };
+                var endDrawingPath = function(e){
+                    drawing = false;
+                    this.attr('cursor','default');
+                };
                 svgData.s.mousedown(startDrawingPath);
                 svgData.s.mousemove(continueDrawingPath);
                 svgData.s.mouseup(endDrawingPath);
+                for(var i=0;i<svgData.configData.numOfPlayers;i++){
+                    svgData.players[i].g.attr('cursor','pointer');
+                }
+
             }
             function disableDrawingPath(svgData){
                 svgData.s.unmousedown();
                 svgData.s.unmousemove();
                 svgData.s.unmouseup();
+                for(var i=0;i<svgData.configData.numOfPlayers;i++){
+                    svgData.players[i].g.attr('cursor','default');
+                }
             }
             function enableDrawingPass(svgData){
                 var startPosition;
@@ -470,12 +455,10 @@
                         var x = parseInt(startPosition.cx) + r/2;
                         var y = parseInt(startPosition.cy) + r/2;
                         svgData.pass = svgData.s.line(x,y,posx,posy);
-                        svgData.pass.attr("stroke", svgData.playerWithTheBall.color);
+                        svgData.pass.attr("stroke", 'brown');
                         svgData.pass.attr("stroke-width", 2);
                         svgData.pass.attr("stroke-linecap", "round");
                         svgData.pass.attr("stroke-dasharray", "10,10");
-{#                        var end = svgData.s.path("M 0 0 L 10 5 L 0 10 z"); //triangle end#}
-{#                        svgData.pass.attr('markerEnd', end.marker());#}
                     }
                 };
                 var endDrawingPass = function(e){
@@ -488,6 +471,7 @@
                             if (svgData.playerWithTheBall !== svgData.players[i]) {
                                 if(svgData.players[i].color === svgData.playerWithTheBall.color) {
                                     if (collidesWithPlayer(svgData, svgData.players[i], posx, posy)) {
+                                        svgData.pass.attr({'x2' : svgData.players[i].elem.attr('cx'), 'y2' : svgData.players[i].elem.attr('cy')});
                                         svgData.receiverOfTheBall = svgData.players[i];
                                         clearPass = false;
                                         break;
@@ -517,47 +501,137 @@
                 svgData.s.unmousedown();
                 svgData.s.unmousemove();
                 svgData.s.unmouseup();
+                svgData.playerWithTheBall.g.attr('cursor','default');
             }
             function enableDeletePath(svgData){
-
+                for(var i=0;i<svgData.configData.numOfPlayers;i++){
+                    if(svgData.players[i].move){
+                        svgData.players[i].g.attr('cursor','crosshair');
+                        svgData.players[i].move.elem.attr('cursor','crosshair');
+                        svgData.players[i].g.click(function(index){
+                            return function(){
+                                if(svgData.players[index].move){
+                                    svgData.players[index].g.attr('cursor','default');
+                                    svgData.players[index].move.elem.attr('cursor','default');
+                                    svgData.players[index].move.elem.remove();
+                                    svgData.players[index].move = null;
+                                }
+                            };
+                        }(i));
+                        svgData.players[i].move.elem.click(function(index){
+                            return function(){
+                                if(svgData.players[index].move){
+                                    svgData.players[index].g.attr('cursor','default');
+                                    svgData.players[index].move.elem.attr('cursor','default');
+                                    svgData.players[index].move.elem.remove();
+                                    svgData.players[index].move = null;
+                                }
+                            };
+                        }(i));
+                    }
+                }
             }
             function disableDeletePath(svgData){
-
+                for(var i=0;i<svgData.configData.numOfPlayers;i++){
+                    if(svgData.players[i].move){
+                        svgData.players[i].g.attr('cursor','default');
+                        svgData.players[i].move.elem.attr('cursor','default');
+                        svgData.players[i].g.unclick();
+                        svgData.players[i].move.elem.unclick();
+                    }
+                }
             }
             function enableDeletePass(svgData){
-
+                if(svgData.pass){
+                    var clearPass = function(){
+                        if(svgData.pass){
+                            svgData.receiverOfTheBall.g.attr('cursor', 'default');
+                            svgData.playerWithTheBall.g.attr('cursor', 'default');
+                            svgData.ball.attr('cursor', 'default');
+                            svgData.pass.remove();
+                            svgData.pass = null;
+                            svgData.receiverOfTheBall = null;
+                        }
+                    };
+                    svgData.pass.click(clearPass);
+                    svgData.playerWithTheBall.g.click(clearPass);
+                    svgData.ball.click(clearPass);
+                    svgData.receiverOfTheBall.g.click(clearPass);
+                    svgData.pass.attr('cursor', 'crosshair');
+                    svgData.playerWithTheBall.g.attr('cursor', 'crosshair');
+                    svgData.ball.attr('cursor', 'crosshair');
+                    svgData.receiverOfTheBall.g.attr('cursor', 'crosshair');
+                }
             }
             function disableDeletePass(svgData){
-
+                if(svgData.pass){
+                    svgData.pass.unclick();
+                    svgData.receiverOfTheBall.g.unclick();
+                    svgData.pass.attr('cursor', 'default');
+                    svgData.receiverOfTheBall.g.attr('cursor', 'default');
+                }
+                svgData.playerWithTheBall.g.unclick();
+                svgData.ball.unclick();
+                svgData.playerWithTheBall.g.attr('cursor', 'default');
+                svgData.ball.attr('cursor', 'default');
             }
             function changeMode(svgData, mode){
-                disablePlayersMovement(svgData);
-                disableBallMovement(svgData);
-                disableDrawingPath(svgData);
-                disableDrawingPass(svgData);
-                disableDeletePath(svgData);
-                disableDeletePass(svgData);
                 switch(mode){
                     case 'movePlayer':
+                        disableBallMovement(svgData);
+                        disableDrawingPath(svgData);
+                        disableDrawingPass(svgData);
+                        disableDeletePath(svgData);
+                        disableDeletePass(svgData);
                         enablePlayersMovement(svgData);
                         break;
                     case 'moveBall':
+                        disablePlayersMovement(svgData);
+                        disableDrawingPath(svgData);
+                        disableDrawingPass(svgData);
+                        disableDeletePath(svgData);
+                        disableDeletePass(svgData);
                         enableBallMovement(svgData);
                         break;
                     case 'drawPath':
+                        disablePlayersMovement(svgData);
+                        disableBallMovement(svgData);
+                        disableDrawingPass(svgData);
+                        disableDeletePath(svgData);
+                        disableDeletePass(svgData);
                         enableDrawingPath(svgData);
                         break;
                     case 'drawPass':
+                        disablePlayersMovement(svgData);
+                        disableBallMovement(svgData);
+                        disableDrawingPath(svgData);
+                        disableDeletePath(svgData);
+                        disableDeletePass(svgData);
                         enableDrawingPass(svgData);
                         break;
                     case 'deletePath':
+                        disablePlayersMovement(svgData);
+                        disableBallMovement(svgData);
+                        disableDrawingPath(svgData);
+                        disableDrawingPass(svgData);
+                        disableDeletePass(svgData);
                         enableDeletePath(svgData);
                         break;
                     case 'deletePass':
+                        disablePlayersMovement(svgData);
+                        disableBallMovement(svgData);
+                        disableDrawingPath(svgData);
+                        disableDrawingPass(svgData);
+                        disableDeletePath(svgData);
                         enableDeletePass(svgData);
                         break;
                     default:/* idle */
-
+                        disablePlayersMovement(svgData);
+                        disableBallMovement(svgData);
+                        disableDrawingPath(svgData);
+                        disableDrawingPass(svgData);
+                        disableDeletePath(svgData);
+                        disableDeletePass(svgData);
                 }
             }
         </script>
