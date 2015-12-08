@@ -9,11 +9,23 @@
 
 {% block container %}
 
+    
+    <div class="alert alert-info">
+        <strong>Info!</strong> No rate for player : "{{ player.first_name }} {{ player.last_name }}" yet!
+    </div>
 
-    <h2>No rate for player : "{{ player.first_name }} {{ player.last_name }}" yet!</h2>
-    <br />
 
-    <a class="btn btn-primary " href="{% url 'AthleticTeamApp:index_ranking' player.id %}">Make a rate</a>
+    {% load filters %}
+    {% if request.user|has_group:"Coaching Staff Member" %}
+    <div class="button-rov">
+        <a class="btn btn-primary " href="{% url 'AthleticTeamApp:index_ranking' player.id %}">Make a rate</a>
+    </div>
+    {% endif %}
+
+    <div class="button-rov">
+        <a class="btn btn-primary " href="{% url 'AthleticTeamApp:ShowPlayers' %}">Go to see another player</a>
+    </div>
+
 
 {% endblock %}
 

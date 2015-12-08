@@ -9,29 +9,36 @@
 
 
 {% block container %}
-<h2>Player : {{ player.first_name }} {{ player.last_name }}</h2>
-<ul>
-{% for name, value in player.get_fields %}
-  {% if value %}
-    {% if name == 'image' %}
-        <li><img src={{ player.image.url }}></li>
-    {% else %}
-        <li>{{ name }} = {{ value }}</li>
+    <h2>Player : {{ player.first_name }} {{ player.last_name }}</h2>
+    <ul>
+    {% for name, value in player.get_fields %}
+      {% if value %}
+        {% if name == 'image' %}
+            <li><img src={{ player.image.url }}></li>
+        {% else %}
+            <li>{{ name }} = {{ value }}</li>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+    </ul>
+
+    {% load filters %}
+    {% if request.user|has_group:"Coaching Staff Member" %}
+    <div class="button-rov">
+        <a class="btn btn-primary " href="{% url 'AthleticTeamApp:index_ranking' player.id %}">Rank this player</a>
+    </div>
     {% endif %}
-  {% endif %}
-{% endfor %}
-</ul>
 
 
-<div class="button-rov">
-    <a class="btn btn-primary " href="{% url 'AthleticTeamApp:index_ranking' player.id %}">Rank this player</a>
-</div>
+    <div class="button-rov">
+        <form action="{% url 'AthleticTeamApp:view_rank_player' player.id %}" method="get">
+            <input type="submit" name="submit" value="Show rate of this player" class="btn btn-primary " />
+        </form>
+    </div>
+    
+    <div class="button-rov">
+        <a class="btn btn-primary " href="{% url 'AthleticTeamApp:ShowPlayers' %}">Go to see another player</a>
+    </div>
 
-
-<div class="button-rov">
-    <form action="{% url 'AthleticTeamApp:view_rank_player' player.id %}" method="get">
-        <input type="submit" name="submit" value="Show rate of this player" class="btn btn-primary " />
-    </form>
-</div>
 {% endblock %}
 

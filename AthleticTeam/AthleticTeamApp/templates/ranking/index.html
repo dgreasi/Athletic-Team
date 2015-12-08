@@ -18,7 +18,7 @@
             <p>1. Power of Arms</p>
             <div>
                 <div class="ranking-slider" style="width:200px"></div>
-                <input type="number" name="power_arm" class="ranking-slider-val" style="width:45px"></span>
+                <input type="number" name="power_arm" class="ranking-slider-val" style="width:55px"></span>
             </div>
         </div>
 
@@ -28,7 +28,7 @@
             <p>2. Power of Body</p>
             <div>
                 <div class="ranking-slider" style="width:200px"></div>
-                <input type="number" name="power_body" class="ranking-slider-val" style="width:45px"></span>
+                <input type="number" name="power_body" class="ranking-slider-val" style="width:55px"></span>
             </div>
         </div>
 
@@ -38,7 +38,7 @@
             <p>3. Power of Legs</p>
             <div>
                 <div class="ranking-slider" style="width:200px"></div>
-                <input type="number" name="power_legs" class="ranking-slider-val" style="width:45px"></span>
+                <input type="number" name="power_legs" class="ranking-slider-val" style="width:55px"></span>
             </div>
         </div>
 
@@ -48,7 +48,7 @@
             <p>4. Speed</p>
             <div>
                 <div class="ranking-slider" style="width:200px"></div>
-                <input type="number" name="speed" class="ranking-slider-val" style="width:45px"></span>
+                <input type="number" name="speed" class="ranking-slider-val" style="width:55px"></span>
             </div>
         </div>
         
@@ -58,7 +58,7 @@
             <p>5. Team play</p>
             <div>
                 <div class="ranking-slider" style="width:200px"></div>
-                <input type="number" name="team_play" class="ranking-slider-val" style="width:45px"></span>
+                <input type="number" name="team_play" class="ranking-slider-val" style="width:55px"></span>
             </div>
         </div>
 
@@ -68,7 +68,7 @@
             <p>6. Cooperative</p>
             <div>
                 <div class="ranking-slider" style="width:200px"></div>
-                <input type="number" name="co_op" class="ranking-slider-val" style="width:45px"></span>
+                <input type="number" name="co_op" class="ranking-slider-val" style="width:55px"></span>
             </div>
         </div>
 
@@ -78,7 +78,7 @@
             <p>7. Rate for his position</p>
             <div>
                 <div class="ranking-slider" style="width:200px"></div>
-                <input type="number" name="rate_of_pos" class="ranking-slider-val" style="width:45px"></span>
+                <input type="number" name="rate_of_pos" class="ranking-slider-val" style="width:55px"></span>
             </div>
         </div>
 
@@ -88,7 +88,7 @@
             <p>8. Percent at 2-point shots</p>
             <div>
                 <div class="ranking-slider" style="width:200px"></div>
-                <input type="number" name="two_shots" class="ranking-slider-val" style="width:45px"></span>
+                <input type="number" name="two_shots" class="ranking-slider-val" style="width:55px"></span>
             </div>
         </div>
 
@@ -98,13 +98,27 @@
             <p>9. Percent at 3-point shots</p>
             <div>
                 <div class="ranking-slider" style="width:200px"></div>
-                <input type="number" name="three_shots" class="ranking-slider-val" style="width:45px"></span>
+                <input type="number" name="three_shots" class="ranking-slider-val" style="width:55px"></span>
             </div>
         </div>
 
         <br />
 
-        <input type="submit" name="submit" value="Submit" class="btn btn-primary" />
+        <!-- BUTTONS/WARNINGS -->
+        {% load filters %}
+        {% if request.user|has_group:"Coaching Staff Member" %}
+        <div class="button-rov">
+            <input type="submit" name="submit" value="Submit" class="btn btn-primary" />
+        </div>
+        {% else %}
+        <div class="alert alert-danger">
+            <strong>Danger!</strong> Restricted area, you are playing with the urls i see!
+        </div>
+        {% endif %}
+
+        <div class="button-rov">
+            <a class="btn btn-primary " href="{% url 'AthleticTeamApp:ShowPlayers' %}">Go to see another player</a>
+        </div>
     </form>
 
 {% endblock %}

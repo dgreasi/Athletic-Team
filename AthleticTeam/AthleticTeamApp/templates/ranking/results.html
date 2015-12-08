@@ -25,8 +25,16 @@
 
     <p>Overall rate: {{ ranking.ranking_algo }}</p>
 
+    {% load filters %}
+    {% if request.user|has_group:"Coaching Staff Member" %}
+    <div class="button-rov">
+        <a class="btn btn-primary " href="{% url 'AthleticTeamApp:index_ranking' ranking.player.id %}">Edit rates</a>
+    </div>
+    {% endif %}
 
-    <a class="btn btn-primary " href="{% url 'AthleticTeamApp:index_ranking' ranking.player.id %}">Edit rates</a>
+    <div class="button-rov">
+        <a class="btn btn-primary " href="{% url 'AthleticTeamApp:ShowPlayers' %}">Go to see another player</a>
+    </div>
 
 {% endblock %}
 
