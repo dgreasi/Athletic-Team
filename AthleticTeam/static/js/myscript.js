@@ -11,11 +11,11 @@ $(document).ready(function() {
     $('.ranking-slider').each(function() {
         var stepSlider = this;
         var noUIStepSlider = noUiSlider.create(stepSlider, {
-            start: [ 5 ],
-            step: 1,
+            start: [ 50 ],
+            step: 5,
             range: {
                    'min': [  0 ],
-                   'max': [ 10 ]
+                   'max': [ 100 ]
             }
 
         });

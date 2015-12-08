@@ -162,6 +162,8 @@ def rank(request, player_id):
     team_play_ranked = int(float(request.POST['team_play']))
     co_op_ranked = int(float(request.POST['co_op']))
     rate_of_pos_ranked = int(float(request.POST['rate_of_pos']))
+    two_shots_ranked = int(float(request.POST['two_shots']))
+    three_shots_ranked = int(float(request.POST['three_shots']))
 
     #checking if there is a rank for this player
     temp = Ranking.objects.filter(player_id=player_id)
@@ -177,13 +179,19 @@ def rank(request, player_id):
         pl_ranking.team_play = team_play_ranked
         pl_ranking.co_op = co_op_ranked
         pl_ranking.rate_of_pos = rate_of_pos_ranked
+        pl_ranking.two_shots = two_shots_ranked
+        pl_ranking.three_shots = three_shots_ranked
+
         pl_ranking.save()
+
         return HttpResponseRedirect(reverse('AthleticTeamApp:rank_results', args=(pl_ranking.id,)))
     else:
         #create
         print"CREATING RANK"
-        p = Ranking(player=player_ranked, owner=owner_user, power_arm=power_ranked_arm, power_body=power_ranked_body, power_legs=power_ranked_legs, speed=speed_ranked, team_play= team_play_ranked, co_op=co_op_ranked, rate_of_pos=rate_of_pos_ranked)
+        p = Ranking(player=player_ranked, owner=owner_user, power_arm=power_ranked_arm, power_body=power_ranked_body, power_legs=power_ranked_legs, speed=speed_ranked, team_play= team_play_ranked, co_op=co_op_ranked, rate_of_pos=rate_of_pos_ranked, two_shots=two_shots_ranked, three_shots=three_shots_ranked)
+        
         p.save()
+
         return HttpResponseRedirect(reverse('AthleticTeamApp:rank_results', args=(p.id,)))
 
 

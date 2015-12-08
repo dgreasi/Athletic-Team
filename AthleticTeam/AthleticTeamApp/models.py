@@ -121,12 +121,15 @@ class Ranking(models.Model):
     team_play = models.PositiveSmallIntegerField(blank=True, null=True)
     co_op = models.PositiveSmallIntegerField(blank=True, null=True)
     rate_of_pos = models.PositiveSmallIntegerField(blank=True, null=True)
+    two_shots = models.PositiveSmallIntegerField(blank=True, null=True)
+    three_shots = models.PositiveSmallIntegerField(blank=True, null=True)
+
 
     class Meta:
         unique_together = ("player", "owner")
 
 
     def ranking_algo(self):
-        temp = (self.power_arm + self.power_legs + self.power_body + self.speed + self.team_play + self.co_op + self.rate_of_pos)/7
+        temp = (self.power_arm + self.power_legs + self.power_body + self.speed + self.team_play + self.co_op + self.rate_of_pos + self.two_shots + self.three_shots)/9
 
         return temp
