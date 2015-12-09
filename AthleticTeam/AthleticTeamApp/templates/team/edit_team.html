@@ -1,0 +1,43 @@
+{% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+    <title>ShowAll</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+{% endblock %}
+
+{% block container %}
+<h1>Teams</h1>
+<p><b>Choose a team to delete/edit</b></p>
+    <form action="{% url 'AthleticTeamApp:edit_a_team' %}" method="post">
+        <!-- delete one of ur teamss -->
+        {% csrf_token %}
+        <select name="team">
+        {% for team in team_players_list %}
+            <option value="{{ team.id }}">
+            {{ team.team_name}}
+            </option>
+        {% endfor %}
+        </select>
+        
+        <div class="margin-top-small">
+            {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+            <input type="submit" name="delete" value="Delete team" class="btn btn-success" />
+            <input type="submit" name="edit" value="Edit team" class="btn btn-success" />
+        </div>
+    </form>    
+    <!-- Make new Team -->
+    <h2>Create new Team</h2>
+    
+    <h3>Enter Team Name</h3>
+
+    <form action="{% url 'AthleticTeamApp:create_team'  %}" method="post">
+        {% csrf_token %}
+        <!-- Text area for Title-->
+        <input type="text" class="text_title" id="my_text_title" name="title"/>
+        <br />   
+             
+        <input type="submit" name="submit" value="Submit" class="btn btn-success" />
+    </form>   
+{% endblock %}

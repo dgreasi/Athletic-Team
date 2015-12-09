@@ -10,12 +10,16 @@
 {% block container %}
 {% if team_players_list%}
     <ul>
-    <h2> Teams </h2>
+    <h2> Teams</h2>
     {% for team in team_players_list %}
         <li><a href="{% url 'AthleticTeamApp:ShowTeam' team.id %}">{{ team.team_name}}</a></li>
     {% endfor %}
     </ul>
 {% else %}
-    <p>No teams are available.</p>
+    <p>No players are available.</p>
 {% endif %}
-{% endblock%}
+<form action="{% url 'AthleticTeamApp:edit_team'  %}" method="get">
+        {% csrf_token %}   
+        <input type="submit" name="submit" value="Edit/Create Team" class="btn btn-success" />
+    </form>  
+{% endblock %}

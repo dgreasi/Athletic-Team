@@ -31,6 +31,14 @@ class ShowPlayers(generic.ListView):
     template_name = 'player/showall.html'
     context_object_name = 'players_list'
 
+def add_players(request):
+    title = request.POST['title']
+    team = request.POST['team']
+    temp = Player(first_name = title,team_id = team)
+    temp.save()
+    
+    return HttpResponseRedirect(reverse('AthleticTeamApp:ShowPlayers'))
+
 class ShowPlayer(generic.DetailView):
     model = Player
     template_name = 'player/show.html'
@@ -51,6 +59,61 @@ class ShowTeams(generic.ListView):
     model = Team
     template_name = 'team/showall.html'
     context_object_name = 'team_players_list'
+    
+def create_team(request):
+    title = request.POST['title']
+    temp = Team(team_name=title)
+    temp.save()
+
+    return HttpResponseRedirect(reverse('AthleticTeamApp:ShowTeams'))
+
+class edit_team(generic.ListView):  
+    #title = request.POST['title']
+    #temp = Team(team_name=title)
+    #temp.save()
+    model = Team
+    template_name = 'team/edit_team.html'
+    context_object_name = 'team_players_list'
+
+
+def edit_a_team(request):     
+    p = Team.objects.all()
+    try:
+        selected_team = get_object_or_404(Team, pk=request.POST['team'])
+    except (KeyError, Teams.DoesNotExist):
+        ## Redisplay the delete Announcement form.
+        return render(request, 'announcementsApp/myannouncements.html', {
+            'announcement': p,
+            'error_message': "You didn't select an Announcement.",
+        })
+    else:
+        if 'delete' in request.POST:
+            selected_team.delete()
+            ## Always return an HttpResponseRedirect after successfully dealing
+            ## with POST data. This prevents data from being posted twice if a
+            ## user hits the Back button.
+            return  HttpResponseRedirect(reverse('AthleticTeamApp:ShowTeams'))
+        elif 'edit' in request.POST:  
+	    return HttpResponseRedirect(reverse('AthleticTeamApp:EditTeam',args=(selected_team.id,)))
+
+class EditTeam(generic.DetailView):
+    model = Team
+    template_name = 'team/edit.html'
+	  
+def edit(request,team_id):
+    temp = get_object_or_404(Team, pk=team_id)
+
+    title = request.POST['title']
+    #text = request.POST['text']
+    
+    temp.team_name = title
+    ##temp.announcement_text = text
+    #temp.pub_date = timezone.now()
+    temp.save()
+
+    return HttpResponseRedirect(reverse('AthleticTeamApp:ShowTeams'))
+
+    #return HttpResponseRedirect(reverse('AthleticTeamApp:ShowTeams'))
 
 class ShowTeam(generic.DetailView):
     model = Team
