@@ -10,16 +10,12 @@
 {% else %}
     <p>No players are available.</p>
 {% endif %}
-    <h3>Enter Player</h3>
-
-    <form action="{% url 'AthleticTeamApp:add_players'  %}" method="post">
-        {% csrf_token %}
-        <!-- Text area for Title-->
-        <input type="text" class="text_title" id="my_text_title" name="title"/>
-        <br />   
-        <h3>Enter team</h3>
-
-        <p><textarea type="textarea" class="text_edit" id="my_text" name="team"></textarea></p>     
-        <input type="submit" name="submit" value="Submit" class="btn btn-success" />
-    </form> 
+    <form action="{% url 'AthleticTeamApp:edit_players'  %}" method="get">
+        {% csrf_token %}   
+        <input type="submit" name="submit" value="Edit Players" class="btn btn-success" />
+    </form>
+        <form action="{% url 'AthleticTeamApp:create_player'  %}" method="get">
+        {% csrf_token %}   
+	<input type="submit" name="submit" value="Create New Player" class="btn btn-success" />
+    </form>  
 {% endblock%}

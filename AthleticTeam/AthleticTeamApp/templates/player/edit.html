@@ -1,0 +1,24 @@
+{% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+  <title>Edit announcement</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+  <script type="text/javascript" src="{% static 'js/myscript.js' %}"></script> 
+{% endblock %}
+
+{% block container %}
+    <h1>Edit Current Player</h1>
+    <hr>
+    <h3>Enter New Player Fist Name</h3>
+
+    <form action="{% url 'AthleticTeamApp:edit_player' player.id %}" method="post">
+        {% csrf_token %}
+        
+        <input type="text" class="text_title" id="my_text_title" name="title"/>
+        <br />
+        <input type="submit" name="submit" value="Submit" class="btn btn-success" />
+    </form>
+
+    <br />
+{% endblock %}

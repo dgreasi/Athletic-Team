@@ -25,24 +25,84 @@ class ShowCoachingStaffMember(generic.DetailView):
     model = CoachingStaffMember
     template_name = 'coaching_staff_member/show.html'
 
-
+##################
+# Players Views.
+##################
 class ShowPlayers(generic.ListView):
     model = Player
     template_name = 'player/showall.html'
     context_object_name = 'players_list'
 
-def add_players(request):
-    title = request.POST['title']
-    team = request.POST['team']
-    temp = Player(first_name = title,team_id = team)
-    temp.save()
+#def create_player(request):
+    #title = request.POST['title']
+    ##temp = Player(first_name = title,team_id = 22)
+   ##temp.save()
     
-    return HttpResponseRedirect(reverse('AthleticTeamApp:ShowPlayers'))
+    #return HttpResponseRedirect(reverse('AthleticTeamApp:ShowPlayers'))
 
 class ShowPlayer(generic.DetailView):
     model = Player
     template_name = 'player/show.html'
 
+
+class create_player(generic.ListView):  
+    #title = request.POST['title']
+    #temp = Team(team_name=title)
+    #temp.save()
+    model = Team
+    template_name = 'player/create_player.html'
+    context_object_name = 'teams_list'   
+    
+class edit_players(generic.ListView):
+    model = Player
+    template_name = 'player/edit_players.html'
+    context_object_name = 'players_list'
+   
+class EditPlayer(generic.DetailView):
+    model = Player
+    template_name = 'player/edit.html'
+   
+   
+def create_a_player(request):     
+    p = Team.objects.all()
+    selected_team = get_object_or_404(Team, pk=request.POST['team'])
+    title = request.POST['title']
+    temp = Player(first_name = title,team_id = selected_team.id)
+    temp.save()
+
+    return HttpResponseRedirect(reverse('AthleticTeamApp:ShowPlayers'))
+  
+def edit_a_player(request):     
+    p = Player.objects.all()
+    selected_player = get_object_or_404(Player, pk=request.POST['player'])
+    if 'delete' in request.POST:
+      selected_player.delete()
+            ## Always return an HttpResponseRedirect after successfully dealing
+            ## with POST data. This prevents data from being posted twice if a
+            ## user hits the Back button.
+      return  HttpResponseRedirect(reverse('AthleticTeamApp:ShowPlayers'))
+    elif 'edit' in request.POST:  
+      return HttpResponseRedirect(reverse('AthleticTeamApp:EditPlayer',args=(selected_player.id,))) 
+    
+def edit_player(request,player_id):
+    temp = get_object_or_404(Player, pk=player_id)
+
+    title = request.POST['title']
+    #text = request.POST['text']
+    
+    temp.first_name = title
+    ##temp.announcement_text = text
+    #temp.pub_date = timezone.now()
+    temp.save()
+
+    return HttpResponseRedirect(reverse('AthleticTeamApp:ShowPlayers'))
+
+    #return HttpResponseRedirect(reverse('AthleticTeamApp:ShowTeams'))    
+  
+	  
+##################
+# Matches Views.
+##################
 
 class ShowMatches(generic.ListView):
     model = Match
@@ -53,8 +113,9 @@ class ShowMatch(generic.DetailView):
     model = Match
     template_name = 'match/show.html'
 
-
-# Create your views here.
+##################
+# Teams Views.
+##################
 class ShowTeams(generic.ListView):
     model = Team
     template_name = 'team/showall.html'
@@ -75,26 +136,17 @@ class edit_team(generic.ListView):
     template_name = 'team/edit_team.html'
     context_object_name = 'team_players_list'
 
-
 def edit_a_team(request):     
     p = Team.objects.all()
-    try:
-        selected_team = get_object_or_404(Team, pk=request.POST['team'])
-    except (KeyError, Teams.DoesNotExist):
-        ## Redisplay the delete Announcement form.
-        return render(request, 'announcementsApp/myannouncements.html', {
-            'announcement': p,
-            'error_message': "You didn't select an Announcement.",
-        })
-    else:
-        if 'delete' in request.POST:
-            selected_team.delete()
+    selected_team = get_object_or_404(Team, pk=request.POST['team'])
+    if 'delete' in request.POST:
+      selected_team.delete()
             ## Always return an HttpResponseRedirect after successfully dealing
             ## with POST data. This prevents data from being posted twice if a
             ## user hits the Back button.
-            return  HttpResponseRedirect(reverse('AthleticTeamApp:ShowTeams'))
-        elif 'edit' in request.POST:  
-	    return HttpResponseRedirect(reverse('AthleticTeamApp:EditTeam',args=(selected_team.id,)))
+      return  HttpResponseRedirect(reverse('AthleticTeamApp:ShowTeams'))
+    elif 'edit' in request.POST:  
+      return HttpResponseRedirect(reverse('AthleticTeamApp:EditTeam',args=(selected_team.id,)))
 
 class EditTeam(generic.DetailView):
     model = Team

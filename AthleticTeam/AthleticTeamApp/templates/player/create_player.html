@@ -1,0 +1,32 @@
+{% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+    <title>ShowAll</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+{% endblock %}
+
+{% block container %}
+<p><b>Choose New Player's Team</b></p>
+    <form action="{% url 'AthleticTeamApp:create_a_player' %}" method="post">
+        <!-- delete one of ur teamss -->
+        {% csrf_token %}
+      <select name="team">
+        {% for team in teams_list %}
+            <option value="{{ team.id }}">
+            {{ team.team_name}}
+            </option>
+        {% endfor %}
+      </select>
+    <h2>Create new Player</h2>
+    
+    <h3>Enter Player Name</h3>
+        {% csrf_token %}
+        <!-- Text area for Title-->
+        <input style= "width:100px" type="text" class="text_title" id="my_text_title" name="title"/>
+        <br />   
+             
+        <input type="submit" name="submit" value="Submit" class="btn btn-success" />
+    </form> 
+{% endblock %}    
