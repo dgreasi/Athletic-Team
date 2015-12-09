@@ -30,6 +30,7 @@
         <button id="drawPass" class="drawPass">drawPass</button>
         <button id="deletePath" class="deletePath">deletePath</button>
         <button id="deletePass" class="deletePass">deletePass</button>
+        <button id="doMoves" class="doMoves">doMoves</button>
         <button id="help" class="help">help</button>
 
         <script>
@@ -58,7 +59,7 @@
                     'receiverOfTheBall' : null,
                     'pass' : null
                 };
-                var image = s.image('/static/images/gui-bg.png', 0, 0, svgData.width, svgData.height);
+                var image = s.image('/static/images/basketball-court.png', 0, 0, svgData.width, svgData.height);
                 image.drag(function(){});//disabling drag utility for the bg image
                 svgData.players = createPlayers(svgData);
                 svgData.ball = createBall(svgData);
@@ -81,7 +82,10 @@
                 document.getElementById("deletePass").onclick = function(){
                     changeMode(svgData,'deletePass');
                 };
-                    return svgData;
+                document.getElementById('doMoves').onclick = function(){
+                    changeMode(svgData,'doMoves');
+                };
+                return svgData;
             }
 
             function createPlayers(svgData){
@@ -578,6 +582,7 @@
             function changeMode(svgData, mode){
                 switch(mode){
                     case 'movePlayer':
+                        resetMoves(svgData);
                         disableBallMovement(svgData);
                         disableDrawingPath(svgData);
                         disableDrawingPass(svgData);
@@ -586,6 +591,7 @@
                         enablePlayersMovement(svgData);
                         break;
                     case 'moveBall':
+                        resetMoves(svgData);
                         disablePlayersMovement(svgData);
                         disableDrawingPath(svgData);
                         disableDrawingPass(svgData);
@@ -594,6 +600,7 @@
                         enableBallMovement(svgData);
                         break;
                     case 'drawPath':
+                        resetMoves(svgData);
                         disablePlayersMovement(svgData);
                         disableBallMovement(svgData);
                         disableDrawingPass(svgData);
@@ -602,6 +609,7 @@
                         enableDrawingPath(svgData);
                         break;
                     case 'drawPass':
+                        resetMoves(svgData);
                         disablePlayersMovement(svgData);
                         disableBallMovement(svgData);
                         disableDrawingPath(svgData);
@@ -610,6 +618,7 @@
                         enableDrawingPass(svgData);
                         break;
                     case 'deletePath':
+                        resetMoves(svgData);
                         disablePlayersMovement(svgData);
                         disableBallMovement(svgData);
                         disableDrawingPath(svgData);
@@ -618,6 +627,7 @@
                         enableDeletePath(svgData);
                         break;
                     case 'deletePass':
+                        resetMoves(svgData);
                         disablePlayersMovement(svgData);
                         disableBallMovement(svgData);
                         disableDrawingPath(svgData);
@@ -625,7 +635,18 @@
                         disableDeletePath(svgData);
                         enableDeletePass(svgData);
                         break;
+                    case 'doMoves':
+                        resetMoves(svgData);
+                        disablePlayersMovement(svgData);
+                        disableBallMovement(svgData);
+                        disableDrawingPath(svgData);
+                        disableDrawingPass(svgData);
+                        disableDeletePath(svgData);
+                        disableDeletePass(svgData);
+                        doMoves(svgData);
+                        break;
                     default:/* idle */
+                        resetMoves(svgData);
                         disablePlayersMovement(svgData);
                         disableBallMovement(svgData);
                         disableDrawingPath(svgData);
@@ -633,6 +654,81 @@
                         disableDeletePath(svgData);
                         disableDeletePass(svgData);
                 }
+            }
+            function doMoves(svgData){
+                var x, y, r;
+                var movePlayers = function(){
+                    for(var i=0;i<svgData.configData.numOfPlayers;i++){
+                        if(svgData.players[i].move){
+                            var len = svgData.players[i].move.elem.getTotalLength();
+                            svgData.players[i].move.elem.attr('display', 'none');
+                            setTimeout( function(len,i){
+                                return function() {
+                                    Snap.animate(0, len, function(value) {
+                                        var x, y;
+                                        var player = svgData.players[i];
+                                        var r = svgData.configData.r;
+                                        var movePoint = player.move.elem.getPointAtLength(value);
+                                        player.elem.attr({ cx: movePoint.x, cy: movePoint.y });
+                                        player.text.attr({'x':movePoint.x-r/4, 'y':movePoint.y+r/4});
+                                        if(svgData.pass) {
+                                            if(player === svgData.receiverOfTheBall) {
+                                                x = movePoint.x + r / 2;
+                                                y = movePoint.y + r / 2;
+                                                svgData.ball.attr({'cx': x, 'cy': y});
+                                            }
+                                        }
+                                        else{
+                                            if(player.hasTheBall){
+                                                x = movePoint.x + r / 2;
+                                                y = movePoint.y + r / 2;
+                                                svgData.ball.attr({'cx': x, 'cy': y});
+                                            }
+                                        }
+                                    }, 2000);
+                                }
+                            }(len,i));
+                        }
+
+                    }
+                };
+                if(svgData.pass){
+                    svgData.pass.attr('display', 'none');
+                    r = svgData.configData.r;
+                    x = parseInt(svgData.receiverOfTheBall.elem.attr('cx')) + r / 2;
+                    y = parseInt(svgData.receiverOfTheBall.elem.attr('cy')) + r / 2;
+                    svgData.ball.animate(
+                            {
+                                'cx' : x,
+                                'cy' : y
+                            },
+                            500,
+                            mina.linear,
+                            movePlayers
+                    );
+                }
+                else{
+                    movePlayers();
+                }
+            }
+
+            function resetMoves(svgData){
+                var r = svgData.configData.r;
+                for(var i=0;i<svgData.configData.numOfPlayers;i++){
+                    if(svgData.players[i].move){
+                        var movePoint = svgData.players[i].move.elem.getPointAtLength(0);
+                        svgData.players[i].elem.attr({ cx: movePoint.x, cy: movePoint.y });
+                        svgData.players[i].text.attr({'x':movePoint.x-r/4, 'y':movePoint.y+r/4});
+                        svgData.players[i].move.elem.attr('display', '');
+                    }
+                }
+                var x = parseInt(svgData.playerWithTheBall.elem.attr('cx')) + r / 2;
+                var y = parseInt(svgData.playerWithTheBall.elem.attr('cy')) + r / 2;
+                svgData.ball.attr({'cx' : x, 'cy' : y});
+                if(svgData.pass){
+                    svgData.pass.attr('display', '');
+                }
+
             }
         </script>
 </body>
