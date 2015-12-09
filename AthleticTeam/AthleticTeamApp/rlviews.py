@@ -104,8 +104,8 @@ def change_pass(request):
 
 def get_rank(request, player_id):
     temp = Ranking.objects.filter(player_id=player_id)
-    if temp.count() == 1:
-        p = get_object_or_404(Ranking, player_id=player_id)
+    if temp.count() > 0:
+        p = temp.first()
         return HttpResponseRedirect(reverse('AthleticTeamApp:rank_results', args=(p.id,)))
     else:
         return HttpResponseRedirect(reverse('AthleticTeamApp:firstRank', args=(player_id,)))
@@ -114,6 +114,7 @@ def rank(request, player_id):
     print player_id
     player_ranked = get_object_or_404(Player, pk=player_id)
     owner_user = request.user
+    userid = owner_user.id
 
     power_ranked_arm = int(float(request.POST['power_arm']))
     power_ranked_body = int(float(request.POST['power_body']))
@@ -126,12 +127,12 @@ def rank(request, player_id):
     three_shots_ranked = int(float(request.POST['three_shots']))
 
     #checking if there is a rank for this player
-    temp = Ranking.objects.filter(player_id=player_id)
+    temp = Ranking.objects.filter(owner_id=userid, player_id=player_id)
     
-    if temp.count() == 1:
+    if temp.count() == 1 :
         #Edit
         print"EDITING RANK"
-        pl_ranking = get_object_or_404(Ranking, player_id=player_id)
+        pl_ranking = get_object_or_404(Ranking, owner_id=userid, player_id=player_id)
         pl_ranking.power_arm = power_ranked_arm
         pl_ranking.power_body = power_ranked_body
         pl_ranking.power_legs = power_ranked_legs

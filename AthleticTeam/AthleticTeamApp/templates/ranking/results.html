@@ -9,29 +9,34 @@
 
 {% block container %}
 
-
     <h2>Rates of player : {{ ranking.player.first_name }} {{ ranking.player.last_name }}</h2>
-    <br />
-    
+        
+    <hr>
+    <p><big>Last Coach's rates: {{ ranking.owner }}</big></p>
+    <p>1. Power of  Arms: {{ ranking.power_arm }}</p>
+    <p>2. Power of Body: {{ ranking.power_body }}</p>
+    <p>3. Power of Legs: {{ ranking.power_legs }}</p>
+    <p>4. Speed: {{ ranking.speed }}</p>
+    <p>5. Team play: {{ ranking.team_play }}</p>
+    <p>6. Cooperative: {{ ranking.co_op }}</p>
+    <p>7. Rate for his position: {{ ranking.ranking_of_pos }}</p>
+    <p>8. Percent at 2-point shots: {{ ranking.two_shots }}</p>
+    <p>9. Percent at 3-point shots: {{ ranking.three_shots }}</p>
 
-    <p>Coach that rated last: {{ ranking.owner }}</p>
-    <p>Power of  Arms: {{ ranking.power_arm }}</p>
-    <p>Power of Body: {{ ranking.power_body }}</p>
-    <p>Power of Legs: {{ ranking.power_legs }}</p>
-    <p>Speed: {{ ranking.speed }}</p>
-    <p>Team play: {{ ranking.team_play }}</p>
-    <p>Cooperative: {{ ranking.co_op }}</p>
-    <p>Rate for his position: {{ ranking.rate_of_pos }}</p>
+        
 
-    <p>Overall rate: {{ ranking.ranking_algo }}</p>
+    <hr>
+    <p><big><strong>Overall rate from all coaches's rates: {{ ranking.ranking_algorithm }}</strong></big></p>
 
     {% load filters %}
     {% if request.user|has_group:"Coaching Staff Member" %}
     <div class="button-rov">
-        <a class="btn btn-primary " href="{% url 'AthleticTeamApp:index_ranking' ranking.player.id %}">Edit rates</a>
+        <a class="btn btn-primary " href="{% url 'AthleticTeamApp:index_ranking' ranking.player.id %}">Edit rankings</a>
     </div>
     {% endif %}
 
+
+    
     <div class="button-rov">
         <a class="btn btn-primary " href="{% url 'AthleticTeamApp:ShowPlayers' %}">Go to see another player</a>
     </div>

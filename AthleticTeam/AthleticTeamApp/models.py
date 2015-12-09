@@ -109,7 +109,6 @@ class MatchPlayerStatistics(models.Model):
         return [(field.name, field.value_to_string(self)) for field in MatchPlayerStatistics._meta.fields]
 
 class Ranking(models.Model):
-    #coach = models.ForeignKey(CoachingStaffMember)
     player = models.ForeignKey(Player)
 
     owner = models.ForeignKey(User, null=True)
@@ -133,3 +132,17 @@ class Ranking(models.Model):
         temp = (self.power_arm + self.power_legs + self.power_body + self.speed + self.team_play + self.co_op + self.rate_of_pos + self.two_shots + self.three_shots)/9
 
         return temp
+
+    def ranking_algorithm(self):
+        #get object player
+        fplayer = self.player
+
+        rank_obj = Ranking.objects.filter(player=fplayer)
+
+        k=0
+        for temp in rank_obj:
+            k += temp.ranking_algo()
+
+        overall = k / rank_obj.count()
+
+        return overall
