@@ -21,7 +21,7 @@ class IndexRanking(generic.DetailView):
     template_name = 'ranking/index.html'
 
 class RankingResults(generic.DetailView):
-    model = Ranking
+    model = Player
     template_name = 'ranking/results.html'
 
 class FirstRank(generic.DetailView):
@@ -106,7 +106,7 @@ def get_rank(request, player_id):
     temp = Ranking.objects.filter(player_id=player_id)
     if temp.count() > 0:
         p = temp.first()
-        return HttpResponseRedirect(reverse('AthleticTeamApp:rank_results', args=(p.id,)))
+        return HttpResponseRedirect(reverse('AthleticTeamApp:rank_results', args=(player_id,)))
     else:
         return HttpResponseRedirect(reverse('AthleticTeamApp:firstRank', args=(player_id,)))
 
@@ -145,7 +145,7 @@ def rank(request, player_id):
 
         pl_ranking.save()
 
-        return HttpResponseRedirect(reverse('AthleticTeamApp:rank_results', args=(pl_ranking.id,)))
+        return HttpResponseRedirect(reverse('AthleticTeamApp:rank_results', args=(player_id,)))
     else:
         #create
         print"CREATING RANK"
@@ -153,6 +153,6 @@ def rank(request, player_id):
         
         p.save()
 
-        return HttpResponseRedirect(reverse('AthleticTeamApp:rank_results', args=(p.id,)))
+        return HttpResponseRedirect(reverse('AthleticTeamApp:rank_results', args=(player_id,)))
 
 

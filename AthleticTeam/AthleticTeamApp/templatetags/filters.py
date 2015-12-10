@@ -9,8 +9,4 @@ def has_group(user, group_name):
     group = Group.objects.get(name=group_name) 
     return True if group in user.groups.all() else False
 
-@register.filter(name='rankg')
-def rankg(user, group_name): 
-    group = Group.objects.get(name=group_name) 
-    return True if group in user.groups.all() else False
 
