@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^teams$', views.ShowTeams.as_view(), name='ShowTeams'),
     url(r'^team/(?P<pk>[0-9]+)$', views.ShowTeam.as_view(), name='ShowTeam'),
 	url(r'^home/$', rlviews.HomeView.as_view(), name='home'),
+    url(r'^hello/$', rlviews.HomeGuestView.as_view(), name='homeGuest'),
 	url(r'^$', rlviews.IndexView.as_view(), name='index'),
     url(r'^login/$', rlviews.login_user, name='login_user'),
     url(r'^logout/$', rlviews.logout_view, name='logout'),

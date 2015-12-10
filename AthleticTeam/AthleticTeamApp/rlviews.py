@@ -44,6 +44,7 @@ class FirstRank(generic.DetailView):
 
 def login_user(request):
     if 'login' in request.POST:
+        print"test"
         logout(request)
         username = password = ''
         if request.POST:
@@ -55,8 +56,10 @@ def login_user(request):
                 if user.is_active:
                     login(request, user)
                     return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
-    elif 'visitor' in request.POST:
+    else:
+        print "stable"
         return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
+    print "sAAA"
     return HttpResponseRedirect(reverse('AthleticTeamApp:index'))
 
     #, context_instance=RequestContext(request)
@@ -69,6 +72,8 @@ def logout_view(request):
 class HomeView(TemplateView):
     template_name = 'home/base_site.html'
 
+class HomeGuestView(TemplateView):
+    template_name = 'Guest/base_siteg.html'
 
 class IndexView(TemplateView):
     template_name = 'Login/index.html'

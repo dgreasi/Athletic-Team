@@ -1,4 +1,4 @@
-{% extends "container.html" %}
+{% extends "Guest/containerg.html" %}
 
 {% block head %}
 {% load staticfiles %}
@@ -12,22 +12,14 @@
   <!-- test Grid -->
   <div class="container-fluid">
     <h1>Information Sports Team System</h1>
-    <p>Welcome to our Team's Site!!!</p>
+    <p>Welcome to our Team's site!!!</p>
     <div class="row">
       <div class="col-sm-3 col-md-6 col-lg-4" style="background-color:lavender;">
-      {% if user.is_authenticated %}
-        <p>Recent events, announcements, sponsorships!</p>
-      {% else %}
         <p>Show current teams!</p>
         <p>New players!</p>
-      {% endif %}
       </div>
       <div class="col-sm-9 col-md-6 col-lg-8" style="background-color:lavenderblush;">
-      {% if user.is_authenticated %}
-        <p>Have a nice day!</p>
-      {% else %}
         <p>Coming matches!</p>
-      {% endif %}
       </div>
     </div>
   </div>
