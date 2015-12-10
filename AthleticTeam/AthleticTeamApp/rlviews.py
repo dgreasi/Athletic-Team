@@ -2,6 +2,7 @@ from django.shortcuts import render, render_to_response, redirect,get_object_or_
 from django.views import generic
 
 from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team, Ranking
+from django.contrib.auth.models import User
 
 from django.http import *
 from django.template import RequestContext
@@ -20,13 +21,26 @@ class IndexRanking(generic.DetailView):
     model = Player
     template_name = 'ranking/index.html'
 
+    #U can come here only if u are logged in
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(IndexRanking, self).dispatch(*args, **kwargs)
+
 class RankingResults(generic.DetailView):
     model = Player
     template_name = 'ranking/results.html'
+    #U can come here only if u are logged in
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(RankingResults, self).dispatch(*args, **kwargs)
 
 class FirstRank(generic.DetailView):
     model = Player
     template_name = 'ranking/first_rank.html'
+    #U can come here only if u are logged in
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(FirstRank, self).dispatch(*args, **kwargs)
 
 def login_user(request):
     if 'login' in request.POST:
@@ -51,18 +65,12 @@ def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('AthleticTeamApp:index'))
 
-#@login_required(login_url='/login/')
-#@method_decorator(login_required, name='login_user')
+
 class HomeView(TemplateView):
     template_name = 'home/base_site.html'
 
-    #U can come here only if u are logged in
-    #@method_decorator(login_required)
-    #def dispatch(self, *args, **kwargs):
-    #    return super(HomeView, self).dispatch(*args, **kwargs)
 
 class IndexView(TemplateView):
-    #model = User
     template_name = 'Login/index.html'
 
 class AboutUs(TemplateView):
@@ -155,4 +163,9 @@ def rank(request, player_id):
 
         return HttpResponseRedirect(reverse('AthleticTeamApp:rank_results', args=(player_id,)))
 
+#check if user exists
+def username_present(username):
+    if User.objects.filter(username=username).exists():
+        return True
 
+    return False

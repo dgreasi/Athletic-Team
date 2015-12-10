@@ -20,6 +20,7 @@
         {% endif %}
       {% endif %}
     {% endfor %}
+    <li>Rate: {{ player.ranking_set.first.ranking_algorithm }}</li>
     </ul>
 
     {% load filters %}
@@ -29,13 +30,15 @@
     </div>
     {% endif %}
 
-
+    {% if user.DoesNotExist %}
     <div class="button-rov">
         <form action="{% url 'AthleticTeamApp:view_rank_player' player.id %}" method="get">
             <input type="submit" name="submit" value="Show rate of this player" class="btn btn-primary " />
         </form>
     </div>
-    
+    {% endif %}
+
+
     <div class="button-rov">
         <a class="btn btn-primary " href="{% url 'AthleticTeamApp:ShowPlayers' %}">Go to see another player</a>
     </div>

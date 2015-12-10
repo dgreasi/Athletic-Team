@@ -9,11 +9,11 @@
 
 {% block container %}
 
-    {% for ranking in player.ranking_set.all %}
-        <h2>Rates of player : {{ ranking.player.first_name }} {{ ranking.player.last_name }}</h2>
+    <h2>Rates of player : {{ player.first_name }} {{ player.last_name }}</h2>
+    {% for ranking in player.ranking_set.all %}        
             
         <hr>
-        <p><big>Last Coach's rates: {{ ranking.owner }}</big></p>
+        <p><big>Rates of coach: {{ ranking.owner }}</big></p>
         <p>1. Power of  Arms: {{ ranking.power_arm }}</p>
         <p>2. Power of Body: {{ ranking.power_body }}</p>
         <p>3. Power of Legs: {{ ranking.power_legs }}</p>
