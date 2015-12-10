@@ -1,15 +1,21 @@
 {% extends "container.html" %}
+{% block head %}
+{% load staticfiles %}
+    <title>Show</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+{% endblock %}
+
 {% block container %}
-<ul>
-{% for name, value in player.get_fields %}
-  {% if value %}
-    {% if name == 'image' %}
-        <li><img src={{ player.image.url }}></li>
-    {% else %}
-        <li>{{ name }} => {{ value }}</li>
-    {% endif %}
-  {% endif %}
-{% endfor %}
-</ul>
+
+<img src={{ player.image.url }}  height="300" width="300" align="left">  
+<h2 align="middle" style="color:blue ;">PROFILE </h2>          
+<p align="middle">First Name       : {{player.first_name}}</p>
+<p align="middle">Last  Name       : {{player.last_name}}</p>
+<p align="middle">Height           : {{player.height}}</p>
+<p align="middle">Weight           : {{player.weight}}</p>
+<p align="middle">Primary Position : {{player.position}}</p>
+<p align="middle">Nationality      : {{player.nationality}}</p>
+<p align="middle">Team      : {{player.team}}</p>
 {% endblock %}
 
