@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Person(models.Model):
@@ -107,3 +107,42 @@ class MatchPlayerStatistics(models.Model):
 
     def get_fields(self):
         return [(field.name, field.value_to_string(self)) for field in MatchPlayerStatistics._meta.fields]
+
+class Ranking(models.Model):
+    player = models.ForeignKey(Player)
+
+    owner = models.ForeignKey(User, null=True)
+
+    power_arm = models.PositiveSmallIntegerField(blank=True, null=True)
+    power_body = models.PositiveSmallIntegerField(blank=True, null=True)
+    power_legs = models.PositiveSmallIntegerField(blank=True, null=True)
+    speed = models.PositiveSmallIntegerField(blank=True, null=True)
+    team_play = models.PositiveSmallIntegerField(blank=True, null=True)
+    co_op = models.PositiveSmallIntegerField(blank=True, null=True)
+    rate_of_pos = models.PositiveSmallIntegerField(blank=True, null=True)
+    two_shots = models.PositiveSmallIntegerField(blank=True, null=True)
+    three_shots = models.PositiveSmallIntegerField(blank=True, null=True)
+
+
+    class Meta:
+        unique_together = ("player", "owner")
+
+
+    def ranking_algo(self):
+        temp = (self.power_arm + self.power_legs + self.power_body + self.speed + self.team_play + self.co_op + self.rate_of_pos + self.two_shots + self.three_shots)/9
+
+        return temp
+
+    def ranking_algorithm(self):
+        #get object player
+        fplayer = self.player
+
+        rank_obj = Ranking.objects.filter(player=fplayer)
+
+        k=0
+        for temp in rank_obj:
+            k += temp.ranking_algo()
+
+        overall = k / rank_obj.count()
+
+        return overall

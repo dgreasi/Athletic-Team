@@ -9,24 +9,29 @@
 
 {% block container %}
 <h1>My Announcements</h1>
-<p><b>Choose an announcement to delete/edit</b></p>
-  
-    <form action="{% url 'announcementsApp:deleteAnnouncement' %}" method="post">
-        <!-- delete one of ur announcements -->
-        {% csrf_token %}
-        {% for announcement in latest_Announcement_list %}
-            {% ifequal user announcement.owner %}
-                <input type="radio" name="announcement" id="announcement{{ forloop.counter }}" value="{{ announcement.id }}" />
-                <label for="announcement{{ forloop.counter }}">{{ announcement.announcement_title }}</label>
-                <br/>
-            {% endifequal %}    
-        {% endfor %}
 
-        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-        <input type="submit" name="delete" value="Delete announcement" class="btn btn-success" />
-        <input type="submit" name="edit" value="Edit announcement" class="btn btn-success" />
-    </form>
-
+    {% if latest_Announcement_list %}
+        <p><b>Choose an announcement to delete/edit</b></p>
+        <form action="{% url 'announcementsApp:deleteAnnouncement' %}" method="post">
+            <!-- delete one of ur announcements -->
+            {% csrf_token %}
+            <select name="announcement">
+            {% for announcement in latest_Announcement_list %}
+                <option value="{{ announcement.id }}">
+                {{ announcement.announcement_title }}
+                </option>
+            {% endfor %}
+            </select>
+            
+            <div class="margin-top-small">
+                {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+                <input type="submit" name="delete" value="Delete announcement" class="btn btn-success" />
+                <input type="submit" name="edit" value="Edit announcement" class="btn btn-success" />
+            </div>
+        </form>
+    {% else %}
+        <p><strong>You haven't done any announcements yet!</strong></p>
+    {% endif %}
     <!-- Make new Announcement -->
     <h2>Create new announcement</h2>
     

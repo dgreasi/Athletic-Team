@@ -18,6 +18,22 @@ h2 {
 	color: blue;
 }
 
+.button-rov {
+	margin: 5px;
+}
+
+.margin-top-small {
+	margin-top: 10px;
+}
+
+.margin-top-medium {
+	margin-top: 20px;
+}
+
+.margin-top-large {
+	margin-top: 40px;
+}
+
 .submenu {
 	background: #fff;
 	position: absolute;

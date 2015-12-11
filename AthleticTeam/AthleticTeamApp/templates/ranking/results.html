@@ -1,0 +1,50 @@
+{% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+    <title>Full List</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+{% endblock %}
+
+{% block container %}
+
+    <h2>Rates of player : {{ player.first_name }} {{ player.last_name }}</h2>
+    {% for ranking in player.ranking_set.all %}        
+            
+        <hr>
+        <p><big>Rates of coach: {{ ranking.owner }}</big></p>
+        <p>1. Power of  Arms: {{ ranking.power_arm }}</p>
+        <p>2. Power of Body: {{ ranking.power_body }}</p>
+        <p>3. Power of Legs: {{ ranking.power_legs }}</p>
+        <p>4. Speed: {{ ranking.speed }}</p>
+        <p>5. Team play: {{ ranking.team_play }}</p>
+        <p>6. Cooperative: {{ ranking.co_op }}</p>
+        <p>7. Rate for his position: {{ ranking.ranking_of_pos }}</p>
+        <p>8. Percent at 2-point shots: {{ ranking.two_shots }}</p>
+        <p>9. Percent at 3-point shots: {{ ranking.three_shots }}</p>
+
+    {% endfor %}
+    
+    <hr>
+    <p><big><strong>Overall rate from all coaches's rates: {{ player.ranking_set.first.ranking_algorithm }}</strong></big></p>
+    
+
+    {% load filters %}
+    {% if request.user|has_group:"Coaching Staff Member" %}
+        <div class="button-rov">
+            <a class="btn btn-primary " href="{% url 'AthleticTeamApp:index_ranking' player.id %}">Make/Edit rank</a>
+        </div>
+    {% endif %}
+
+
+    
+    <div class="button-rov">
+        <a class="btn btn-primary " href="{% url 'AthleticTeamApp:ShowPlayers' %}">Go to see another player</a>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

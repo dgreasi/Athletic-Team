@@ -1,13 +1,22 @@
 {% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+	<title>Players All</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+{% endblock %}
+
 {% block container %}
-{% if players_list%}
+<h2>Players</h2>
+{% if players_list %}
     <ul>
-    <h2> Players</h2>
     {% for player in players_list %}
-        <li><a href="{% url 'AthleticTeamApp:ShowPlayer' player.id %}">{{ player.first_name}}</a></li>
+        <li><a href="{% url 'AthleticTeamApp:ShowPlayer' player.id %}">{{ player.first_name }} {{ player.last_name }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
     <p>No players are available.</p>
 {% endif %}
-{% endblock%}
+
+{% endblock %}

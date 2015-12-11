@@ -18,20 +18,23 @@
 
     <h3>Vote a Comment</h3>
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
-    <form action="{% url 'announcementsApp:vote' announcement.id %}" method="post">
-    <!-- creating list of the comments -->
-    {% csrf_token %}
-    {% for comment in announcement.comment_set.all %}
-        <input type="radio" name="comment" id="comment{{ forloop.counter }}" value="{{ comment.id }}" />
-        <label for="comment{{ forloop.counter }}">{{ comment.comment_text }}</label>
-        <br />
-    {% endfor %}
-    <p></p>
-    <input type="submit" name="submit" value="+1" class="btn btn-success" />
-    </form>
+    {% if announcement.comment_set.all %}
+        <form action="{% url 'announcementsApp:vote' announcement.id %}" method="post">
+        <!-- creating list of the comments -->
+        {% csrf_token %}
+        {% for comment in announcement.comment_set.all %}
+            <input type="radio" name="comment" id="comment{{ forloop.counter }}" value="{{ comment.id }}" />
+            <label for="comment{{ forloop.counter }}">{{ comment.comment_text }}</label>
+            <br />
+        {% endfor %}
+        <div class="margin-top-small">
+            <input type="submit" name="submit" value="+1" class="btn btn-success" />
+        </div>
+        </form>
+    {% else %}
+        <p>No comments in this Announcement.</p>
+    {% endif %}
     
-
     <!-- Making a comment -->
     <h3>Make a comment</h3>
     <form action="{% url 'announcementsApp:comment' announcement.id %}" method="post">

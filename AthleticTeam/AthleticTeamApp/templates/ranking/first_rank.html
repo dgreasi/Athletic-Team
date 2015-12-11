@@ -1,0 +1,34 @@
+{% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+    <title>Full List</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+{% endblock %}
+
+{% block container %}
+
+    
+    <div class="alert alert-info">
+        <strong>Info!</strong> No rate for player : "{{ player.first_name }} {{ player.last_name }}" yet!
+    </div>
+
+
+    {% load filters %}
+    {% if request.user|has_group:"Coaching Staff Member" %}
+    <div class="button-rov">
+        <a class="btn btn-primary " href="{% url 'AthleticTeamApp:index_ranking' player.id %}">Make a rate</a>
+    </div>
+    {% endif %}
+
+    <div class="button-rov">
+        <a class="btn btn-primary " href="{% url 'AthleticTeamApp:ShowPlayers' %}">Go to see another player</a>
+    </div>
+
+
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

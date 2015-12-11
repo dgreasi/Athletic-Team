@@ -12,17 +12,19 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="/home/">Home</a>
-            <a class="navbar-brand" href="/announcements/">Announcements</a>
+            {% if user.is_authenticated %}
+                <a class="navbar-brand" href="/announcements/">Announcements</a>
+            {% endif %}
             <a class="navbar-brand" href="/teams">Teams</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="#" title="The Official Start Bootstrap Blog">Blog</a>
+                    <a href="/players" title="Rank a player">All Players</a>
                 </li>
                 <li>
-                    <a href="#" title="Help with Start Bootstrap Templates &amp; Themes">Help</a>
+                    <a href="/about" title="Help with Start Bootstrap Templates &amp; Themes">About Us</a>
                 </li>
                 <li>
                     <a href="#" title="Contact the Start Bootstrap Team">Contact</a>
@@ -30,20 +32,27 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                {% if user %}
+                {% if user.is_authenticated %}
                     <a href="#" class="dropdown-toggle glyphicon glyphicon-user" data-toggle="dropdown">
                         {{ user.username }}
+                        <b class="caret"></b>
+                    </a>
+                {% else %}
+                    <a href="#" class="dropdown-toggle glyphicon glyphicon-user" data-toggle="dropdown">
+                        Guest
                         <b class="caret"></b>
                     </a>
                 {% endif %}
                     <ul class="dropdown-menu btn-info">
                         <!--Profile info-->
-                        <li>
-                            <form action="{% url 'AthleticTeamApp:profile' %}"  method="get">
-                                {% csrf_token %}
-                                <input type="submit" name="profile" value="Profile" class="btn btn-primary btn-block" />
-                            </form>
-                        </li>
+                        {% if user.is_authenticated %}
+                            <li>
+                                <form action="{% url 'AthleticTeamApp:profile' %}"  method="get">
+                                    {% csrf_token %}
+                                    <input type="submit" name="profile" value="Profile" class="btn btn-primary btn-block" />
+                                </form>
+                            </li>
+                        {% endif %}
                         <!--Logout-->
                         <li>
                             <form action="{% url 'AthleticTeamApp:logout' %}"  method="post">

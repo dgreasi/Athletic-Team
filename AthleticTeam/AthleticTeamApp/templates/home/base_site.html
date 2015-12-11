@@ -9,20 +9,28 @@
 
 
 {% block container %}
-	<!-- test Grid -->
-	<div class="container-fluid">
-	  <h1>Information Sports Team System</h1>
-	  <p>Grid example to use</p>
-	  <div class="row">
-	    <div class="col-sm-3 col-md-6 col-lg-4" style="background-color:lavender;">
-	      <p>Recent events or announcements , tickets and more</p>
-	      <p>New players</p>
-	    </div>
-	    <div class="col-sm-9 col-md-6 col-lg-8" style="background-color:lavenderblush;">
-	      <p>Other funclionalities</p>
-	    </div>
-	  </div>
-	</div>
+  <!-- test Grid -->
+  <div class="container-fluid">
+    <h1>Information Sports Team System</h1>
+    <p>Welcome to our Team's Site!!!</p>
+    <div class="row">
+      <div class="col-sm-3 col-md-6 col-lg-4" style="background-color:lavender;">
+      {% if user.is_authenticated %}
+        <p>Recent events, announcements, sponsorships!</p>
+      {% else %}
+        <p>Show current teams!</p>
+        <p>New players!</p>
+      {% endif %}
+      </div>
+      <div class="col-sm-9 col-md-6 col-lg-8" style="background-color:lavenderblush;">
+      {% if user.is_authenticated %}
+        <p>Have a nice day!</p>
+      {% else %}
+        <p>Coming matches!</p>
+      {% endif %}
+      </div>
+    </div>
+  </div>
 
     <!-- Carousel
     ================================================== -->

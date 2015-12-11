@@ -6,6 +6,34 @@ $('#visitor').click(function() {
   window.location='/home';
 });
 
+
+$(document).ready(function() {
+    $('.ranking-slider').each(function() {
+        var stepSlider = this;
+        var noUIStepSlider = noUiSlider.create(stepSlider, {
+            start: [ 50 ],
+            step: 5,
+            range: {
+                   'min': [  0 ],
+                   'max': [ 100 ]
+            }
+
+        });
+        var $stepSliderValueElement = $(stepSlider).siblings('.ranking-slider-val').eq(0);
+        if ($stepSliderValueElement.length) {
+            stepSlider.noUiSlider.on('update', function( values, handle ) {
+                $stepSliderValueElement.val(values[handle]);
+            });
+           
+            $stepSliderValueElement.on('keyup change', function() {
+                var $this = $(this);
+                noUIStepSlider.set(+$this.val());
+            });
+        }
+    });
+});
+
+
 function view_text () {
     // Find html elements.
     var textTitle = document.getElementById('my_text_title');

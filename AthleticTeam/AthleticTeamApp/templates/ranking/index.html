@@ -3,13 +3,127 @@
 {% block head %}
 {% load staticfiles %}
     <title>Full List</title>
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'bower_components/nouislider/distribute/nouislider.min.css' %}" />
 {% endblock %}
 
 {% block container %}
-    <h1>GAMIESTE</h1>
-    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <h2>Ranking player : {{ player.first_name }} {{ player.last_name }}</h2>
+    <br />
+    <form action="{% url 'AthleticTeamApp:ranking' player.id %}" method="post">
+        <!-- ranking -->
+        {% csrf_token %}
+        <div>
+            <p>1. Power of Arms</p>
+            <div>
+                <div class="ranking-slider" style="width:200px"></div>
+                <input type="number" name="power_arm" class="ranking-slider-val" style="width:55px"></span>
+            </div>
+        </div>
+
+        <hr>
+
+        <div>
+            <p>2. Power of Body</p>
+            <div>
+                <div class="ranking-slider" style="width:200px"></div>
+                <input type="number" name="power_body" class="ranking-slider-val" style="width:55px"></span>
+            </div>
+        </div>
+
+        <hr>
+
+        <div>
+            <p>3. Power of Legs</p>
+            <div>
+                <div class="ranking-slider" style="width:200px"></div>
+                <input type="number" name="power_legs" class="ranking-slider-val" style="width:55px"></span>
+            </div>
+        </div>
+
+        <hr>
+        
+        <div>
+            <p>4. Speed</p>
+            <div>
+                <div class="ranking-slider" style="width:200px"></div>
+                <input type="number" name="speed" class="ranking-slider-val" style="width:55px"></span>
+            </div>
+        </div>
+        
+        <hr>
+
+        <div>
+            <p>5. Team play</p>
+            <div>
+                <div class="ranking-slider" style="width:200px"></div>
+                <input type="number" name="team_play" class="ranking-slider-val" style="width:55px"></span>
+            </div>
+        </div>
+
+        <hr>
+
+        <div>
+            <p>6. Cooperative</p>
+            <div>
+                <div class="ranking-slider" style="width:200px"></div>
+                <input type="number" name="co_op" class="ranking-slider-val" style="width:55px"></span>
+            </div>
+        </div>
+
+        <hr>
+
+        <div>
+            <p>7. Rate for his position</p>
+            <div>
+                <div class="ranking-slider" style="width:200px"></div>
+                <input type="number" name="rate_of_pos" class="ranking-slider-val" style="width:55px"></span>
+            </div>
+        </div>
+
+        <hr>
+
+        <div>
+            <p>8. Percent at 2-point shots</p>
+            <div>
+                <div class="ranking-slider" style="width:200px"></div>
+                <input type="number" name="two_shots" class="ranking-slider-val" style="width:55px"></span>
+            </div>
+        </div>
+
+        <hr>
+
+        <div>
+            <p>9. Percent at 3-point shots</p>
+            <div>
+                <div class="ranking-slider" style="width:200px"></div>
+                <input type="number" name="three_shots" class="ranking-slider-val" style="width:55px"></span>
+            </div>
+        </div>
+
+        <br />
+
+        <!-- BUTTONS/WARNINGS -->
+        {% load filters %}
+        {% if request.user|has_group:"Coaching Staff Member" %}
+        <div class="button-rov">
+            <input type="submit" name="submit" value="Submit" class="btn btn-primary" />
+        </div>
+        {% else %}
+        <div class="alert alert-danger">
+            <strong>Danger!</strong> Restricted area, you are playing with the urls i see!
+        </div>
+        {% endif %}
+
+        <div class="button-rov">
+            <a class="btn btn-primary " href="{% url 'AthleticTeamApp:ShowPlayers' %}">Go to see another player</a>
+        </div>
+    </form>
+
 {% endblock %}
 
+{% block scripts %}
+    <script type="text/javascript"  src="{% static 'bower_components/nouislider/distribute/nouislider.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/myscript.js' %}"></script>
+{% endblock %}
