@@ -32,9 +32,9 @@
 
     {% load filters %}
     {% if request.user|has_group:"Coaching Staff Member" %}
-    <div class="button-rov">
-        <a class="btn btn-primary " href="{% url 'AthleticTeamApp:index_ranking' player.id %}">Edit rankings</a>
-    </div>
+        <div class="button-rov">
+            <a class="btn btn-primary " href="{% url 'AthleticTeamApp:index_ranking' player.id %}">Make/Edit rank</a>
+        </div>
     {% endif %}
 
 
