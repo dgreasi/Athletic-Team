@@ -29,9 +29,11 @@
             {% csrf_token %}
             <select name="comment">
                 {% for comment in announcement.comment_set.all %}
-                    <option value="{{ comment.id }}" >
-                        {{ comment.comment_text }}
-                    </option>
+                    {% ifequal user comment.owner %}
+                        <option value="{{ comment.id }}" >
+                            {{ comment.comment_text }}
+                        </option>
+                    {% endifequal %}
                 {% endfor %}
             </select>
 
