@@ -5,17 +5,50 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
 {% endblock %}
-
 {% block container %}
-
-<img src={{ player.image.url }}  height="300" width="300" align="left">  
-<h2 align="middle" style="color:blue ;">PROFILE </h2>          
-<p align="middle">First Name       : {{player.first_name}}</p>
-<p align="middle">Last  Name       : {{player.last_name}}</p>
-<p align="middle">Height           : {{player.height}}</p>
-<p align="middle">Weight           : {{player.weight}}</p>
-<p align="middle">Primary Position : {{player.position}}</p>
-<p align="middle">Nationality      : {{player.nationality}}</p>
-<p align="middle">Team      : {{player.team}}</p>
+  {% if  player.image %}
+      <img src={{ player.image.url }}  height="300" width="300" align="middle"> 
+  {% else %}
+      <h1> No photo available </h1>    
+  {% endif %} 
+    <div style="float:left; padding: 0; height="500" width="1000"">
+    <table class="table table table-hover" >
+            <tr>
+             <div class="row top-buffer" >
+		 <td><div class="col-md-0">First Name</div></td>
+                 <td><div class="col-md-1">{{player.first_name}}</div></td>
+            </tr>
+             <tr>
+             <div class="row top-buffer">
+		 <td><div class="col-md-0">Last  Name </div></td>
+                 <td><div class="col-md-1">{{player.last_name}}</div></td>
+            </tr>
+             <tr>
+             <div class="row top-buffer">
+		 <td><div class="col-md-0">Height</div></td>
+                 <td><div class="col-md-1">{{player.height}}</div></td>
+            </tr>
+            <tr>
+             <div class="row top-buffer">
+		 <td><div class="col-md-0">Weight </div></td>
+                 <td><div class="col-md-1">{{player.weight}}</div></td>
+            </tr>
+             <tr>
+             <div class="row top-buffer">
+		 <td><div class="col-md-0">Primary Position </div></td>
+                 <td><div class="col-md-1">{{player.primary_position}}</div></td>
+            </tr>
+             <tr>
+             <div class="row top-buffer">
+		 <td><div class="col-md-0">Nationality </div></td>
+                 <td><div class="col-md-1">{{player.nationality}}</div></td>
+            </tr>    
+             <tr>
+             <div class="row top-buffer">
+		 <td><div class="col-md-0">Team </div></td>
+                 <td><div class="col-md-1">{{player.team}}</div></td>
+            </tr>             
+    </table>
+    </div>
 {% endblock %}
 

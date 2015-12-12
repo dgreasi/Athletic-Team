@@ -1,0 +1,62 @@
+{% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+    <title>ShowAll</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+{% endblock %}
+
+{% block container %}
+    <div style="float:left; padding: 0; height="100" width="100"">
+      <table class="table table table-hover">
+	      <tr>
+	      <div class="row top-buffer">
+		  <td><div class="col-md-0">Players</div></td>
+	      </tr>
+	      <tr>
+	      <div class="row top-buffer">
+		  <td><div class="col-md-0">Player 0</div></td>
+	      </tr>
+	      <tr>
+	      <div class= "row top-buffer">
+		  <td><div class="col-md-0">Player 1</div></td>
+	      </tr>
+	      <tr>
+	      <div class="row top-buffer">
+		  <td><div class="col-md-0">Player 2</div></td>
+	      </tr>
+	      <tr>
+	      <div class="row top-buffer">
+		  <td><div class="col-md-0">Player 3</div></td>
+	      </tr>
+      </table>
+    </div>
+    <div style="float:right; padding: 0; height="100" width="100"">
+     <table class="table table table-hover">
+	      <tr>
+	      <div class="row top-buffer">
+		  <td><div class="col-md-0">Teams</div></td>
+	      </tr>
+	      <tr>
+	      <div class="row top-buffer">
+		  <td><div class="col-md-0">Team 0</div></td>
+	      </tr>
+	      <tr>
+	      <div class= "row top-buffer">
+		  <td><div class="col-md-0">Team 1</div></td>
+	      </tr>
+	      <tr>
+	      <div class="row top-buffer">
+		  <td><div class="col-md-0">Team 2</div></td>
+	      </tr>
+	      <tr>
+	      <div class="row top-buffer">
+		  <td><div class="col-md-0">Team 3</div></td>
+	      </tr>
+      </table>
+   </div>
+    <div style="float:bottom; padding: 0; height="100" width="100"">
+    <h3> Chooce one or more players to add to a team</h3>
+    </div>
+{% endblock %}'

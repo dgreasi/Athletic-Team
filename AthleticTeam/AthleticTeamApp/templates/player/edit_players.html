@@ -26,5 +26,9 @@
             <input type="submit" name="delete" value="Delete Player" class="btn btn-success" />
             <input type="submit" name="edit" value="Edit Player" class="btn btn-success" />
         </div>
-    </form>    
+    </form>
+        <form action="{% url 'AthleticTeamApp:players_teams'  %}" method="get">
+        {% csrf_token %}   
+        <input type="submit" name="submit" value="Add Players To Teams" class="btn btn-success" />
+    </form>
 {% endblock %}

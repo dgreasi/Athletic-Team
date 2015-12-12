@@ -62,7 +62,12 @@ class edit_players(generic.ListView):
 class EditPlayer(generic.DetailView):
     model = Player
     template_name = 'player/edit.html'
-   
+
+class add_players_to_teams(generic.ListView):
+    model = Player
+    template_name = 'player/player_team.html'
+    context_object_name = 'players_list'
+    
 def all_teams(request):
     teams = Team.objects.all()[0]
     return render_to_response('/player/edit.html',{'teams': teams})
@@ -70,8 +75,24 @@ def all_teams(request):
 def create_a_player(request):     
     p = Team.objects.all()
     selected_team = get_object_or_404(Team, pk=request.POST['team'])
-    title = request.POST['title']
-    temp = Player(first_name = title,team_id = selected_team.id)
+
+    new_first_name = request.POST['first_name']
+    new_last_name = request.POST['last_name']
+    #primary_position = request.POST['primary_position']
+    #secondary_positions = request.POST['secondary_positions']
+    new_number = request.POST['number']
+    new_height = request.POST['height']
+    new_weight = request.POST['weight']
+    new_nationality = request.POST['nationality']
+    
+    temp = Player(first_name = new_first_name,team_id = selected_team.id)
+    temp.last_name = new_last_name
+    #temp.primary_position = primary_position
+    #temp.secondary_positions = secondary_positions
+    temp.number = new_number
+    temp.height =new_height
+    temp.weight = new_weight
+    temp.nationality = new_nationality
     temp.save()
 
     return HttpResponseRedirect(reverse('AthleticTeamApp:ShowPlayers'))
