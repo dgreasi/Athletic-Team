@@ -12,7 +12,7 @@ $(document).ready(function() {
         var stepSlider = this;
         var noUIStepSlider = noUiSlider.create(stepSlider, {
             start: [ 50 ],
-            step: 5,
+            step: 1,
             range: {
                    'min': [  0 ],
                    'max': [ 100 ]
