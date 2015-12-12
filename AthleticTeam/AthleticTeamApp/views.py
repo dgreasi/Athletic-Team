@@ -13,6 +13,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.views.generic import TemplateView
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
+from django.template import RequestContext
 
 # Create your views here.
 class ShowCoachingStaffMembers(generic.ListView):
@@ -62,7 +63,10 @@ class EditPlayer(generic.DetailView):
     model = Player
     template_name = 'player/edit.html'
    
-   
+def all_teams(request):
+    teams = Team.objects.all()[0]
+    return render_to_response('/player/edit.html',{'teams': teams})
+    
 def create_a_player(request):     
     p = Team.objects.all()
     selected_team = get_object_or_404(Team, pk=request.POST['team'])
@@ -87,18 +91,29 @@ def edit_a_player(request):
 def edit_player(request,player_id):
     temp = get_object_or_404(Player, pk=player_id)
 
-    title = request.POST['title']
-    #text = request.POST['text']
+    first_name = request.POST['first_name']
+    last_name = request.POST['last_name']
+    #primary_position = request.POST['primary_position']
+    #secondary_positions = request.POST['secondary_positions']
+    number = request.POST['number']
+    height = request.POST['height']
+    weight = request.POST['weight']
+    nationality = request.POST['nationality']
     
-    temp.first_name = title
+    temp.first_name = first_name
+    temp.last_name = last_name
+    #temp.primary_position = primary_position
+    #temp.secondary_positions = secondary_positions
+    temp.number = number
+    temp.height = height
+    temp.weight = weight
+    temp.nationality = nationality
     ##temp.announcement_text = text
     #temp.pub_date = timezone.now()
     temp.save()
 
-    return HttpResponseRedirect(reverse('AthleticTeamApp:ShowPlayers'))
+    return HttpResponseRedirect(reverse('AthleticTeamApp:ShowPlayers'))  
 
-    #return HttpResponseRedirect(reverse('AthleticTeamApp:ShowTeams'))    
-  
 	  
 ##################
 # Matches Views.

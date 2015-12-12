@@ -16,7 +16,7 @@
         <select name="player">
         {% for player in players_list %}
             <option value="{{ player.id }}">
-            {{ player.first_name}}
+            {{ player.first_name}} {{ player.last_name}} 
             </option>
         {% endfor %}
         </select>
