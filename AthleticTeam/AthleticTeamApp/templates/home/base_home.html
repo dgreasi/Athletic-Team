@@ -1,0 +1,82 @@
+{% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+<title>Home</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+{% endblock %}
+
+
+{% block container %}
+  <!-- test Grid -->
+  <div class="container-fluid">
+    <!-- <h1>Information Sports Team System</h1>
+    <p>Welcome to our Team's Site!!!</p> -->
+    <div class="row">
+      <div class="col-sm-3 col-md-6 col-lg-4" style="background-color:lavender;">
+        <p>Recent events, announcements, sponsorships!</p>
+        <!-- ANNOUNCEMETNS PAGING -->
+        <div class="col-sm-9 col-md-6 col-lg-8" style="background-color:lavenderblush;">
+          <p>Have a nice day!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<h1>PAGINATION</h1>
+
+{# .... **Normal content list, maybe a table** .... #}
+{% if announcement_list %}
+    <table id="announcements">
+        {% for announcement in announcement_list %}
+            <tr>
+                <td><a href="/announcements/{{ announcement.id }}/" class="see_detail">{{ announcement.announcement_title }}</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+    {# .... **Now the pagination section** .... #}
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+{% else %}
+    <h3>My announcements</h3>
+    <p>No announcements found!!! :(</p>
+{% endif %}
+<!-- 
+  { for announcement in announcements }
+    {# Each "contact" is a Contact model object. #}
+    {{ announcement.title|upper }}<br />
+  { endfor }
+
+  <div class="pagination">
+      <span class="step-links">
+          {% if announcements.has_previous %}
+              <a href="?page={{ announcements.previous_page_number }}">previous</a>
+          {% endif %}
+
+          <span class="current">
+              Page {{ announcements.number }} of {{ announcements.paginator.num_pages }}.
+          </span>
+
+          {% if announcements.has_next %}
+              <a href="?page={{ announcements.next_page_number }}">next</a>
+          {% endif %}
+      </span>
+  </div> -->
+
+{% endblock %}

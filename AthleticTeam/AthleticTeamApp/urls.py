@@ -26,4 +26,5 @@ urlpatterns = [
     url(r'^ranking_results_view/(?P<player_id>[0-9]+)$', rlviews.get_rank, name='view_rank_player'),
     url(r'^first_rank/(?P<pk>[0-9]+)$', rlviews.FirstRank.as_view(), name='firstRank'),
 
+    url(r'^home_paging/$', rlviews.HomePaging.as_view(), name='paging'),
 ]
