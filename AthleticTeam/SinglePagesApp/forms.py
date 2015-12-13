@@ -7,3 +7,11 @@ class EditContactUsForm(forms.Form):
     phone = forms.CharField(label='Phone:', max_length=30, required=False)
     mobile_phone = forms.CharField(label='Mobile Phone:', max_length=30, required=False)
 
+class EditAboutUsForm(forms.Form):
+    visible = forms.ChoiceField(label='Visible:', choices=(('Visible', 'Visible'), ('', 'Hidden')), required=False)
+    first_name = forms.CharField(label='First Name:', max_length=30, required=False)
+    last_name = forms.CharField(label='Last Name:', max_length=30, required=False)
+    position = forms.CharField(label='Position:', max_length=30, required=False)
+
+
+

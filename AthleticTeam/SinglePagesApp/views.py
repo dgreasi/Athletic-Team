@@ -3,8 +3,8 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 # Create your views here.
 from AthleticTeam.settings import MEDIA_ROOT
-from SinglePagesApp.forms import EditContactUsForm
-
+from SinglePagesApp.forms import EditContactUsForm, EditAboutUsForm
+#from SinglePagesApp.forms import EditAboutUsForm
 
 def contact_us(request):
     data = read_file('contact_us.json')
@@ -14,6 +14,27 @@ def contact_us(request):
     else:
         raise Http404("Contact Us Page isn't used")
 
+def about_us(request):
+    data = read_file('about_us.json')
+
+    if data['visible'] != '':
+        return render(request, 'single_pages/about_us.html', context={'data': data})
+    else:
+        raise Http404("About Us Page isn't used")
+
+
+def edit_about_us(request):
+    if request.method == 'POST':
+        data = request.POST
+        data = data.copy()
+        data.pop('csrfmiddlewaretoken', None)
+        write_file('about_us.json', data)
+        return redirect('SinglePagesApp:about_us')
+    else:
+        name = 'About Us'
+        data = read_file('about_us.json')
+        form = EditAboutUsForm(data)
+        return render(request, 'single_pages/edit.html', context={'name': name, 'form': form})
 
 def edit_contact_us(request):
     if request.method == 'POST':
