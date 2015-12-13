@@ -16,7 +16,7 @@ from django.views.generic import TemplateView
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
 
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.utils import timezone
 
 
 
@@ -45,9 +45,9 @@ class FirstRank(generic.DetailView):
     def dispatch(self, *args, **kwargs):
         return super(FirstRank, self).dispatch(*args, **kwargs)
 
+
 def login_user(request):
     if 'login' in request.POST:
-        print"test"
         logout(request)
         username = password = ''
         if request.POST:
@@ -60,50 +60,29 @@ def login_user(request):
                     login(request, user)
                     return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
     else:
-        print "stable"
         return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
-    print "sAAA"
     return HttpResponseRedirect(reverse('AthleticTeamApp:index'))
 
-    #, context_instance=RequestContext(request)
 
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('AthleticTeamApp:index'))
 
-class HomePaging(generic.ListView):
+class HomeView(generic.ListView):
     model = Announcement
-    template_name = 'home/base_home.html'
+    template_name = 'home/base_site.html'
     context_object_name = "announcement_list"
     paginate_by = 3
 
-    #     model = models.Car      # shorthand for setting queryset = models.Car.objects.all()
-    # template_name = 'app/car_list.html'  # optional (the default is app_name/modelNameInLowerCase_list.html; which will look into your templates folder for that path and file)
-    # context_object_name = "car_list"    #default is object_list as well as model's_verbose_name_list and/or model's_verbose_name_plural_list, if defined in the model's inner Meta class
-    # paginate_by = 10  #and that's it !!
+    def get_queryset(self):
+        """
+        Return all published Announcements (not including those set to be
+        published in the future).
+        """
+        return Announcement.objects.filter(
+            pub_date__lte=timezone.now()
+        ).order_by('-pub_date')
 
-def listing(request):
-    announcements_list = Announcement.objects.all()
-    paginator = Paginator(announcements_list, 3) # Show 3 announcements per page
-
-    page = request.GET.get('page')
-    try:
-        announcements = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        announcements = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        announcements = paginator.page(paginator.num_pages)
-
-    return render_to_response('base_home.html', {"announcements": announcements})
-
-class HomeView(TemplateView):
-    template_name = 'home/base_site.html'
-
-#To be deleted along with AthleticTeamApp/templates/Guest and url: /hello/
-class HomeGuestView(TemplateView):
-    template_name = 'Guest/base_siteg.html'
 
 class IndexView(TemplateView):
     template_name = 'Login/index.html'

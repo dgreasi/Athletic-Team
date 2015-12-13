@@ -8,40 +8,11 @@ from django.contrib.auth.decorators import login_required
 
 from announcementsApp.models import Comment, Announcement
 
-#View all announcements
-class FullView(generic.ListView):
-    template_name = 'announcementsApp/full.html'
-    #For DetailView the Announcement variable is provided automatically 
-    #since we are using a Django model (Announcement), Django is able to 
-    #determine an appropriate name for the context variable. However, 
-    #for ListView, the automatically generated context variable 
-    #is Announcement_list. To override this we provide the context_object_name attribute,
-    # specifying that we want to use latest_Announcement_list instead
-    context_object_name = 'latest_Announcement_list'
-
-    def get_queryset(self):
-        """
-        Return all published Announcements (not including those set to be
-        published in the future).
-        """
-        return Announcement.objects.filter(
-            pub_date__lte=timezone.now()
-        ).order_by('-pub_date')
-
-    #U can come here only if u are logged in
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(FullView, self).dispatch(*args, **kwargs)
-
 #View recent announcements
 class IndexView(generic.ListView):
     template_name = 'announcementsApp/index.html'
-    #For DetailView the Announcement variable is provided automatically 
-    #since we are using a Django model (Announcement), Django is able to 
-    #determine an appropriate name for the context variable. However, 
-    #for ListView, the automatically generated context variable 
-    #is Announcement_list. To override this we provide the context_object_name attribute,
-    # specifying that we want to use latest_Announcement_list instead
+    model = Announcement
+    paginate_by = 3
     context_object_name = 'latest_Announcement_list'
 
     def get_queryset(self):
@@ -51,7 +22,7 @@ class IndexView(generic.ListView):
         """
         return Announcement.objects.filter(
             pub_date__lte=timezone.now()
-        ).order_by('-pub_date')[:3]
+        ).order_by('-pub_date')
 
     #U can come here only if u are logged in
     @method_decorator(login_required)
