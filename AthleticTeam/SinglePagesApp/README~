@@ -2,6 +2,6 @@ Single Pages App:
     How to add a page:
         1. create 'name_of_page'.json file at MEDIA_ROOT + 'SinglePagesData/'
         2. create the form for your page at SinglePagesApp/forms.py
-        4. create 'name_of_page' and edit_'name_of_page'views at SinglePagesApp/views.py
+        4. create 'name_of_page' and edit_'name_of_page' views at SinglePagesApp/views.py
         5. create 'name_of_page'.html file at SinglePagesApp/templates/single_pages
         6. add it's urls to SinglePagesApp/urls.py

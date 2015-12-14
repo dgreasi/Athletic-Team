@@ -3,7 +3,7 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 # Create your views here.
 from AthleticTeam.settings import MEDIA_ROOT
-from SinglePagesApp.forms import EditContactUsForm, EditHistoryForm
+from SinglePagesApp.forms import EditContactUsForm, EditHistoryForm, EditTicketsForm
 
 def history(request):
     data = read_file('history.json')
@@ -64,4 +64,47 @@ def write_file(file_name, data):
     data = json.dumps(data)
     file_handler.write(data)
     file_handler.close()
+
+def tickets(request):
+    data = read_file('tickets.json')
+
+    if data['visible'] != '':
+        return render(request, 'single_pages/tickets.html', context={'data': data})
+    else:
+        raise Http404("Tickets Page isn't used")
+
+def edit_tickets(request):
+    if request.method == 'POST':
+        data = request.POST
+        data = data.copy()
+        data.pop('csrfmiddlewaretoken', None)
+        write_file('tickets.json', data)
+        return redirect('SinglePagesApp:tickets')
+    else:
+        name = 'Tickets'
+        data = read_file('tickets.json')
+        form = EditTicketsForm(data)
+        return render(request, 'single_pages/edit.html', context={'name': name, 'form': form})
+
+def events(request):
+    data = read_file('events.json')
+
+    if data['visible'] != '':
+        return render(request, 'single_pages/events.html', context={'data': data})
+    else:
+        raise Http404("events Page isn't used")
+
+
+def edit_events(request):
+    if request.method == 'POST':
+        data = request.POST
+        data = data.copy()
+        data.pop('csrfmiddlewaretoken', None)
+        write_file('events.json', data)
+        return redirect('SinglePagesApp:events')
+    else:
+        name = 'events'
+        data = read_file('events.json')
+        form = EditHistoryForm(data)
+        return render(request, 'single_pages/edit.html', context={'name': name, 'form': form})
 

@@ -7,4 +7,8 @@ urlpatterns = [
     url(r'^contactUs/edit$', views.edit_contact_us, name='edit_contact_us'),
     url(r'^history$', views.history, name='history'),
     url(r'^history/edit$', views.edit_history, name='edit_history'),
+    url(r'^tickets$', views.tickets, name='tickets'),
+    url(r'^tickets/edit$', views.edit_tickets, name='edit_tickets'),
+    url(r'^events$', views.events, name='events'),
+    url(r'^events/edit$', views.edit_events, name='edit_events'),
 ]

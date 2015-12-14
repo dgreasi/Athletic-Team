@@ -11,3 +11,14 @@ class EditHistoryForm(forms.Form):
     visible = forms.ChoiceField(label='Visible:', choices=(('Visible', 'Visible'), ('', 'Hidden')), required=False)
     info = forms.CharField(label='info:', required=False,max_length=30)
 
+class EditTicketsForm(forms.Form):
+    visible = forms.ChoiceField(label='Visible:', choices=(('Visible', 'Visible'), ('', 'Hidden')), required=False)
+    info = forms.CharField(label='info:', required=False,max_length=30)
+
+class EditEventsForm(forms.Form):
+    visible = forms.ChoiceField(label='Visible:', choices=(('Visible', 'Visible'), ('', 'Hidden')), required=False)
+    info = forms.CharField(label='info:', required=False,max_length=30)
+
+class EditCampForm(forms.Form):
+    visible = forms.ChoiceField(label='Visible:', choices=(('Visible', 'Visible'), ('', 'Hidden')), required=False)
+    info = forms.CharField(label='info:', required=False,max_length=30)
