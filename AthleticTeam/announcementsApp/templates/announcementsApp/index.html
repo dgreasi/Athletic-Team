@@ -9,17 +9,35 @@
 
 
 {% block container %}
-<h1>Recent Announcements</h1>
-{% if latest_Announcement_list %}
-    <ul>
-    {% for announcement in latest_Announcement_list %}
-        <li><a href="{% url 'announcementsApp:detail' announcement.id %}">{{ announcement.announcement_title }}</a></li>
-    {% endfor %}
-    </ul>
-    <p><a href="{% url 'announcementsApp:full' %}">View all announcements</a></p>
-{% else %}
-    <p>No announcements are available.</p>
-{% endif %}
+    <h1>Announcements</h1>
+    {% if latest_Announcement_list %}
+        <ul>
+        {% for announcement in latest_Announcement_list %}
+            <li><a href="{% url 'announcementsApp:detail' announcement.id %}">{{ announcement.announcement_title }}</a></li>
+        {% endfor %}
+        </ul>
+
+        {# .... **Now the pagination section** .... #}
+        {% if is_paginated %}
+            <div class="pagination">
+                <span class="page-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                    {% endif %}
+                    <span class="page-current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">next</a>
+                    {% endif %}
+                </span>
+            </div>
+        {% endif %}
+    {% else %}
+        <p>No announcements are available.</p>
+    {% endif %}
+
+
     <!-- Make new Announcement -->
     <h2>Create new announcement</h2>
     

@@ -2,6 +2,7 @@ from django.shortcuts import render, render_to_response, redirect,get_object_or_
 from django.views import generic
 
 from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team, Ranking
+from announcementsApp.models import Announcement
 from django.contrib.auth.models import User
 
 from django.http import *
@@ -14,6 +15,8 @@ from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import TemplateView
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
+
+from django.utils import timezone
 
 
 
@@ -42,9 +45,9 @@ class FirstRank(generic.DetailView):
     def dispatch(self, *args, **kwargs):
         return super(FirstRank, self).dispatch(*args, **kwargs)
 
+
 def login_user(request):
     if 'login' in request.POST:
-        print"test"
         logout(request)
         username = password = ''
         if request.POST:
@@ -57,23 +60,29 @@ def login_user(request):
                     login(request, user)
                     return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
     else:
-        print "stable"
         return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
-    print "sAAA"
     return HttpResponseRedirect(reverse('AthleticTeamApp:index'))
 
-    #, context_instance=RequestContext(request)
 
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('AthleticTeamApp:index'))
 
-
-class HomeView(TemplateView):
+class HomeView(generic.ListView):
+    model = Announcement
     template_name = 'home/base_site.html'
+    context_object_name = "announcement_list"
+    paginate_by = 3
 
-class HomeGuestView(TemplateView):
-    template_name = 'Guest/base_siteg.html'
+    def get_queryset(self):
+        """
+        Return all published Announcements (not including those set to be
+        published in the future).
+        """
+        return Announcement.objects.filter(
+            pub_date__lte=timezone.now()
+        ).order_by('-pub_date')
+
 
 class IndexView(TemplateView):
     template_name = 'Login/index.html'
