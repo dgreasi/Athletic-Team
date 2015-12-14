@@ -4,7 +4,7 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 # Create your views here.
 from AthleticTeam.settings import MEDIA_ROOT
-from SinglePagesApp.forms import EditContactUsForm, EditHistoryForm, EditTicketsForm, EditFacilitiesForm
+from SinglePagesApp.forms import EditHistoryForm, EditTicketsForm, EditFacilitiesForm
 
 def history(request):
     data = read_file('history.json')
@@ -29,13 +29,13 @@ def edit_history(request):
         return render(request, 'single_pages/edit.html', context={'name': name, 'form': form})
 
 
-def contact_us(request):
-    data = read_file('contact_us.json')
+##def contact_us(request):
+    #data = read_file('contact_us.json')
 
-    if data['visible'] != '':
-        return render(request, 'single_pages/contact_us.html', context={'data': data})
-    else:
-        raise Http404("Contact Us Page isn't used")
+    #if data['visible'] != '':
+     #   return render(request, 'single_pages/contact_us.html', context={'data': data})
+    #else:
+     #   raise Http404("Contact Us Page isn't used")
 
 def about_us(request):
     data = read_file('about_us.json')
@@ -59,18 +59,18 @@ def edit_about_us(request):
         form = EditAboutUsForm(data)
         return render(request, 'single_pages/edit.html', context={'name': name, 'form': form})
 
-def edit_contact_us(request):
-    if request.method == 'POST':
-        data = request.POST
-        data = data.copy()
-        data.pop('csrfmiddlewaretoken', None)
-        write_file('contact_us.json', data)
-        return redirect('SinglePagesApp:contact_us')
-    else:
-        name = 'Contact Us'
-        data = read_file('contact_us.json')
-        form = EditContactUsForm(data)
-        return render(request, 'single_pages/edit.html', context={'name': name, 'form': form})
+#def edit_contact_us(request):
+ #   if request.method == 'POST':
+  #      data = request.POST
+   #     data = data.copy()
+    #    data.pop('csrfmiddlewaretoken', None)
+     #   write_file('contact_us.json', data)
+      #  return redirect('SinglePagesApp:contact_us')
+    #else:
+     #   name = 'Contact Us'
+      #  data = read_file('contact_us.json')
+       # form = EditContactUsForm(data)
+        #return render(request, 'single_pages/edit.html', context={'name': name, 'form': form})
 
 
 def read_file(file_name):
