@@ -60,6 +60,25 @@ class ShowTeam(generic.DetailView):
     model = Team
     template_name = 'team/show.html'
 
+
+class ShowTeamPlays(generic.ListView):
+    model = Player
+    template_name = 'team_play/showall.html'
+
+
+class ShowTeamPlay(generic.DetailView):
+    model = Player
+    template_name = 'team_play/show.html'
+
+
+def create_team_play(request):
+    pass
+
+
+def edit_team_play(request):
+    pass
+
+
 def login_user(request):
     logout(request)
     username = password = ''

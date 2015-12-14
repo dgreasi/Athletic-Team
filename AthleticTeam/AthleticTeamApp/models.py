@@ -107,3 +107,7 @@ class MatchPlayerStatistics(models.Model):
 
     def get_fields(self):
         return [(field.name, field.value_to_string(self)) for field in MatchPlayerStatistics._meta.fields]
+
+
+class TeamPlay(models.Model):
+    data = models.TextField()
