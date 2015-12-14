@@ -3,8 +3,27 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 # Create your views here.
 from AthleticTeam.settings import MEDIA_ROOT
-from SinglePagesApp.forms import EditContactUsForm, EditAboutUsForm
+from SinglePagesApp.forms import EditContactUsForm, EditAboutUsForm, EditSponsorshipsForm
 #from SinglePagesApp.forms import EditAboutUsForm
+
+
+def sponsorships(request):
+    data = read_file('sponsorships.json')
+
+    if data['visible'] != '':
+        return render(request, 'single_pages/sponsorships.html', context={'data': data})
+    else:
+        raise Http404("Contact Us Page isn't used")
+
+
+def about_us(request):
+    data = read_file('about_us.json')
+
+    if data['visible'] != '':
+        return render(request, 'single_pages/about_us.html', context={'data': data})
+    else:
+        raise Http404("About Us Page isn't used")
+
 
 def contact_us(request):
     data = read_file('contact_us.json')
@@ -14,13 +33,19 @@ def contact_us(request):
     else:
         raise Http404("Contact Us Page isn't used")
 
-def about_us(request):
-    data = read_file('about_us.json')
 
-    if data['visible'] != '':
-        return render(request, 'single_pages/about_us.html', context={'data': data})
+def edit_sponsorships(request):
+    if request.method == 'POST':
+        data = request.POST
+        data = data.copy()
+        data.pop('csrfmiddlewaretoken', None)
+        write_file('sponsorships.json', data)
+        return redirect('SinglePagesApp:sponsorships')
     else:
-        raise Http404("About Us Page isn't used")
+        name = 'sponsorships'
+        data = read_file('sponsorships.json')
+        form = EditSponsorshipsForm(data)
+        return render(request, 'single_pages/edit.html', context={'name': name, 'form': form})
 
 
 def edit_about_us(request):

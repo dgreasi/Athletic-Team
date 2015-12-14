@@ -14,4 +14,7 @@ class EditAboutUsForm(forms.Form):
     position = forms.CharField(label='Position:', max_length=30, required=False)
 
 
-
+class EditSponsorshipsForm(forms.Form):
+    visible = forms.ChoiceField(label='Visible:', choices=(('Visible', 'Visible'), ('', 'Hidden')), required=False)
+    first_name = forms.CharField(label='Company:', max_length=30, required=False)
+    #add photo
