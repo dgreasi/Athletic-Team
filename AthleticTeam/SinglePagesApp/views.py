@@ -3,7 +3,7 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 # Create your views here.
 from AthleticTeam.settings import MEDIA_ROOT
-from SinglePagesApp.forms import EditContactUsForm, EditHistoryForm, EditTicketsForm
+from SinglePagesApp.forms import EditContactUsForm, EditHistoryForm, EditTicketsForm, EditFacilitiesForm
 
 def history(request):
     data = read_file('history.json')
@@ -107,4 +107,27 @@ def edit_events(request):
         data = read_file('events.json')
         form = EditHistoryForm(data)
         return render(request, 'single_pages/edit.html', context={'name': name, 'form': form})
+
+def facilities(request):
+    data = read_file('facilities.json')
+
+    if data['visible'] != '':
+        return render(request, 'single_pages/facilities.html', context={'data': data})
+    else:
+        raise Http404("Facilities Page isn't used")
+
+
+def edit_facilities(request):
+    if request.method == 'POST':
+        data = request.POST
+        data = data.copy()
+        data.pop('csrfmiddlewaretoken', None)
+        write_file('facilities.json', data)
+        return redirect('SinglePagesApp:facilities')
+    else:
+        name = 'facilities'
+        data = read_file('facilities.json')
+        form = EditFacilitiesForm(data)
+        return render(request, 'single_pages/edit.html', context={'name': name, 'form': form})
+
 
