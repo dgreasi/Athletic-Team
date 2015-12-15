@@ -44,6 +44,15 @@ class ShowMatches(generic.ListView):
     template_name = 'match/showall.html'
     context_object_name = 'matches_list'
 
+    def get_queryset(self):
+        """
+        Return the last three published Match (not including those set to be
+        published in the future).
+        """
+        return Match.objects.filter(
+            date__lte=timezone.now()
+        ).order_by('-date')
+
 class ShowMatch(generic.DetailView):
     model = Match
     template_name = 'match/show.html'
@@ -85,9 +94,4 @@ def match_creator(request):
     match_to_send.save()  
 
     return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
-    # if text_a == text_b:
-        
-    #     return HttpResponseRedirect(reverse('AthleticTeamApp:index'))
-    # else:
-    #     #prin error mesg MESSAGES DJANGO
-    #     return HttpResponseRedirect(reverse('AthleticTeamApp:changePass'))
+
