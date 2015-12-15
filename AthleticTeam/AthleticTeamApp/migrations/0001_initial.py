@@ -2,11 +2,13 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
@@ -17,6 +19,7 @@ class Migration(migrations.Migration):
                 ('first_name', models.CharField(max_length=30, blank=True)),
                 ('last_name', models.CharField(max_length=30, blank=True)),
                 ('info', models.TextField(blank=True)),
+                ('image', models.ImageField(upload_to=b'photos/', blank=True)),
                 ('position', models.CharField(max_length=30, blank=True)),
             ],
             options={
@@ -65,6 +68,7 @@ class Migration(migrations.Migration):
                 ('first_name', models.CharField(max_length=30, blank=True)),
                 ('last_name', models.CharField(max_length=30, blank=True)),
                 ('info', models.TextField(blank=True)),
+                ('image', models.ImageField(upload_to=b'photos/', blank=True)),
                 ('height', models.DecimalField(null=True, max_digits=3, decimal_places=2, blank=True)),
                 ('weight', models.PositiveSmallIntegerField(null=True, blank=True)),
                 ('birth_date', models.DateField(null=True, blank=True)),
@@ -90,6 +94,11 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(to='AthleticTeamApp.Team'),
         ),
         migrations.AddField(
+            model_name='player',
+            name='user',
+            field=models.ForeignKey(default=b'', to=settings.AUTH_USER_MODEL),
+        ),
+        migrations.AddField(
             model_name='matchplayerstatistics',
             name='player',
             field=models.ForeignKey(to='AthleticTeamApp.Player'),
@@ -113,5 +122,10 @@ class Migration(migrations.Migration):
             model_name='coachingstaffmember',
             name='team',
             field=models.ForeignKey(to='AthleticTeamApp.Team'),
+        ),
+        migrations.AddField(
+            model_name='coachingstaffmember',
+            name='user',
+            field=models.ForeignKey(default=b'', to=settings.AUTH_USER_MODEL),
         ),
     ]

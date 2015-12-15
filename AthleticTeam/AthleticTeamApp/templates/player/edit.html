@@ -9,19 +9,6 @@
 
 {% block container %}
     <h1>Edit {{player.first_name}} {{player.last_name}}</h1>
-    {% for team in teams %}
-      <h3>{{team.team_name}}</h3>
-    {% endfor %}  
-    <h3>Choose new team</h3> 
-    <hr>
-    {% csrf_token %}
-    <select name="team">
-      {% for team in team_players_list %}
-	<option value="{{ teams.id }}">
-	  {{ team.team_name}}
-	</option>
-      {% endfor %}
-    </select>
     <h3>Enter New Player Fist Name</h3>
 
     <form action="{% url 'AthleticTeamApp:edit_player' player.id %}" method="post">

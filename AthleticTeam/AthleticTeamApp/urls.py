@@ -25,7 +25,7 @@ urlpatterns = [
     url(r'^edit_a_player$', views.edit_a_player, name='edit_a_player'),
     url(r'^EditPlayer/(?P<pk>[0-9]+)$', views.EditPlayer.as_view(), name='EditPlayer'),
     url(r'^(?P<player_id>[0-9]+)/edit_player/$', views.edit_player, name='edit_player'),
-    url(r'^(?P<player_id>[0-9]+)all_teams$', views.all_teams, name='all_teams'),
+    url(r'^all_teams$', views.all_teams, name='all_teams'),
     url(r'^players_teams$', views.add_players_to_teams.as_view(), name='players_teams'),
    
    

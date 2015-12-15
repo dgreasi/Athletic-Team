@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Person(models.Model):
@@ -7,7 +7,7 @@ class Person(models.Model):
     last_name = models.CharField(max_length=30, blank=True)
     info = models.TextField(blank=True)
     image = models.ImageField(upload_to='photos/', blank=True)
-
+    #user = models.ForeignKey(User, default='')
     class Meta:
         abstract = True
 

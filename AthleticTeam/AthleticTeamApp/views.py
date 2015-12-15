@@ -64,14 +64,31 @@ class EditPlayer(generic.DetailView):
     template_name = 'player/edit.html'
 
 class add_players_to_teams(generic.ListView):
-    model = Player
+    model = Team
     template_name = 'player/player_team.html'
-    context_object_name = 'players_list'
+    context_object_name = 'teams_list'
     
 def all_teams(request):
-    teams = Team.objects.all()[0]
-    return render_to_response('/player/edit.html',{'teams': teams})
-    
+    players = request.POST.getlist('players')
+    try :
+      team = request.POST['teams']
+    except (KeyError, Team.DoesNotExist):
+        # Redisplay the Announcement voting form.
+        return render(request, 'player/player_team.html', {
+            'teams_list': Team.objects.all ,
+            'error_message': "Oops you didn't select a Team. Please choose again",
+        })
+    else:  
+      print "Team:" + team
+      print  players
+      for player in players:
+	
+	temp = get_object_or_404(Player, pk=player)
+	temp.team = Team.objects.get(id=team)
+	temp.save()
+      
+      return HttpResponseRedirect(reverse('AthleticTeamApp:ShowPlayers'))
+  
 def create_a_player(request):     
     p = Team.objects.all()
     selected_team = get_object_or_404(Team, pk=request.POST['team'])
