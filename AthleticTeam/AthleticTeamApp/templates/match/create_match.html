@@ -1,0 +1,63 @@
+{% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+<title>Home</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+{% endblock %}
+
+
+{% block container %}
+
+	<!-- Creating Match -->
+    <h2>Creating Match</h2>
+    
+    
+
+    <form action="{% url 'AthleticTeamApp:match_stg1'  %}" method="post">
+        {% csrf_token %}
+        <!-- Text area for Title-->
+
+        <h3>Select Team A from your teams</h3>
+		<select name="team_a">
+            {% for team in teams_list %}
+                <option value="{{ team.id }}">
+                {{ team.team_name }}
+                </option>
+            {% endfor %}
+        </select>
+        <br />
+
+        <h3>Name of Team B</h3>
+		<input type="text" class="text_title" id="TeamB" name="team_b"/>
+		<br />
+
+        <h3>Enter Points of Team A</h3>
+        <input type="number" id="points_team_a" name="points_a"/>
+        <br />   
+        
+        <h3>Enter Points of Team B</h3>
+        <input type="number" id="points_team_b" name="points_b"/>
+        <br />
+
+        <h3>Enter Stadium</h3>
+        <input type="text" class="text_title" id="stadium_id" name="stadium"/>
+        <br />
+
+        <h3>Enter info of the game</h3>
+        <textarea type="textarea" class="text_edit" id="info_id" name="info"></textarea>
+
+        <h3>Select home Team</h3>
+        <select name="home_away">
+            <option name="home_team_a">Team A</option>
+            <option name="home_team_b">Team B</option>
+        </select>
+        <br />
+
+        <div class="margin-top-medium">
+        	<input type="submit" name="submit" value="Create" class="btn btn-success btn-lg" />
+        </div>
+    </form>
+
+{% endblock%}

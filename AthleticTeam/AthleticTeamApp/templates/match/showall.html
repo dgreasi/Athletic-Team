@@ -1,6 +1,14 @@
 {% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+<title>Home</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+{% endblock %}
+
 {% block container %}
-{% if matches_list%}
+{% if matches_list %}
     <ul>
     <h2> Matches</h2>
     {% for match in matches_list %}

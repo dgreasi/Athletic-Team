@@ -8,6 +8,10 @@ class Person(models.Model):
     info = models.TextField(blank=True)
     #image = models.ImageField(upload_to='photos/', blank=True)
 
+    def __str__(self):              # __unicode__ on Python 2
+        return self.last_name
+
+
     class Meta:
         abstract = True
 
@@ -76,7 +80,9 @@ class Match(models.Model):
 
     # model relationships
     home_team = models.ForeignKey(Team, related_name='home_team',null=True)
-    away_team = models.ForeignKey(Team, related_name='away_team',null=True)
+    away_team = models.CharField(max_length=30, blank=True)
+
+    home_away = models.CharField(max_length=30, blank=True)
 
     players = models.ManyToManyField(Player, through='MatchPlayerStatistics')
 

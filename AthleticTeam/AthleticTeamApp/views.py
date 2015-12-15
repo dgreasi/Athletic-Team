@@ -14,6 +14,9 @@ from django.views.generic import TemplateView
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
 
+import datetime
+from django.utils import timezone
+
 # Create your views here.
 class ShowCoachingStaffMembers(generic.ListView):
     model = CoachingStaffMember
@@ -46,6 +49,11 @@ class ShowMatch(generic.DetailView):
     template_name = 'match/show.html'
 
 
+class CreateMatch(generic.ListView):
+    model = Team
+    template_name = 'match/create_match.html'
+    context_object_name = "teams_list"
+
 # Create your views here.
 class ShowTeams(generic.ListView):
     model = Team
@@ -56,3 +64,30 @@ class ShowTeam(generic.DetailView):
     model = Team
     template_name = 'team/show.html'
 
+
+def match_creator(request):
+    team_a_id = request.POST['team_a']
+    team_a = get_object_or_404(Team, pk=team_a_id)
+
+    team_b = request.POST['team_b']
+
+    points_a = int(request.POST.get('points_a', False))
+    points_b = int(request.POST.get('points_b', False))
+    
+
+    stadium = request.POST['stadium']
+    info = request.POST['info']
+
+    home_away_team = request.POST['home_away']
+    print "PAOK"
+    match_to_send = Match(home_pts=points_a, away_pts=points_b, stadium=stadium, date=datetime.datetime.now(), time=timezone.now(), info=info, home_team=team_a, away_team=team_b, home_away=home_away_team)
+    
+    match_to_send.save()  
+
+    return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
+    # if text_a == text_b:
+        
+    #     return HttpResponseRedirect(reverse('AthleticTeamApp:index'))
+    # else:
+    #     #prin error mesg MESSAGES DJANGO
+    #     return HttpResponseRedirect(reverse('AthleticTeamApp:changePass'))
