@@ -28,7 +28,6 @@ from django.template import Context
 def contact(request):
     form_class = ContactForm
 
-    # new logic!
     if request.method == 'POST':
         form = form_class(data=request.POST)
 
@@ -47,7 +46,7 @@ def contact(request):
             })
             content = template.render(context)
 
-            email = EmailMessage( "New contact form submission", content, "Your website" +'<hi@weddinglovely.com>', ['youremail@gmail.com'],
+            email = EmailMessage( "New contact form submission", content, "Your website" +'<hi@teamapp.com>', ['youremail@gmail.com'],
                 headers = {'Reply-To': contact_email }
             )
             email.send()
