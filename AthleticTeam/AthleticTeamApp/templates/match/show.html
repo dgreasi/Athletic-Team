@@ -8,11 +8,65 @@
 {% endblock %}
 
 {% block container %}
+
+{% load filters %}
+{% if match.home_away|str_equal:"Team B" %}
+    <div class="table-responsive">  
+        <table class="table" width="300">
+            <thead>
+                <th width="100">{{match.away_team}}</th>
+                <th width="100">VS</th>
+                <th width="100">{{match.home_team}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td width="100">{{match.away_pts}}</td>
+                <td width="100">-</td>
+                <td width="100">{{match.home_pts}}</td>
+              </tr>
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <div class="table-responsive">  
+        <table class="table" width="300">
+            <thead>
+                <th width="100">{{ match.home_team }}</th>
+                <th width="100">VS</th>
+                <th width="100">{{ match.away_team }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td width="100">{{ match.home_pts }}</td>
+                <td width="100">-</td>
+                <td width="100">{{ match.away_pts }}</td>
+              </tr>
+            </tbody>
+        </table>
+    </div>
+{% endif %}
+
+<h3>Information about match</h3>
 <ul>
-{% for name, value in match.get_fields %}
-{#  {% if value %}#}
-    <li>{{ name }} => {{ value }}</li>
-{#  {% endif %}#}
-{% endfor %}
+    <p>Stadium: {{ match.stadium }}</p>
+    <p>Date of match: {{ match.date }}</p>
+    <p>Time of match: {{ match.time }}</p>
+    <p>Comments about match: {{ match.info }}</p>
 </ul>
+
+<h3>Players</h3>
+{% if match.matchPlayerStatistics_set.all %}
+    <!-- print player stats -->
+{% else %}
+    <p>No players added to this match yet</p>
+{% endif %}
+
+<button class="btn btn-md btn-primary" name="matches" id="matches_id" type="submit">Show all matches</button>
+
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="{% static 'js/myscript.js' %}"></script>
 {% endblock %}

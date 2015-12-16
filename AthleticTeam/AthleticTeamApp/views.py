@@ -43,15 +43,13 @@ class ShowMatches(generic.ListView):
     model = Match
     template_name = 'match/showall.html'
     context_object_name = 'matches_list'
+    paginate_by = 3
 
     def get_queryset(self):
         """
-        Return the last three published Match (not including those set to be
-        published in the future).
+        Return order_by date).
         """
-        return Match.objects.filter(
-            date__lte=timezone.now()
-        ).order_by('-date')
+        return Match.objects.filter().order_by('-date')
 
 class ShowMatch(generic.DetailView):
     model = Match
@@ -74,6 +72,7 @@ class ShowTeam(generic.DetailView):
     template_name = 'team/show.html'
 
 
+
 def match_creator(request):
     team_a_id = request.POST['team_a']
     team_a = get_object_or_404(Team, pk=team_a_id)
@@ -82,16 +81,17 @@ def match_creator(request):
 
     points_a = int(request.POST.get('points_a', False))
     points_b = int(request.POST.get('points_b', False))
-    
 
+    date_match = request.POST['date_match']
+    time_match = request.POST['time_match']
     stadium = request.POST['stadium']
     info = request.POST['info']
 
     home_away_team = request.POST['home_away']
-    print "PAOK"
-    match_to_send = Match(home_pts=points_a, away_pts=points_b, stadium=stadium, date=datetime.datetime.now(), time=timezone.now(), info=info, home_team=team_a, away_team=team_b, home_away=home_away_team)
+
+    match_to_send = Match(home_pts=points_a, away_pts=points_b, stadium=stadium, date=date_match, time=time_match, info=info, home_team=team_a, away_team=team_b, home_away=home_away_team)
     
     match_to_send.save()  
 
-    return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
+    return HttpResponseRedirect(reverse('AthleticTeamApp:ShowMatches'))
 

@@ -6,6 +6,20 @@ $('#visitor').click(function() {
   window.location='/home';
 });
 
+$('#matches_id').click(function() {
+  window.location='/matches';
+});
+
+$(document).ready(function() {
+    $("#datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+});
+
+$(document).ready(function() {
+    $( '#durationExample' ).timepicker({
+    'minTime': '2:00pm',
+    'maxTime': '11:30pm',
+    });
+});
 
 $(document).ready(function() {
     $('.ranking-slider').each(function() {

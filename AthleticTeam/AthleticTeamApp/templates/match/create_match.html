@@ -5,12 +5,14 @@
 <title>Home</title>
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/jquery.timepicker.css' %}" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 {% endblock %}
 
 
 {% block container %}
 
-	<!-- Creating Match -->
+    <!-- Creating Match -->
     <h2>Creating Match</h2>
     
     
@@ -20,7 +22,7 @@
         <!-- Text area for Title-->
 
         <h3>Select Team A from your teams</h3>
-		<select name="team_a">
+        <select name="team_a">
             {% for team in teams_list %}
                 <option value="{{ team.id }}">
                 {{ team.team_name }}
@@ -30,8 +32,8 @@
         <br />
 
         <h3>Name of Team B</h3>
-		<input type="text" class="text_title" id="TeamB" name="team_b"/>
-		<br />
+        <input type="text" class="text_title" id="TeamB" name="team_b"/>
+        <br />
 
         <h3>Enter Points of Team A</h3>
         <input type="number" id="points_team_a" name="points_a"/>
@@ -39,6 +41,14 @@
         
         <h3>Enter Points of Team B</h3>
         <input type="number" id="points_team_b" name="points_b"/>
+        <br />
+
+        <h3>Enter Date of match</h3>
+        <input type="text" id="datepicker" name="date_match"/>
+        <br />
+
+        <h3>Enter Time of match</h3>
+        <input type="text" id="durationExample" name="time_match"/>
         <br />
 
         <h3>Enter Stadium</h3>
@@ -56,8 +66,15 @@
         <br />
 
         <div class="margin-top-medium">
-        	<input type="submit" name="submit" value="Create" class="btn btn-success btn-lg" />
+            <input type="submit" name="submit" value="Create" class="btn btn-success btn-lg" />
         </div>
     </form>
 
 {% endblock%}
+
+{% block scripts %}
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script type="text/javascript" src="{% static 'js/myscript.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.timepicker.js' %}"></script>
+{% endblock %}
