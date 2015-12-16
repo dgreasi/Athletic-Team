@@ -1,0 +1,69 @@
+{% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+<title>Home</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+{% endblock %}
+
+
+{% block container %}
+  
+  <div class="container">
+    <h1>Team : {{match.home_team}} Players Stats</h1>
+    
+    <div id="table" class="table-editable">
+      <table class="table" >
+	<tr>
+	  <th>First Name</th>
+	  <th>Last Name</th>
+	  <th>MIN</th>
+	  <th>2PT-A</th>
+	  <th>2PT-M</th>
+	  <th>3PT-A</th>
+	  <th>3PT-M</th>
+	  <th>F-A</th>
+	  <th>F-M</th>
+	  <th>T0</th>
+	  <th>OFF</th>
+	  <th>DEF</th>
+	  <th>ST</th>
+	  <th>BLK</th>
+	  <th>PF</th>
+	  <th>PTS</th> 
+	</tr>
+	{% for player in match.home_team.player_set.all %}
+	  <form action="{% url 'AthleticTeamApp:all_stats'%}" method="post">
+	  {% csrf_token %}
+	  <tr>
+
+	    <td class='tdinput'><input size = 10 name = "player1" type="text" value="{{player.first_name}}" readonly/></td>
+	    <td class='tdinput'><input size = 10 name = "player2" type="text" value="{{player.last_name}}" readonly/></td>
+	    <td class='tdinput'><input size = 3 name = "min" type="text"/></td>
+	    <td class='tdinput'><input size = 2 name = "2pt-a" type="text"/></td>
+	    <td class='tdinput'><input size = 2 name = "2pt_m" type="text"/></td>
+	    <td class='tdinput'><input size = 2 name = "3pt-a" type="text"/></td>
+	    <td class='tdinput'><input size = 2 name = "3pt-m" type="text"/></td>
+	    <td class='tdinput'><input size = 2 name = "f-a" type="text"/></td> 
+	    <td class='tdinput'><input size = 2 name = "f-m" type="text"/></td>
+	    <td class='tdinput'><input size = 2 name = "to" type="text"/></td>
+	    <td class='tdinput'><input size = 2 name = "off" type="text"/></td>
+	    <td class='tdinput'><input size = 2 name = "def" type="text"/></td> 
+	    <td class='tdinput'><input size = 2 name = "st" type="text"/></td>
+	    <td class='tdinput'><input size = 2 name = "blk" type="text"/></td>
+	    <td class='tdinput'><input size = 2 name = "pf" type="text"/></td>
+	    <td class='tdinput'><input size = 2 name = "pts" type="text"/></td>
+	    
+	  </tr>
+	     
+	    {% endfor %}
+      </table>
+    </div>
+    
+  <td class='tdinput'><input size = 2 type="submit" name="submit" value="Done" class="btn btn-success"/>
+
+</div>
+
+
+{% endblock%}
