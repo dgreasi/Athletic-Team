@@ -29,3 +29,4 @@ class MatchAdmin(admin.ModelAdmin):
 admin.site.register(Team, TeamAdmin)
 admin.site.register(Match, MatchAdmin)
 admin.site.register(Player)
+admin.site.register(MatchPlayerStatistics)

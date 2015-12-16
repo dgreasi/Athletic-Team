@@ -20,4 +20,6 @@ urlpatterns = [
     url(r'^change_info/$', views.ChangePassView.as_view(), name='changePass'),
     url(r'^change_info_def/$', views.change_pass, name='change_pass_def'),
     url(r'^ranking/$', views.IndexRanking.as_view(), name='index_ranking'),
+    url(r'^player_stats/(?P<pk>[0-9]+)$', views.Players_stats.as_view(), name='Players_stats'),
+    url(r'^all_stats/$', views.all_stats, name='all_stats'),
 ]

@@ -1,7 +1,7 @@
 from django.shortcuts import render, render_to_response, redirect,get_object_or_404
 from django.views import generic
 
-from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team
+from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team ,MatchPlayerStatistics
 
 from django.http import *
 from django.template import RequestContext
@@ -132,3 +132,65 @@ def change_pass(request):
     else:
         #prin error mesg MESSAGES DJANGO
         return HttpResponseRedirect(reverse('AthleticTeamApp:changePass'))
+      
+class Players_stats(generic.DetailView):
+    model = Match
+    template_name = 'match/players_stats.html'
+    
+def all_stats(request,match_id):
+  
+  minutes = request.POST.getlist('min')
+  two_a = request.POST.getlist('2pt-a')
+  two_m = request.POST.getlist('2pt_m')
+  threept_a = request.POST.getlist('3pt-a')
+  threept_m = request.POST.getlist('3pt-m')
+  f_a = request.POST.getlist('f-a')
+  f_m = request.POST.getlist('f-m')
+  to = request.POST.getlist('to')
+  off = request.POST.getlist('off')
+  defreb = request.POST.getlist('def')
+  blk = request.POST.getlist('blk')
+  pf = request.POST.getlist('pf')
+  pts = request.POST.getlist('pts')
+  player = request.POST.getlist('players')
+  
+  
+  temp = get_object_or_404(MatchPlayerStatistics, pk = match_id)
+  
+  print temp.player.first_name
+  #for kostas in temp
+    #print kostas.first_name
+  #print lista
+  print minutes
+  print two_a
+  print two_m
+  print threept_a
+  print threept_m
+  print f_a
+  print f_m
+  print to
+  print off
+  print defreb
+  print blk
+  print pf
+  print pts
+
+  return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
+
+   #players = request.POST.getlist('players')
+    #try :
+      #team = request.POST['teams']
+    #except (KeyError, Team.DoesNotExist):
+        ## Redisplay the Announcement voting form.
+        #return render(request, 'player/player_team.html', {
+            #'teams_list': Team.objects.all ,
+            #'error_message': "Oops you didn't select a Team. Please choose again",
+        #})
+    #else:  
+      #print "Team:" + team
+      #print  players
+      #for player in players:
+	
+	#temp = get_object_or_404(Player, pk=player)
+	#temp.team = Team.objects.get(id=team)
+	#temp.save()
