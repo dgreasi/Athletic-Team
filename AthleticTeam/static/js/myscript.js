@@ -6,6 +6,10 @@ $('#visitor').click(function() {
   window.location='/home';
 });
 
+$('#create_match').click(function() {
+  window.location='/create_match';
+});
+
 $('#matches_id').click(function() {
   window.location='/matches';
 });

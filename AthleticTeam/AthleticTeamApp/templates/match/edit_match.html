@@ -1,0 +1,91 @@
+{% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+<title>Home</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/jquery.timepicker.css' %}" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+{% endblock %}
+
+{% block container %}
+<h2>Edit Match</h2>
+    
+    <form action="{% url 'AthleticTeamApp:match_edit' match.id %}" method="post">
+        {% csrf_token %}
+        <!-- Text area for Title-->
+
+        <h3>Select Team A from your teams</h3>
+        <select name="team_a">
+            <option value="{{ match.home_team.id }}">
+            {{ match.home_team }}
+            </option>
+        </select>
+        <br />
+
+        <h3>Name of Team B</h3>
+        <input type="text" class="text_title" id="TeamB" name="team_b" value="{{ match.away_team }}" />
+        <br />
+
+        <h3>Enter Points of Team A</h3>
+        <input type="number" id="points_team_a" name="points_a" value="{{ match.home_pts }}"/>
+        <br />   
+        
+        <h3>Enter Points of Team B</h3>
+        <input type="number" id="points_team_b" name="points_b" value="{{ match.away_pts }}"/>
+        <br />
+
+        <h3>Enter Date of match</h3>
+        <input type="text" id="datepicker" name="date_match" value="{{ match.date|date:"Y-m-d" }}"/>
+        <br />
+
+        <h3>Enter Time of match</h3>
+        <input type="text" id="durationExample" name="time_match" value="{{ match.time }}"/>
+        <br />
+
+        <h3>Enter Stadium</h3>
+        <input type="text" class="text_title" id="stadium_id" name="stadium" value="{{ match.stadium }}"/>
+        <br />
+
+        <h3>Enter info of the game</h3>
+        <textarea type="textarea" class="text_edit" id="info_id" name="info">{{ match.info }}</textarea>
+
+        <h3>Select home Team</h3>
+        <select name="home_away">
+            {% load filters %}
+            {% if match.home_away|str_equal:"Team A" %}
+                <option name="home_team_a" selected="selected">Team A</option>
+                <option name="home_team_b">Team B</option>
+            {% else %}
+                <option name="home_team_a">Team A</option>
+                <option name="home_team_b" selected="selected">Team B</option>
+            {% endif %}
+        </select>
+        <br />
+
+        <div class="margin-top-small">
+            <input type="submit" name="submit" value="Submit" class="btn btn-success btn-lg" />
+        </div>
+    </form>
+
+
+
+
+
+
+
+    {% load filters %}
+    {% if request.user|has_group:"Match Creator" %}
+        <div class="margin-top-small">
+            <button  type="submit" class="btn btn-success btn-lg" name="create" id="create_match">Create a new Match</button>
+        </div>
+    {% endif %}
+{% endblock%}
+
+{% block scripts %}
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script type="text/javascript" src="{% static 'js/myscript.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.timepicker.js' %}"></script>
+{% endblock %}

@@ -26,6 +26,9 @@ urlpatterns = [
     url(r'^first_rank/(?P<pk>[0-9]+)$', rlviews.FirstRank.as_view(), name='firstRank'),
     url(r'^create_match/$', views.CreateMatch.as_view(), name='CreateMatch'),
     url(r'^creating_match_stage_1/$', views.match_creator, name='match_stg1'),
+    url(r'^edit_match/(?P<pk>[0-9]+)$', views.EditMatches.as_view(), name='EditMatch'),
+    url(r'^edit_match_go_to_form/(?P<match_id>[0-9]+)$', views.edit_match, name='editmatch'),
+    url(r'^match_edit/(?P<match_id>[0-9]+)$', views.match_edit, name='match_edit'),
 
     
 ]

@@ -49,7 +49,12 @@ class ShowMatches(generic.ListView):
         """
         Return order_by date).
         """
-        return Match.objects.filter().order_by('-date')
+        return Match.objects.filter(date__lte=timezone.now()).order_by('-date')
+
+class EditMatches(generic.DetailView):
+    model = Match
+    template_name = 'match/edit_match.html'
+        
 
 class ShowMatch(generic.DetailView):
     model = Match
@@ -95,3 +100,40 @@ def match_creator(request):
 
     return HttpResponseRedirect(reverse('AthleticTeamApp:ShowMatches'))
 
+def match_edit(request, match_id):
+    match_to_edit = get_object_or_404(Match, pk=match_id)
+
+    team_a_id = request.POST['team_a']
+    team_a = get_object_or_404(Team, pk=team_a_id)
+    team_b = request.POST['team_b']
+    points_a = int(request.POST.get('points_a', False))
+    points_b = int(request.POST.get('points_b', False))
+    date_match = request.POST['date_match']
+    time_match = request.POST['time_match']
+    stadium = request.POST['stadium']
+    info = request.POST['info']
+    home_away_team = request.POST['home_away']
+
+    # EDIT FIELDS
+    match_to_edit.home_pts = points_a
+    match_to_edit.away_pts = points_b
+    match_to_edit.stadium = stadium
+    match_to_edit.date = date_match
+    match_to_edit.time = time_match
+    match_to_edit.info = info
+    match_to_edit.home_team = team_a
+    match_to_edit.away_team = team_b
+    match_to_edit.home_away = home_away_team
+
+    match_to_edit.save()  
+
+    return HttpResponseRedirect(reverse('AthleticTeamApp:ShowMatches'))
+
+def edit_match(request, match_id):
+    selected_match = get_object_or_404(Match, pk=match_id)
+
+    if 'edit' in request.POST:
+        return HttpResponseRedirect(reverse('AthleticTeamApp:EditMatch', args=(selected_match.id,)))
+    elif 'delete' in request.POST:
+        selected_match.delete()
+        return HttpResponseRedirect(reverse('AthleticTeamApp:ShowMatches'))
