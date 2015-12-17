@@ -164,7 +164,7 @@ def all_stats(request):
     
     paiktis = Player.objects.get(first_name = name1[i] , last_name = name2[i]) 
     match1 = Match.objects.get(pk = agwnas)  
-    temp = MatchPlayerStatistics.objects.get(match=match1 ,player=paiktis)  
+    temp = MatchPlayerStatistics(match=match1 ,player=paiktis,started=1)
     temp.time_played = int(minutes[i]) 
     temp.pts = int(pts[i])
     temp.two_pa = int(two_a[i])
