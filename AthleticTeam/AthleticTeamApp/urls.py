@@ -23,3 +23,5 @@ urlpatterns = [
     url(r'^player_stats/(?P<pk>[0-9]+)$', views.Players_stats.as_view(), name='Players_stats'),
     url(r'^all_stats/$', views.all_stats, name='all_stats'),
 ]
+
+    

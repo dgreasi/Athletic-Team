@@ -137,8 +137,11 @@ class Players_stats(generic.DetailView):
     model = Match
     template_name = 'match/players_stats.html'
     
-def all_stats(request,match_id):
+def all_stats(request):
   
+  agwnas = request.POST['match']
+  name1 = request.POST.getlist('player1')
+  name2 = request.POST.getlist('player2')
   minutes = request.POST.getlist('min')
   two_a = request.POST.getlist('2pt-a')
   two_m = request.POST.getlist('2pt_m')
@@ -153,44 +156,33 @@ def all_stats(request,match_id):
   pf = request.POST.getlist('pf')
   pts = request.POST.getlist('pts')
   player = request.POST.getlist('players')
+  ass = request.POST.getlist('ass')
+  st = request.POST.getlist('st')
   
   
-  temp = get_object_or_404(MatchPlayerStatistics, pk = match_id)
-  
-  print temp.player.first_name
-  #for kostas in temp
-    #print kostas.first_name
-  #print lista
-  print minutes
-  print two_a
-  print two_m
-  print threept_a
-  print threept_m
-  print f_a
-  print f_m
-  print to
-  print off
-  print defreb
-  print blk
-  print pf
-  print pts
+  for i in range(len(name1)):
+    
+    paiktis = Player.objects.get(first_name = name1[i] , last_name = name2[i]) 
+    match1 = Match.objects.get(pk = agwnas)  
+    temp = MatchPlayerStatistics.objects.get(match=match1 ,player=paiktis)  
+    temp.time_played = int(minutes[i]) 
+    temp.pts = int(pts[i])
+    temp.two_pa = int(two_a[i])
+    temp.two_pm = int(two_m[i])
+    temp.three_pa = int(threept_a[i])
+    temp.three_pm = int(threept_m[i])
+    temp.fta = int(f_a[i])
+    temp.ftm = int(f_m[i])
+    temp.tov = int(to[i])
+    temp.oreb = int(off[i])
+    temp.dreb = int(defreb[i])
+    temp.ast = int(ass[i])
+    temp.stl = int(st[i])
+    temp.blk = int(blk[i])
+    temp.pf = int(pf[i])
+    
+    temp.save()
 
-  return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
+  return HttpResponseRedirect(reverse('AthleticTeamApp:ShowMatches'))
 
-   #players = request.POST.getlist('players')
-    #try :
-      #team = request.POST['teams']
-    #except (KeyError, Team.DoesNotExist):
-        ## Redisplay the Announcement voting form.
-        #return render(request, 'player/player_team.html', {
-            #'teams_list': Team.objects.all ,
-            #'error_message': "Oops you didn't select a Team. Please choose again",
-        #})
-    #else:  
-      #print "Team:" + team
-      #print  players
-      #for player in players:
-	
-	#temp = get_object_or_404(Player, pk=player)
-	#temp.team = Team.objects.get(id=team)
-	#temp.save()
+

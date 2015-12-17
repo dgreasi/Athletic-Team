@@ -16,6 +16,7 @@
     <div id="table" class="table-editable">
       <table class="table" >
 	<tr>
+	  <th> Match id </th>
 	  <th>First Name</th>
 	  <th>Last Name</th>
 	  <th>MIN</th>
@@ -29,15 +30,16 @@
 	  <th>OFF</th>
 	  <th>DEF</th>
 	  <th>ST</th>
+	  <th>AST</th>
 	  <th>BLK</th>
 	  <th>PF</th>
 	  <th>PTS</th> 
 	</tr>
 	{% for player in match.home_team.player_set.all %}
-	  <form action="{% url 'AthleticTeamApp:all_stats'%}" method="post">
+	  <form action="{% url 'AthleticTeamApp:all_stats'  %}" method="post">
 	  {% csrf_token %}
 	  <tr>
-
+	    <td class='tdinput'><input size = 10 name = "match" type="text" value="{{match.id}}" readonly/></td>
 	    <td class='tdinput'><input size = 10 name = "player1" type="text" value="{{player.first_name}}" readonly/></td>
 	    <td class='tdinput'><input size = 10 name = "player2" type="text" value="{{player.last_name}}" readonly/></td>
 	    <td class='tdinput'><input size = 3 name = "min" type="text"/></td>
@@ -51,6 +53,7 @@
 	    <td class='tdinput'><input size = 2 name = "off" type="text"/></td>
 	    <td class='tdinput'><input size = 2 name = "def" type="text"/></td> 
 	    <td class='tdinput'><input size = 2 name = "st" type="text"/></td>
+	    <td class='tdinput'><input size = 2 name = "ass" type="text"/></td>
 	    <td class='tdinput'><input size = 2 name = "blk" type="text"/></td>
 	    <td class='tdinput'><input size = 2 name = "pf" type="text"/></td>
 	    <td class='tdinput'><input size = 2 name = "pts" type="text"/></td>
