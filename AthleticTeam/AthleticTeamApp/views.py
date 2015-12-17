@@ -2,7 +2,6 @@ from django.shortcuts import render, render_to_response, redirect,get_object_or_
 from django.views import generic
 
 from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team, Ranking, MatchPlayerStatistics
-
 from django.http import *
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
@@ -77,7 +76,6 @@ class ShowTeam(generic.DetailView):
     template_name = 'team/show.html'
 
 
-
 def match_creator(request):
     team_a_id = request.POST['team_a']
     team_a = get_object_or_404(Team, pk=team_a_id)
@@ -104,7 +102,7 @@ def match_creator(request):
     #     temp = MatchPlayerStatistics(match=match_to_send, player=p, started=1)
     #     temp.save()
 
-    return HttpResponseRedirect(reverse('AthleticTeamApp:ShowMatches'))
+    return HttpResponseRedirect(reverse('AthleticTeamApp:Players_stats', args=(match_to_send.id,)))
 
 def match_edit(request, match_id):
     match_to_edit = get_object_or_404(Match, pk=match_id)
@@ -143,3 +141,55 @@ def edit_match(request, match_id):
     elif 'delete' in request.POST:
         selected_match.delete()
         return HttpResponseRedirect(reverse('AthleticTeamApp:ShowMatches'))
+
+class Players_stats(generic.DetailView):
+    model = Match
+    template_name = 'match/players_stats.html'
+    
+def all_stats(request):
+  
+  agwnas = request.POST['match']
+  name1 = request.POST.getlist('player1')
+  name2 = request.POST.getlist('player2')
+  minutes = request.POST.getlist('min')
+  two_a = request.POST.getlist('2pt-a')
+  two_m = request.POST.getlist('2pt_m')
+  threept_a = request.POST.getlist('3pt-a')
+  threept_m = request.POST.getlist('3pt-m')
+  f_a = request.POST.getlist('f-a')
+  f_m = request.POST.getlist('f-m')
+  to = request.POST.getlist('to')
+  off = request.POST.getlist('off')
+  defreb = request.POST.getlist('def')
+  blk = request.POST.getlist('blk')
+  pf = request.POST.getlist('pf')
+  pts = request.POST.getlist('pts')
+  player = request.POST.getlist('players')
+  ass = request.POST.getlist('ass')
+  st = request.POST.getlist('st')
+  
+  
+  for i in range(len(name1)):
+    
+    paiktis = Player.objects.get(first_name = name1[i] , last_name = name2[i]) 
+    match1 = Match.objects.get(pk = agwnas)  
+    temp = MatchPlayerStatistics(match=match1 ,player=paiktis,started=1)
+    temp.time_played = int(minutes[i]) 
+    temp.pts = int(pts[i])
+    temp.two_pa = int(two_a[i])
+    temp.two_pm = int(two_m[i])
+    temp.three_pa = int(threept_a[i])
+    temp.three_pm = int(threept_m[i])
+    temp.fta = int(f_a[i])
+    temp.ftm = int(f_m[i])
+    temp.tov = int(to[i])
+    temp.oreb = int(off[i])
+    temp.dreb = int(defreb[i])
+    temp.ast = int(ass[i])
+    temp.stl = int(st[i])
+    temp.blk = int(blk[i])
+    temp.pf = int(pf[i])
+    
+    temp.save()
+
+  return HttpResponseRedirect(reverse('AthleticTeamApp:ShowMatches'))

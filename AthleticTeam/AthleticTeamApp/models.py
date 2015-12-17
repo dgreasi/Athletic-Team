@@ -67,7 +67,9 @@ class Player(Person):
     def get_fields(self):
         return [(field.name, field.value_to_string(self)) for field in Player._meta.fields]
 
-
+    def __str__(self):              # __unicode__ on Python 2
+	return self.last_name
+  
 class Match(models.Model):
     # model fields
     home_pts = models.PositiveSmallIntegerField(blank=True, null=True)
@@ -89,7 +91,9 @@ class Match(models.Model):
     def get_fields(self):
         return [(field.name, field.value_to_string(self)) for field in Match._meta.fields]
 
-
+    def __str__(self):              # __unicode__ on Python 2
+	return self.stadium
+  
 class MatchPlayerStatistics(models.Model):
     match = models.ForeignKey(Match)
     player = models.ForeignKey(Player)
