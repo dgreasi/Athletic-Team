@@ -1,7 +1,7 @@
 from django.shortcuts import render, render_to_response, redirect,get_object_or_404
 from django.views import generic
 
-from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team, Ranking
+from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team, Ranking, MatchPlayerStatistics
 
 from django.http import *
 from django.template import RequestContext
@@ -95,8 +95,14 @@ def match_creator(request):
     home_away_team = request.POST['home_away']
 
     match_to_send = Match(home_pts=points_a, away_pts=points_b, stadium=stadium, date=date_match, time=time_match, info=info, home_team=team_a, away_team=team_b, home_away=home_away_team)
-    
+
     match_to_send.save()  
+
+    # list1 = Player.objects.filter(team=team_a)
+
+    # for p in list1:
+    #     temp = MatchPlayerStatistics(match=match_to_send, player=p, started=1)
+    #     temp.save()
 
     return HttpResponseRedirect(reverse('AthleticTeamApp:ShowMatches'))
 
