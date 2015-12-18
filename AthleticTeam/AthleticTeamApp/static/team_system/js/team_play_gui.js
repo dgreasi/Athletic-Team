@@ -65,6 +65,9 @@ function init(data,editMode){
         document.getElementById("deletePass").onclick = function(){
             changeMode(svgData,'deletePass');
         };
+		document.getElementById("save").onclick = function(){
+            saveData(svgData);
+        };
 
     }
     document.getElementById('prevIter').onclick = function(){
@@ -942,6 +945,7 @@ function changeMode(svgData, mode){
             disableDrawingPass(svgData);
             disableDeletePass(svgData);
             enableDeletePath(svgData);
+    changeM
             break;
         case 'deletePass':
             disablePlayersMovement(svgData);
@@ -1052,4 +1056,5 @@ function saveData(svgData){
         }
     }
     document.getElementById('id_data').innerHTML = JSON.stringify(output);
+
 }
