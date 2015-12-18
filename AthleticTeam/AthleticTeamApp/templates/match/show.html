@@ -57,7 +57,6 @@
 </ul>
 
 <h3>Players</h3>
-
       
     <div class="container">
         <h1>Team : {{match.home_team}} Players Stats</h1>
@@ -84,30 +83,35 @@
           <th>PF</th>
           <th>PTS</th> 
         </tr>
-        {% for player in match.home_team.player_set.all %}
-          <tr>
+        <!-- { for player in match.players.all }
+          {{ player.matchplayerstatistics_set }}
+          { for name,value in player.matchplayerstatistics.get_fields }
+ -->
+            <td> value </td>
+          <!-- { endfor }
+          { endfor } -->
+         <!--  <tr>
             <td class='tdinput'><input size = 10 name = "match" type="text" value="{{match.id}}" readonly/></td>
             <td class='tdinput'><input size = 10 name = "player1" type="text" value="{{player.first_name}}" readonly/></td>
             <td class='tdinput'><input size = 10 name = "player2" type="text" value="{{player.last_name}}" readonly/></td>
-            <td  class='tdinput'><input value="{{ player.time_played }}" size = 3 name = "min" type="text"readonly /></td>
-            <td  class='tdinput'><input value="{{ player.two_pa }}" size = 2 name = "2pt-a" type="text"readonly /></td>
-            <td  class='tdinput'><input value="{{ player.two_pm }}" size = 2 name = "2pt_m" type="text"readonly /></td>
-            <td  class='tdinput'><input value="{{ player.three_pa }}" size = 2 name = "3pt-a" type="text"readonly /></td>
-            <td  class='tdinput'><input value="{{ player.three_pm }}" size = 2 name = "3pt-m" type="text"readonly /></td>
-            <td  class='tdinput'><input value="{{ player.fta }}" size = 2 name = "f-a" type="text"readonly / ></td> 
-            <td  class='tdinput'><input value="{{ player.ftm }}" size = 2 name = "f-m" type="text"readonly /></td>
-            <td  class='tdinput'><input value="{{ player.tov }}" size = 2 name = "to" type="text"readonly /></td>
-            <td  class='tdinput'><input value="{{ player.oreb }}" size = 2 name = "off" type="text"readonly /></td>
-            <td  class='tdinput'><input value="{{ player.dreb }}" size = 2 name = "def" type="text"readonly / ></td> 
-            <td  class='tdinput'><input value="{{ player.ast }}" size = 2 name = "st" type="text"readonly /></td>
-            <td  class='tdinput'><input value="{{ player.stl }}" size = 2 name = "ass" type="text"readonly /></td>
-            <td  class='tdinput'><input value="{{ player.blk }}" size = 2 name = "blk" type="text"readonly /></td>
-            <td  class='tdinput'><input value="{{ player.pf }}" size = 2 name = "pf" type="text"readonly /></td>
-            <td  class='tdinput'><input value="{{ player.pts }}" size = 2 name = "pts" type="text"readonly /></td>
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics_set.all.time_played }}" size = 3 name = "min" type="text"readonly /></td>
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics.two_pa }}" size = 2 name = "2pt-a" type="text"readonly /></td>
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics.two_pm }}" size = 2 name = "2pt_m" type="text"readonly /></td>
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics.three_pa }}" size = 2 name = "3pt-a" type="text"readonly /></td>
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics.three_pm }}" size = 2 name = "3pt-m" type="text"readonly /></td>
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics.fta }}" size = 2 name = "f-a" type="text"readonly / ></td> 
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics.ftm }}" size = 2 name = "f-m" type="text"readonly /></td>
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics.tov }}" size = 2 name = "to" type="text"readonly /></td>
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics.oreb }}" size = 2 name = "off" type="text"readonly /></td>
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics.dreb }}" size = 2 name = "def" type="text"readonly / ></td> 
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics.ast }}" size = 2 name = "st" type="text"readonly /></td>
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics.stl }}" size = 2 name = "ass" type="text"readonly /></td>
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics.blk }}" size = 2 name = "blk" type="text"readonly /></td>
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics.pf }}" size = 2 name = "pf" type="text"readonly /></td>
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics.pts }}" size = 2 name = "pts" type="text"readonly /></td>
             
-          </tr>
-             
-        {% endfor %}
+          </tr> -->
+        
           </table>
         </div>
     </div>
