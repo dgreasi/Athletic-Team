@@ -1,0 +1,13 @@
+{% if teamplay_list %}
+    <ul>
+    {% for teamplay in teamplay_list %}
+        <li>
+            <a href="{% url 'AthleticTeamApp:ShowTeamPlay' teamplay.id %}">
+                {{ teamplay.id}}
+            </a>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No team plays are available.</p>
+{% endif %}

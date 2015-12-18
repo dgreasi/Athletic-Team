@@ -1,8 +1,7 @@
-from django.shortcuts import render, render_to_response, redirect
+from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 from django.views import generic
 
-from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team
-
+from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team, TeamPlay
 from django.http import *
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
@@ -16,10 +15,6 @@ from django.utils.decorators import method_decorator
 
 
 # Create your views here.
-def gui(request):
-    return render(request, 'gui.html')
-
-
 class ShowCoachingStaffMembers(generic.ListView):
     model = CoachingStaffMember
     template_name = 'coaching_staff_member/showall.html'
@@ -62,21 +57,30 @@ class ShowTeam(generic.DetailView):
 
 
 class ShowTeamPlays(generic.ListView):
-    model = Player
+    model = TeamPlay
     template_name = 'team_play/showall.html'
 
 
 class ShowTeamPlay(generic.DetailView):
-    model = Player
+    model = TeamPlay
     template_name = 'team_play/show.html'
 
 
-def create_team_play(request):
-    pass
+class CreateTeamPlay(generic.CreateView):
+    model = TeamPlay
+    fields = ['name', 'data']
+    template_name = 'team_play/create_form.html'
 
+    def get_success_url(self):
+        return reverse('AthleticTeamApp:ShowTeamPlay', args=(self.object.id,))
 
-def edit_team_play(request):
-    pass
+class EditTeamPlay(generic.UpdateView):
+    model = TeamPlay
+    fields = ['name', 'data']
+    template_name = 'team_play/edit_form.html'
+
+    def get_success_url(self):
+        return reverse('AthleticTeamApp:ShowTeamPlay', args=(self.object.id,))
 
 
 def login_user(request):

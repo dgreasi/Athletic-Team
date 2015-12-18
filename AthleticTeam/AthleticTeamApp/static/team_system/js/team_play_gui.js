@@ -1,4 +1,4 @@
-function init(data,viewMode){
+function init(data,editMode){
     var svgData;
     var s = Snap('#svg');
     var svg = document.getElementById('svg');
@@ -18,13 +18,13 @@ function init(data,viewMode){
             'numOfIterations': null,
             'mode': null
         };
-    if(viewMode){//if true indicates view mode
-        svgData.mode = 'none'
-    }
-    else{
+    if(editMode){//if true indicates view mode
         svgData.mode = ''
     }
-    image = s.image('/static/images/basketball-court.png', 0, 0, svgData.width, svgData.height);
+    else{
+        svgData.mode = 'none'
+    }
+    image = s.image('/static/team_system/images/basketball-court.png', 0, 0, svgData.width, svgData.height);
     image.drag(function () {});//disabling drag utility for the bg image
     if(data){
         recreateData(svgData,data);
@@ -46,25 +46,27 @@ function init(data,viewMode){
         svgData.players = createPlayers(svgData);
         svgData.ball = createBall(svgData);
     }
+    if(editMode){
+        document.getElementById("movePlayer").onclick = function(){
+            changeMode(svgData,'movePlayer');
+        };
+        document.getElementById("moveBall").onclick = function(){
+            changeMode(svgData,'moveBall');
+        };
+        document.getElementById("drawPath").onclick = function(){
+            changeMode(svgData,'drawPath');
+        };
+        document.getElementById("drawPass").onclick = function(){
+            changeMode(svgData,'drawPass');
+        };
+        document.getElementById("deletePath").onclick = function(){
+            changeMode(svgData,'deletePath');
+        };
+        document.getElementById("deletePass").onclick = function(){
+            changeMode(svgData,'deletePass');
+        };
 
-    document.getElementById("movePlayer").onclick = function(){
-        changeMode(svgData,'movePlayer');
-    };
-    document.getElementById("moveBall").onclick = function(){
-        changeMode(svgData,'moveBall');
-    };
-    document.getElementById("drawPath").onclick = function(){
-        changeMode(svgData,'drawPath');
-    };
-    document.getElementById("drawPass").onclick = function(){
-        changeMode(svgData,'drawPass');
-    };
-    document.getElementById("deletePath").onclick = function(){
-        changeMode(svgData,'deletePath');
-    };
-    document.getElementById("deletePass").onclick = function(){
-        changeMode(svgData,'deletePass');
-    };
+    }
     document.getElementById('prevIter').onclick = function(){
         changeMode(svgData,'prevIter');
     };
@@ -76,53 +78,6 @@ function init(data,viewMode){
         svg.innerHTML = 'numOfIter : ' + svgData.numOfIterations + '<br>' +
                     'curr : ' + svgData.curr + '<br>' +
                     'playerWithTheBall :  ' + svgData.playerWithTheBall[svgData.curr].g.attr('id');
-    };
-    document.getElementById('save').onclick = function(){
-        changeMode(svgData,'idle');
-        var i,j;
-        var r = svgData.configData.r;
-        var ball = svgData.ball.clone();
-        var x = parseInt(svgData.playerWithTheBall[0].elem.attr('cx')) + r / 2;
-        var y = parseInt(svgData.playerWithTheBall[0].elem.attr('cy')) + r / 2;
-        ball.attr({'cx' : x, 'cy' : y});
-        ball.remove();
-        var output = {
-            'configData' : svgData.configData,
-            'players' : [],
-            'playerWithTheBall' : [],
-            'ball' : ball,
-            'receiverOfTheBall' : [],
-            'pass' : [],
-            'numOfIterations' : svgData.numOfIterations
-        };
-        for(i=0;i<svgData.configData.numOfPlayers;i++) {
-            output.players[i] ={
-                'color' : svgData.players[i].color,
-                'g' : svgData.players[i].g.clone(),
-                'move' : []
-            };
-            if(svgData.players[i].move[0]) {
-                var movePoint = svgData.players[i].move[0].getPointAtLength(0);
-                output.players[i].g.select('circle').attr({ cx: movePoint.x, cy: movePoint.y });
-                output.players[i].g.select('text').attr({'x':movePoint.x-r/4, 'y':movePoint.y+r/4});
-            }
-            output.players[i].g.remove();
-            for(j=0;j<=svgData.numOfIterations;j++){
-                if(svgData.players[i] === svgData.playerWithTheBall[j]){
-                    output.playerWithTheBall[j] = i;
-                }
-                if(svgData.players[i] === svgData.receiverOfTheBall[j]){
-                    output.receiverOfTheBall[j] = i;
-                }
-                output.players[i].move[j] = svgData.players[i].move[j];
-            }
-        }
-        for(j=0;j<=svgData.numOfIterations;j++){
-            if(svgData.pass[j]){
-                output.pass[j] = svgData.pass[j];
-            }
-        }
-        alert(JSON.stringify(output));//TODO CHANGE TO PUSH
     };
     disableButtons(svgData);
     enableButtons(svgData);
@@ -1049,4 +1004,52 @@ function disableButtons(svgData){
     }
     document.getElementById('prevIter').disabled = true;
     document.getElementById('nextIter').disabled = true;
+}
+
+function saveData(svgData){
+    changeMode(svgData,'idle');
+    var i,j;
+    var r = svgData.configData.r;
+    var ball = svgData.ball.clone();
+    var x = parseInt(svgData.playerWithTheBall[0].elem.attr('cx')) + r / 2;
+    var y = parseInt(svgData.playerWithTheBall[0].elem.attr('cy')) + r / 2;
+    ball.attr({'cx' : x, 'cy' : y});
+    ball.remove();
+    var output = {
+        'configData' : svgData.configData,
+        'players' : [],
+        'playerWithTheBall' : [],
+        'ball' : ball,
+        'receiverOfTheBall' : [],
+        'pass' : [],
+        'numOfIterations' : svgData.numOfIterations
+    };
+    for(i=0;i<svgData.configData.numOfPlayers;i++) {
+        output.players[i] ={
+            'color' : svgData.players[i].color,
+            'g' : svgData.players[i].g.clone(),
+            'move' : []
+        };
+        if(svgData.players[i].move[0]) {
+            var movePoint = svgData.players[i].move[0].getPointAtLength(0);
+            output.players[i].g.select('circle').attr({ cx: movePoint.x, cy: movePoint.y });
+            output.players[i].g.select('text').attr({'x':movePoint.x-r/4, 'y':movePoint.y+r/4});
+        }
+        output.players[i].g.remove();
+        for(j=0;j<=svgData.numOfIterations;j++){
+            if(svgData.players[i] === svgData.playerWithTheBall[j]){
+                output.playerWithTheBall[j] = i;
+            }
+            if(svgData.players[i] === svgData.receiverOfTheBall[j]){
+                output.receiverOfTheBall[j] = i;
+            }
+            output.players[i].move[j] = svgData.players[i].move[j];
+        }
+    }
+    for(j=0;j<=svgData.numOfIterations;j++){
+        if(svgData.pass[j]){
+            output.pass[j] = svgData.pass[j];
+        }
+    }
+    document.getElementById('id_data').innerHTML = JSON.stringify(output);
 }

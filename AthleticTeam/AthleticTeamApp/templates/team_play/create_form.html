@@ -1,0 +1,34 @@
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'team_system/css/style.css' %}" />
+<script type="text/javascript" src="{% static 'team_system/js/team_play_gui.js' %}"></script>
+<script src="{% static 'team_system/js/snap.svg-min.js' %}"></script>
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Save" />
+</form>
+
+<div id="svg-container">
+    <svg id="svg" width="800" height="500">
+    </svg>
+</div>
+
+<button id="movePlayer" class="movePlayer">movePlayer</button>
+<button id="moveBall" class="moveBall">moveBall</button>
+<button id="drawPath" class="drawPath">drawPath</button>
+<button id="drawPass" class="drawPass">drawPass</button>
+<button id="deletePath" class="deletePath">deletePath</button>
+<button id="deletePass" class="deletePass">deletePass</button>
+<br>
+<button id="prevIter" class="prevIter">prevIter</button>
+<button id="nextIter" class="nextIter">nextIter</button>
+<br>
+<button id="help" class="help">help</button>
+<button id="save" class="save">save</button>
+
+<script>
+    window.onload = function(){
+        init(null,'editMode');
+    };
+</script>
