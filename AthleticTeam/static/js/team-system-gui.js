@@ -1,4 +1,4 @@
-function init(data,mode){
+function init(data,viewMode){
     var svgData;
     var s = Snap('#svg');
     var svg = document.getElementById('svg');
@@ -16,15 +16,24 @@ function init(data,mode){
             'pass': [],
             'curr': 0,
             'numOfIterations': null,
-            'mode': mode
+            'mode': null
         };
+    if(viewMode){//if true indicates view mode
+        svgData.mode = 'none'
+    }
+    else{
+        svgData.mode = ''
+    }
     image = s.image('/static/images/basketball-court.png', 0, 0, svgData.width, svgData.height);
     image.drag(function () {});//disabling drag utility for the bg image
     if(data){
         recreateData(svgData,data);
     }
     else{
-        var r = 20;
+        var r = svgData.width * svgData.height / 20000;
+        if(r === 0){
+            r = 1;
+        }
         var numOfPlayers = 10;
         svgData.configData = {
                 'r': r,
@@ -115,8 +124,7 @@ function init(data,mode){
         }
         alert(JSON.stringify(output));//TODO CHANGE TO PUSH
     };
-    hideUnusedButtons(svgData.mode);
-    disableButtons();
+    disableButtons(svgData);
     enableButtons(svgData);
     return svgData;
 }
@@ -192,6 +200,7 @@ function createPlayer(svgData, data){
 
     elem = s.circle(x,y,r);
     text = s.text(x-r/4,y+r/4,data.label);
+    text.attr('font-size',r/1.2);
     elem.attr({
         'fill':data.color
     });
@@ -874,7 +883,7 @@ function doMoves(svgData){
         }
     }
     if(playersMoving || svgData.pass[svgData.curr]){
-        disableButtons();
+        disableButtons(svgData);
     }
     if(svgData.pass[svgData.curr]){
         svgData.pass[svgData.curr].attr('display', 'none');
@@ -1028,26 +1037,16 @@ function enableButtons(svgData){
     document.getElementById('prevIter').disabled = false;
     document.getElementById('nextIter').disabled = false;
 }
-function disableButtons(){
-    document.getElementById("movePlayer").disabled = true;
-    document.getElementById("moveBall").disabled = true;
-    document.getElementById("drawPath").disabled = true;
-    document.getElementById("drawPass").disabled = true;
-    document.getElementById("deletePath").disabled = true;
-    document.getElementById("deletePass").disabled = true;
-    document.getElementById("save").disabled = true;
+function disableButtons(svgData){
+    if(svgData.mode === '') {//indicates edit mode is on
+        document.getElementById("movePlayer").disabled = true;
+        document.getElementById("moveBall").disabled = true;
+        document.getElementById("drawPath").disabled = true;
+        document.getElementById("drawPass").disabled = true;
+        document.getElementById("deletePath").disabled = true;
+        document.getElementById("deletePass").disabled = true;
+        document.getElementById("save").disabled = true;
+    }
     document.getElementById('prevIter').disabled = true;
     document.getElementById('nextIter').disabled = true;
-}
-
-function hideUnusedButtons(mode){
-    if(mode === 'none'){
-        document.getElementById("movePlayer").style.display = 'none';
-        document.getElementById("moveBall").style.display = 'none';
-        document.getElementById("drawPath").style.display = 'none';
-        document.getElementById("drawPass").style.display = 'none';
-        document.getElementById("deletePath").style.display = 'none';
-        document.getElementById("deletePass").style.display = 'none';
-        document.getElementById("save").style.display = 'none';
-    }
 }
