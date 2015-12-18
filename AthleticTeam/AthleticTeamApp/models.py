@@ -13,13 +13,13 @@ class Person(models.Model):
 
 
 class Team(models.Model):
-  team_name = models.CharField(max_length=30, blank=True)
-    
-  def __str__(self):              # __unicode__ on Python 2
-    return self.team_name
-  
-  def get_fields(self):
-    return [(field.name, field.value_to_string(self)) for field in Team._meta.fields]
+    team_name = models.CharField(max_length=30, blank=True)
+
+    def __str__(self):              # __unicode__ on Python 2
+        return self.team_name
+
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self)) for field in Team._meta.fields]
 
 
 class CoachingStaffMember(Person):
@@ -108,6 +108,7 @@ class MatchPlayerStatistics(models.Model):
     def get_fields(self):
         return [(field.name, field.value_to_string(self)) for field in MatchPlayerStatistics._meta.fields]
 
+
 class Ranking(models.Model):
     player = models.ForeignKey(Player)
 
@@ -146,3 +147,15 @@ class Ranking(models.Model):
         overall = k / rank_obj.count()
 
         return overall
+
+
+class TeamPlay(models.Model):
+    name = models.CharField(max_length=30, default='')
+    data = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self)) for field in TeamPlay._meta.fields]
+

@@ -1,8 +1,7 @@
 from django.shortcuts import render, render_to_response, redirect,get_object_or_404
 from django.views import generic
 
-from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team, Ranking
-
+from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team, Ranking, TeamPlay
 from django.http import *
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
@@ -13,6 +12,7 @@ from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import TemplateView
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
+
 
 # Create your views here.
 class ShowCoachingStaffMembers(generic.ListView):
@@ -56,3 +56,29 @@ class ShowTeam(generic.DetailView):
     model = Team
     template_name = 'team/show.html'
 
+
+class ShowTeamPlays(generic.ListView):
+    model = TeamPlay
+    template_name = 'team_play/showall.html'
+
+
+class ShowTeamPlay(generic.DetailView):
+    model = TeamPlay
+    template_name = 'team_play/show.html'
+
+
+class CreateTeamPlay(generic.CreateView):
+    model = TeamPlay
+    fields = ['name', 'data']
+    template_name = 'team_play/create_form.html'
+
+    def get_success_url(self):
+        return reverse('AthleticTeamApp:ShowTeamPlay', args=(self.object.id,))
+
+class EditTeamPlay(generic.UpdateView):
+    model = TeamPlay
+    fields = ['name', 'data']
+    template_name = 'team_play/edit_form.html'
+
+    def get_success_url(self):
+        return reverse('AthleticTeamApp:ShowTeamPlay', args=(self.object.id,))
