@@ -2,21 +2,51 @@
 
 {% block head %}
 {% load staticfiles %}
-    <title>Players All</title>
+    <title>ShowAll</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
 {% endblock %}
 
 {% block container %}
-<h2>Players</h2>
-{% if players_list %}
-    <ul>
+{% if players_list%}
+    <h2> Players</h2>
+    <table class="table table table-hover">
+            <tr>
+             <div class="row top-buffer">
+		 <td><div class="col-md-0">#</div></td>
+                 <td><div class="col-md-1">First Name</div></td>
+                 <td><div class="col-md-2">Last Name</div></td>
+                 <td><div class="col-md-3">Team</div></td>
+                 <td><div class="col-md-4">Birth Date</div></td>
+                 <td><div class="col-md-5">Height</div></td>
+                 <td><div class="col-md-6">Position</div></td>
+                 <td><div class="col-md-7">Nationality</div></td>
+            </tr>
     {% for player in players_list %}
-        <li><a href="{% url 'AthleticTeamApp:ShowPlayer' player.id %}">{{ player.first_name }} {{ player.last_name }}</a></li>
+            <tr>
+                <div class="row top-buffer">
+                    <td><div class="col-md-0">{{ player.number}}</div></td>
+                    <td><div class="col-md-1"><a href="{% url 'AthleticTeamApp:ShowPlayer' player.id %}">{{ player.first_name }}</div></td>
+                    <td><div class="col-md-2"><a href="{% url 'AthleticTeamApp:ShowPlayer' player.id %}">{{ player.last_name }}</div></td>
+                    <td><div class="col-md-2"><a href="{% url 'AthleticTeamApp:ShowTeam' player.team.id %}">{{ player.team }}</div></td>
+                    <td><div class="col-md-4">{{ player.birth_date }}</div></td>
+                    <td><div class="col-md-5">{{ player.height }}</div></td>
+                    <td><div class="col-md-6">{{ player.primary_position }}</div></td>
+                    <td><div class="col-md-7">{{ player.nationality}}</div></td>
+                </div>
+            </tr>
     {% endfor %}
-    </ul>
+    </table>
 {% else %}
     <p>No players are available.</p>
 {% endif %}
 
-{% endblock %}
+    <form action="{% url 'AthleticTeamApp:edit_players'  %}" method="get">
+        {% csrf_token %}   
+        <input type="submit" name="submit" value="Edit Players" class="btn btn-success" />
+    </form>
+        <form action="{% url 'AthleticTeamApp:create_player'  %}" method="get">
+        {% csrf_token %}   
+	<input type="submit" name="submit" value="Create New Player" class="btn btn-success" />
+    </form>  
+{% endblock%}

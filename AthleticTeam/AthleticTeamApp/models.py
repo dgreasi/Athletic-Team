@@ -6,8 +6,9 @@ class Person(models.Model):
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
     info = models.TextField(blank=True)
-    #image = models.ImageField(upload_to='photos/', blank=True)
-
+    image = models.ImageField(upload_to='photos/', blank=True)
+    #user = models.ForeignKey(User, default='')
+    
     class Meta:
         abstract = True
 
