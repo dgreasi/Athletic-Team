@@ -1,4 +1,4 @@
-function init(data){
+function init(data,mode){
     var svgData;
     var s = Snap('#svg');
     var svg = document.getElementById('svg');
@@ -15,7 +15,8 @@ function init(data){
             'receiverOfTheBall': [],
             'pass': [],
             'curr': 0,
-            'numOfIterations': null
+            'numOfIterations': null,
+            'mode': mode
         };
     image = s.image('/static/images/basketball-court.png', 0, 0, svgData.width, svgData.height);
     image.drag(function () {});//disabling drag utility for the bg image
@@ -114,6 +115,8 @@ function init(data){
         }
         alert(JSON.stringify(output));//TODO CHANGE TO PUSH
     };
+    hideUnusedButtons(svgData.mode);
+    disableButtons();
     enableButtons(svgData);
     return svgData;
 }
@@ -145,7 +148,7 @@ function recreateData(svgData,data){
                 svgData.players[i].move[j] = s.path(data.players[i].move[j].attr);
                 var end = svgData.s.circle(0,0,2);
                 svgData.players[i].move[j].attr('markerEnd', end.marker());
-                svgData.players[i].move[j].attr('display', '');
+                svgData.players[i].move[j].attr('display', svgData.mode);
             }
         }
     }
@@ -154,6 +157,7 @@ function recreateData(svgData,data){
         svgData.receiverOfTheBall[j] = svgData.players[data.receiverOfTheBall[j]];
         if(data.pass[j]){
             svgData.pass[j] = s.line(data.pass[j].attr);
+            svgData.pass[j].attr('display', svgData.mode);
         }
     }
     svgData.ball = s.circle(data.ball.attr);
@@ -920,22 +924,20 @@ function resetMoves(svgData){
                 var movePoint = svgData.players[i].move[svgData.curr].getPointAtLength(0);
                 svgData.players[i].elem.attr({ cx: movePoint.x, cy: movePoint.y });
                 svgData.players[i].text.attr({'x':movePoint.x-r/4, 'y':movePoint.y+r/4});
-                svgData.players[i].move[svgData.curr].attr('display', '');
+                svgData.players[i].move[svgData.curr].attr('display', svgData.mode);
             }
         }
         var x = parseInt(svgData.playerWithTheBall[svgData.curr].elem.attr('cx')) + r / 2;
         var y = parseInt(svgData.playerWithTheBall[svgData.curr].elem.attr('cy')) + r / 2;
         svgData.ball.attr({'cx' : x, 'cy' : y});
         if(svgData.pass[svgData.curr]){
-            svgData.pass[svgData.curr].attr('display', '');
+            svgData.pass[svgData.curr].attr('display', svgData.mode);
         }
     };
     reset();
 }
 
 function changeMode(svgData, mode){
-
-
     switch(mode){
         case 'movePlayer':
             disableBallMovement(svgData);
@@ -1012,14 +1014,17 @@ function changeMode(svgData, mode){
     }
 }
 function enableButtons(svgData){
-    if(svgData.curr === 0) {
-        document.getElementById("movePlayer").disabled = false;
-        document.getElementById("moveBall").disabled = false;
+    if(svgData.mode === '') {//indicates edit mode is on
+        if (svgData.curr === 0) {
+            document.getElementById("movePlayer").disabled = false;
+            document.getElementById("moveBall").disabled = false;
+        }
+        document.getElementById("drawPath").disabled = false;
+        document.getElementById("drawPass").disabled = false;
+        document.getElementById("deletePath").disabled = false;
+        document.getElementById("deletePass").disabled = false;
+        document.getElementById("save").disabled = false;
     }
-    document.getElementById("drawPath").disabled = false;
-    document.getElementById("drawPass").disabled = false;
-    document.getElementById("deletePath").disabled = false;
-    document.getElementById("deletePass").disabled = false;
     document.getElementById('prevIter').disabled = false;
     document.getElementById('nextIter').disabled = false;
 }
@@ -1030,6 +1035,19 @@ function disableButtons(){
     document.getElementById("drawPass").disabled = true;
     document.getElementById("deletePath").disabled = true;
     document.getElementById("deletePass").disabled = true;
+    document.getElementById("save").disabled = true;
     document.getElementById('prevIter').disabled = true;
     document.getElementById('nextIter').disabled = true;
+}
+
+function hideUnusedButtons(mode){
+    if(mode === 'none'){
+        document.getElementById("movePlayer").style.display = 'none';
+        document.getElementById("moveBall").style.display = 'none';
+        document.getElementById("drawPath").style.display = 'none';
+        document.getElementById("drawPass").style.display = 'none';
+        document.getElementById("deletePath").style.display = 'none';
+        document.getElementById("deletePass").style.display = 'none';
+        document.getElementById("save").style.display = 'none';
+    }
 }
