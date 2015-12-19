@@ -93,7 +93,7 @@ class Match(models.Model):
 
     def __str__(self):              # __unicode__ on Python 2
 	return self.stadium
-  
+
 class MatchPlayerStatistics(models.Model):
     match = models.ForeignKey(Match)
     player = models.ForeignKey(Player)
