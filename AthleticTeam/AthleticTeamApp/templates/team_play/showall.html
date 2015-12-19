@@ -11,11 +11,12 @@
 
 {% block container %}
     {% if teamplay_list %}
+        <h1>Team Plays:</h1>
         <ul>
         {% for teamplay in teamplay_list %}
             <li>
-                <a href="{% url 'AthleticTeamApp:ShowTeamPlay' teamplay.name %}">
-                    {{ teamplay.id}}
+                <a href="{% url 'AthleticTeamApp:ShowTeamPlay' teamplay.id %}">
+                    {{ teamplay.name}}
                 </a>
             </li>
         {% endfor %}
@@ -23,4 +24,9 @@
     {% else %}
         <h1>No team plays are available.</h1>
     {% endif %}
+    <br>
+    <a type="button" class="btn btn-default" aria-label="Create Team Play" href="{% url 'AthleticTeamApp:CreateTeamPlay' %}">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create
+    </a>
+    <hr>
 {% endblock %}

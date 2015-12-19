@@ -10,33 +10,19 @@
 {% endblock %}
 
 {% block container %}
-    <h1>Edit Team Play: {{ teamplay.name }}</h1>
-    <br>
-
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Save" />
-    </form>
-
-    <div id="svg-container">
-        <svg id="svg" width="800" height="500">
-        </svg>
+    <div class="row">
+        <div class="col-lg-8">
+            <h1>
+                Edit Team Play: {{ teamplay.name }}
+                <a type="button" class="btn btn-default pull-right" aria-label="Create Team Play" href="{% url 'AthleticTeamApp:ShowTeamPlay' teamplay.id %}">
+                  <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span> Back
+                </a>
+            </h1>
+            <br>
+        </div>
     </div>
-
-    <button id="movePlayer" class="movePlayer">movePlayer</button>
-    <button id="moveBall" class="moveBall">moveBall</button>
-    <button id="drawPath" class="drawPath">drawPath</button>
-    <button id="drawPass" class="drawPass">drawPass</button>
-    <button id="deletePath" class="deletePath">deletePath</button>
-    <button id="deletePass" class="deletePass">deletePass</button>
-    <br>
-    <button id="prevIter" class="prevIter">prevIter</button>
-    <button id="nextIter" class="nextIter">nextIter</button>
-    <br>
-    <button id="help" class="help">help</button>
-    <button id="save" class="save">save</button>
-
+    {% include "team_play/_gui_edit_mode.html" %}
+    <hr>
 {% endblock %}
 
 {% block scripts %}

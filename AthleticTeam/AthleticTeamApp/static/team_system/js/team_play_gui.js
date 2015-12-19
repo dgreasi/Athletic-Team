@@ -273,7 +273,7 @@ function getDefaultPosition(svgData, index){
 }
 
 function calcOffsetLeft(elem){
-    return elem.offsetLeft - document.body.scrollLeft - document.documentElement.scrollLeft;
+    return elem.offsetLeft + elem.offsetParent.offsetLeft - document.body.scrollLeft - document.documentElement.scrollLeft;
     //var parent = elem.parentNode;
     //if(parent){
     //    return calcOffsetLeft(parent);
@@ -284,7 +284,7 @@ function calcOffsetLeft(elem){
 }
 
 function calcOffsetTop(elem){
-    return elem.offsetTop - document.body.scrollTop - document.documentElement.scrollTop;
+    return elem.offsetTop + elem.offsetParent.offsetTop - document.body.scrollTop - document.documentElement.scrollTop;
     //var parent = elem.parentNode;
     //if(parent){
     //    return elem.offsetTop + calcOffsetTop(parent);
@@ -297,8 +297,8 @@ function calcOffsetTop(elem){
 
 function enablePlayersMovement(svgData){
     var movePlayer = function(dx, dy, posx, posy, e) {
-        posx = posx - document.getElementById('svg-container').offsetLeft + document.body.scrollLeft + document.documentElement.scrollLeft;
-        posy = posy - document.getElementById('svg-container').offsetTop + document.body.scrollTop + document.documentElement.scrollTop;
+        posx = e.clientX - calcOffsetLeft(document.getElementById('svg-container'));
+        posy = e.clientY - calcOffsetTop(document.getElementById('svg-container'));
         var index;
         var svg_width = svgData.width;
         var svg_height = svgData.height;
@@ -342,13 +342,22 @@ function enablePlayersMovement(svgData){
     };
     var startMovePlayer = function(){
         this.attr('cursor','move');
+        if(svgData.players[decodePlayerId(this.attr('id'))].move[svgData.curr]){
+            svgData.players[decodePlayerId(this.attr('id'))].move[svgData.curr].attr('cursor','move');
+        }
     };
     var endMovePlayer = function(){
         this.attr('cursor','grab');
+        if(svgData.players[decodePlayerId(this.attr('id'))].move[svgData.curr]){
+            svgData.players[decodePlayerId(this.attr('id'))].move[svgData.curr].attr('cursor','grab');
+        }
     };
     for(var i=0;i<svgData.configData.numOfPlayers;i++){
         svgData.players[i].g.drag(movePlayer, startMovePlayer, endMovePlayer);
         svgData.players[i].g.attr('cursor','grab');
+        if(svgData.players[i].move[svgData.curr]){
+            svgData.players[i].move[svgData.curr].attr('cursor','grab');
+        }
     }
 }
 function disablePlayersMovement(svgData){
@@ -356,13 +365,16 @@ function disablePlayersMovement(svgData){
         svgData.players[i].g.undrag();
         svgData.players[i].g.drag(function(){});
         svgData.players[i].g.attr('cursor','default');
+        if(svgData.players[i].move[svgData.curr]){
+            svgData.players[i].move[svgData.curr].attr('cursor','default');
+        }
     }
 }
 function enableBallMovement(svgData){
     var startPosition;
     var moveBall = function(dx, dy, posx, posy, e) {
-        posx = posx - calcOffsetLeft(document.getElementById('svg-container'));
-        posy = posy - calcOffsetTop(document.getElementById('svg-container'));
+        posx = e.clientX - calcOffsetLeft(document.getElementById('svg-container'));
+        posy = e.clientY - calcOffsetTop(document.getElementById('svg-container'));
         var svg_width = svgData.width;
         var svg_height = svgData.height;
         var r = svgData.configData.r/2;

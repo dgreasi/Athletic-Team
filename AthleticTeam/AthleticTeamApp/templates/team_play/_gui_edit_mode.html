@@ -1,0 +1,39 @@
+<div class="row">
+    {% for field in form %}
+        {{ field.errors }}
+    {% endfor %}
+
+    <form hidden action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input id="send-form" type="submit" value="Save" />
+    </form>
+
+    <div class="form-group">
+        <label for="team-play-name">Name:</label>
+        <input id="team-play-name" maxlength="30" name="name" type="text" value="{{ teamplay.name }}"/>
+    </div>
+    <br>
+    <div id="svg-container">
+        <svg id="svg" width="800" height="500">
+        </svg>
+    </div>
+    <div class="col-lg-8">
+        <div class="btn-group" role="group">
+            <button id="prevIter" class="prevIter btn btn-primary">prevIter</button>
+            <button id="nextIter" class="nextIter btn btn-primary">nextIter</button>
+        </div>
+        <button id="help" class="help btn btn-info pull-right">help</button>
+    </div>
+    <div class="col-lg-8">
+        <div class="btn-group" role="group">
+            <button id="movePlayer" class="movePlayer btn btn-primary">movePlayer</button>
+            <button id="moveBall" class="moveBall btn btn-primary">moveBall</button>
+            <button id="drawPath" class="drawPath btn btn-primary">drawPath</button>
+            <button id="drawPass" class="drawPass btn btn-primary">drawPass</button>
+            <button id="deletePath" class="deletePath btn btn-primary">deletePath</button>
+            <button id="deletePass" class="deletePass btn btn-primary">deletePass</button>
+        </div>
+        <button id="save" class="save btn btn-success pull-right">save</button>
+    </div>
+</div>

@@ -10,18 +10,19 @@
 {% endblock %}
 
 {% block container %}
-    <h2>Team Play: {{ teamplay.name }}</h2>
-    <br>
-
-    <div id="svg-container">
-        <svg id="svg" width="800" height="500">
-        </svg>
+    <div class="row">
+        <div class="col-lg-8">
+            <h1>
+                Team Play: {{ teamplay.name }}
+                <a type="button" class="btn btn-default pull-right" aria-label="Create Team Play" href="{% url 'AthleticTeamApp:EditTeamPlay' teamplay.id %}">
+                  <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
+                </a>
+            </h1>
+            <br>
+        </div>
     </div>
-
-    <button id="prevIter" class="prevIter">prevIter</button>
-    <button id="nextIter" class="nextIter">nextIter</button>
-    <br>
-    <button id="help" class="help">help</button>
+    {% include "team_play/_gui_view_mode.html" %}
+    <hr>
 {% endblock %}
 
 {% block scripts %}
