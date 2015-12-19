@@ -65,7 +65,7 @@ function init(data,editMode){
         document.getElementById("deletePass").onclick = function(){
             changeMode(svgData,'deletePass');
         };
-        document.getElementById('save').onclick = function(){
+        document.getElementById("save").onclick = function(){
             saveData(svgData);
         };
     }
@@ -76,7 +76,10 @@ function init(data,editMode){
         changeMode(svgData,'nextIter');
     };
     document.getElementById('help').onclick = function(){
-
+        var svg = document.getElementById('svgData');
+        svg.innerHTML = 'numOfIter : ' + svgData.numOfIterations + '<br>' +
+                    'curr : ' + svgData.curr + '<br>' +
+                    'playerWithTheBall :  ' + svgData.playerWithTheBall[svgData.curr].g.attr('id');
     };
     disableButtons(svgData);
     enableButtons(svgData);
@@ -271,8 +274,8 @@ function getDefaultPosition(svgData, index){
 
 function enablePlayersMovement(svgData){
     var movePlayer = function(dx, dy, posx, posy, e) {
-        posx = posx - document.getElementById('svg-container').offsetLeft;
-        posy = posy - document.getElementById('svg-container').offsetTop;
+        posx = posx - document.getElementById('svg-container').offsetLeft + document.body.scrollLeft + document.documentElement.scrollLeft;
+        posy = posy - document.getElementById('svg-container').offsetTop + document.body.scrollTop + document.documentElement.scrollTop;
         var index;
         var svg_width = svgData.width;
         var svg_height = svgData.height;
@@ -335,8 +338,8 @@ function disablePlayersMovement(svgData){
 function enableBallMovement(svgData){
     var startPosition;
     var moveBall = function(dx, dy, posx, posy, e) {
-        posx = posx - document.getElementById('svg-container').offsetLeft;
-        posy = posy - document.getElementById('svg-container').offsetTop;
+        posx = posx - document.getElementById('svg-container').offsetLeft + document.body.scrollLeft + document.documentElement.scrollLeft;
+        posy = posy - document.getElementById('svg-container').offsetTop + document.body.scrollTop + document.documentElement.scrollTop;
         var svg_width = svgData.width;
         var svg_height = svgData.height;
         var r = svgData.configData.r/2;
@@ -360,8 +363,8 @@ function enableBallMovement(svgData){
         this.attr('cursor','move');
     };
     var endMoveBall = function(e){
-        var posx = e.clientX - document.getElementById('svg-container').offsetLeft;
-        var posy = e.clientY - document.getElementById('svg-container').offsetTop;
+        var posx = e.clientX - document.getElementById('svg-container').offsetLeft + document.body.scrollLeft + document.documentElement.scrollLeft;
+        var posy = e.clientY - document.getElementById('svg-container').offsetTop + document.body.scrollTop + document.documentElement.scrollTop;
         var resetBall = true;
         for(var i=0;i<svgData.configData.numOfPlayers;i++){
             if(collidesWithPlayer(svgData, svgData.players[i], posx, posy)){
@@ -409,8 +412,8 @@ function enableDrawingPath(svgData){
     var drawing = false;
     var playerMoving = null;
     var continueDrawingPath = function(e) {
-        var posx = e.clientX - document.getElementById('svg-container').offsetLeft;
-        var posy = e.clientY - document.getElementById('svg-container').offsetTop;
+        var posx = e.clientX - document.getElementById('svg-container').offsetLeft + document.body.scrollLeft + document.documentElement.scrollLeft;
+        var posy = e.clientY - document.getElementById('svg-container').offsetTop + document.body.scrollTop + document.documentElement.scrollTop;
         if(drawing){
             var pathData = playerMoving.move[svgData.curr].attr("d");
             pathData = pathData + " L" + posx + "," + posy;
@@ -418,8 +421,8 @@ function enableDrawingPath(svgData){
         }
     };
     var startDrawingPath = function(e){
-        var posx = e.clientX - document.getElementById('svg-container').offsetLeft;
-        var posy = e.clientY - document.getElementById('svg-container').offsetTop;
+        var posx = e.clientX - document.getElementById('svg-container').offsetLeft + document.body.scrollLeft + document.documentElement.scrollLeft;
+        var posy = e.clientY - document.getElementById('svg-container').offsetTop + document.body.scrollTop + document.documentElement.scrollTop;
         for(var i=0;i<svgData.configData.numOfPlayers;i++){
             if(collidesWithPlayer(svgData, svgData.players[i], posx, posy)){
                 playerMoving = svgData.players[i];
@@ -509,15 +512,15 @@ function enableDrawingPass(svgData){
     var startPosition;
     var drawing = false;
     var continueDrawingPass = function(e) {
-        var posx = e.clientX - document.getElementById('svg-container').offsetLeft;
-        var posy = e.clientY - document.getElementById('svg-container').offsetTop;
+        var posx = e.clientX - document.getElementById('svg-container').offsetLeft + document.body.scrollLeft + document.documentElement.scrollLeft;
+        var posy = e.clientY - document.getElementById('svg-container').offsetTop + document.body.scrollTop + document.documentElement.scrollTop;
         if(drawing){
             svgData.pass[svgData.curr].attr({'x2' : posx, 'y2' : posy});
         }
     };
     var startDrawingPass = function(e){
-        var posx = e.clientX - document.getElementById('svg-container').offsetLeft;
-        var posy = e.clientY - document.getElementById('svg-container').offsetTop;
+        var posx = e.clientX - document.getElementById('svg-container').offsetLeft + document.body.scrollLeft + document.documentElement.scrollLeft;
+        var posy = e.clientY - document.getElementById('svg-container').offsetTop + document.body.scrollTop + document.documentElement.scrollTop;
         if(collidesWithPlayer(svgData, svgData.playerWithTheBall[svgData.curr], posx, posy)){
             if(svgData.pass[svgData.curr]){
                 svgData.pass[svgData.curr].remove();
@@ -549,8 +552,8 @@ function enableDrawingPass(svgData){
     };
     var endDrawingPass = function(e){
         var i,j;
-        var posx = e.clientX - document.getElementById('svg-container').offsetLeft;
-        var posy = e.clientY - document.getElementById('svg-container').offsetTop;
+        var posx = e.clientX - document.getElementById('svg-container').offsetLeft + document.body.scrollLeft + document.documentElement.scrollLeft;
+        var posy = e.clientY - document.getElementById('svg-container').offsetTop + document.body.scrollTop + document.documentElement.scrollTop;
         if(drawing) {
             var clearPass = true;
             for (i = 0; i < svgData.configData.numOfPlayers; i++) {
