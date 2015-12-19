@@ -101,6 +101,7 @@ def create_a_player(request):
     new_height = request.POST['height']
     new_weight = request.POST['weight']
     new_nationality = request.POST['nationality']
+    new_birth_date = request.POST['date']
     
 
     print new_secondary_positions
@@ -113,7 +114,7 @@ def create_a_player(request):
     temp.height =new_height
     temp.weight = new_weight
     temp.nationality = new_nationality
-    print temp.secondary_positions
+    temp.birth_date = new_birth_date
     temp.save()
 
     return HttpResponseRedirect(reverse('AthleticTeamApp:ShowPlayers'))
@@ -135,22 +136,23 @@ def edit_player(request,player_id):
 
     first_name = request.POST['first_name']
     last_name = request.POST['last_name']
-    #primary_position = request.POST['primary_position']
-    #secondary_positions = request.POST['secondary_positions']
+    new_primary_position = request.POST.get('thesi',False)
+    new_secondary_positions = request.POST.getlist('secondary_positions')
     number = request.POST['number']
     height = request.POST['height']
     weight = request.POST['weight']
     nationality = request.POST['nationality']
+    new_birth_date = request.POST['date']
     
     temp.first_name = first_name
     temp.last_name = last_name
-    #temp.primary_position = primary_position
-    #temp.secondary_positions = secondary_positions
+    temp.primary_position = new_primary_position
+    temp.secondary_positions = '/'.join(new_secondary_positions)
     temp.number = number
     temp.height = height
     temp.weight = weight
     temp.nationality = nationality
-    ##temp.announcement_text = text
+    temp.birth_date= new_birth_date
     #temp.pub_date = timezone.now()
     temp.save()
 

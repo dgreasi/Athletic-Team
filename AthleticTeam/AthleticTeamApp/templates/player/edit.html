@@ -2,10 +2,13 @@
 
 {% block head %}
 {% load staticfiles %}
-  <title>Edit announcement</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
-  <script type="text/javascript" src="{% static 'js/myscript.js' %}"></script> 
+<title>Edit a Player</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/jquery.timepicker.css' %}" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 {% endblock %}
+
 
 {% block container %}
     <h1>Edit {{player.first_name}} {{player.last_name}}</h1>
@@ -40,7 +43,7 @@
 	  </option>	  
     </select>
     <h3>Enter New Player Secondary Positions(Ctrl + click for multiple selection)</h3>
-    <select multiple='multiple' name="secondary_positions" value={{player.secondarary_positions}} size ="5">
+    <select multiple='multiple' name="secondary_positions" value={{player.secondary_positions} size ="5">
 	  <option> 
 	      PG
 	  </option>
@@ -68,10 +71,17 @@
     <input  value={{player.weight}} type="text" class="text_title" id="my_text_title" name="weight"/>
     <h3>Enter New Player Nationality</h3>
     <input  value={{player.nationality}} type="text" class="text_title" id="my_text_title" name="nationality"/>
+    <h3>Enter Birth Date</h3>
+    <input type="text" id="datepicker" name="date" value = {{player.birth_date}} />
+    </br>
     <input type="submit" name="submit" value="Submit" class="btn btn-success" />
     </form>
     <br />
 {% endblock %}
 
-    secondary_positions = models.CharField(max_length=30, blank=True)
-    number
+{% block scripts %}
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script type="text/javascript" src="{% static 'js/myscript.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.timepicker.js' %}"></script>
+{% endblock %}

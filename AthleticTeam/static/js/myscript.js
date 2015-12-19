@@ -1,3 +1,5 @@
+
+
 $('#change_ps').click(function() {
   window.location='/change_info';
 });
@@ -6,6 +8,24 @@ $('#visitor').click(function() {
   window.location='/home';
 });
 
+$('#create_match').click(function() {
+  window.location='/create_match';
+});
+
+$('#matches_id').click(function() {
+  window.location='/matches';
+});
+
+$(document).ready(function() {
+    $("#datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+});
+
+$(document).ready(function() {
+    $( '#durationExample' ).timepicker({
+    'minTime': '2:00pm',
+    'maxTime': '11:30pm',
+    });
+});
 
 $(document).ready(function() {
     $('.ranking-slider').each(function() {
@@ -98,5 +118,4 @@ function mod_selection (val1,val2) {
         textArea.value = begin + val1 + selection + val2 + end;
     }
 }
-
 
