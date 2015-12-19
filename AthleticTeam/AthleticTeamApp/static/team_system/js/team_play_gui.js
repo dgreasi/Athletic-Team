@@ -65,7 +65,9 @@ function init(data,editMode){
         document.getElementById("deletePass").onclick = function(){
             changeMode(svgData,'deletePass');
         };
-
+        document.getElementById('save').onclick = function(){
+            saveData(svgData);
+        };
     }
     document.getElementById('prevIter').onclick = function(){
         changeMode(svgData,'prevIter');
@@ -74,10 +76,7 @@ function init(data,editMode){
         changeMode(svgData,'nextIter');
     };
     document.getElementById('help').onclick = function(){
-        var svg = document.getElementById('svgData');
-        svg.innerHTML = 'numOfIter : ' + svgData.numOfIterations + '<br>' +
-                    'curr : ' + svgData.curr + '<br>' +
-                    'playerWithTheBall :  ' + svgData.playerWithTheBall[svgData.curr].g.attr('id');
+
     };
     disableButtons(svgData);
     enableButtons(svgData);
