@@ -1,13 +1,26 @@
-{% if teamplay_list %}
-    <ul>
-    {% for teamplay in teamplay_list %}
-        <li>
-            <a href="{% url 'AthleticTeamApp:ShowTeamPlay' teamplay.id %}">
-                {{ teamplay.id}}
-            </a>
-        </li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No team plays are available.</p>
-{% endif %}
+{% extends "container.html" %}
+
+{% block head %}
+    {% load staticfiles %}
+    <title>Team Plays</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'team_system/css/style.css' %}" />
+    <script type="text/javascript" src="{% static 'team_system/js/team_play_gui.js' %}"></script>
+    <script src="{% static 'team_system/js/snap.svg-min.js' %}"></script>
+{% endblock %}
+
+{% block container %}
+    {% if teamplay_list %}
+        <ul>
+        {% for teamplay in teamplay_list %}
+            <li>
+                <a href="{% url 'AthleticTeamApp:ShowTeamPlay' teamplay.name %}">
+                    {{ teamplay.id}}
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <h1>No team plays are available.</h1>
+    {% endif %}
+{% endblock %}

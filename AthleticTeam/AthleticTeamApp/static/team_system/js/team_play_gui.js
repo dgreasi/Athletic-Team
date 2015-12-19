@@ -272,6 +272,29 @@ function getDefaultPosition(svgData, index){
     return {'x':x,'y':y};
 }
 
+function calcOffsetLeft(elem){
+    return elem.offsetLeft - document.body.scrollLeft - document.documentElement.scrollLeft;
+    //var parent = elem.parentNode;
+    //if(parent){
+    //    return calcOffsetLeft(parent);
+    //}
+    //else{
+    //    return elem.offsetLeft;
+    //}
+}
+
+function calcOffsetTop(elem){
+    return elem.offsetTop - document.body.scrollTop - document.documentElement.scrollTop;
+    //var parent = elem.parentNode;
+    //if(parent){
+    //    return elem.offsetTop + calcOffsetTop(parent);
+    //}
+    //else{
+    //    return elem.offsetTop;
+    //}
+}
+
+
 function enablePlayersMovement(svgData){
     var movePlayer = function(dx, dy, posx, posy, e) {
         posx = posx - document.getElementById('svg-container').offsetLeft + document.body.scrollLeft + document.documentElement.scrollLeft;
@@ -338,8 +361,8 @@ function disablePlayersMovement(svgData){
 function enableBallMovement(svgData){
     var startPosition;
     var moveBall = function(dx, dy, posx, posy, e) {
-        posx = posx - document.getElementById('svg-container').offsetLeft + document.body.scrollLeft + document.documentElement.scrollLeft;
-        posy = posy - document.getElementById('svg-container').offsetTop + document.body.scrollTop + document.documentElement.scrollTop;
+        posx = posx - calcOffsetLeft(document.getElementById('svg-container'));
+        posy = posy - calcOffsetTop(document.getElementById('svg-container'));
         var svg_width = svgData.width;
         var svg_height = svgData.height;
         var r = svgData.configData.r/2;
@@ -363,8 +386,8 @@ function enableBallMovement(svgData){
         this.attr('cursor','move');
     };
     var endMoveBall = function(e){
-        var posx = e.clientX - document.getElementById('svg-container').offsetLeft + document.body.scrollLeft + document.documentElement.scrollLeft;
-        var posy = e.clientY - document.getElementById('svg-container').offsetTop + document.body.scrollTop + document.documentElement.scrollTop;
+        var posx = e.clientX - calcOffsetLeft(document.getElementById('svg-container'));
+        var posy = e.clientY - calcOffsetTop(document.getElementById('svg-container'));
         var resetBall = true;
         for(var i=0;i<svgData.configData.numOfPlayers;i++){
             if(collidesWithPlayer(svgData, svgData.players[i], posx, posy)){
@@ -412,8 +435,8 @@ function enableDrawingPath(svgData){
     var drawing = false;
     var playerMoving = null;
     var continueDrawingPath = function(e) {
-        var posx = e.clientX - document.getElementById('svg-container').offsetLeft + document.body.scrollLeft + document.documentElement.scrollLeft;
-        var posy = e.clientY - document.getElementById('svg-container').offsetTop + document.body.scrollTop + document.documentElement.scrollTop;
+        var posx = e.clientX - calcOffsetLeft(document.getElementById('svg-container'));
+        var posy = e.clientY - calcOffsetTop(document.getElementById('svg-container'));
         if(drawing){
             var pathData = playerMoving.move[svgData.curr].attr("d");
             pathData = pathData + " L" + posx + "," + posy;
@@ -421,8 +444,8 @@ function enableDrawingPath(svgData){
         }
     };
     var startDrawingPath = function(e){
-        var posx = e.clientX - document.getElementById('svg-container').offsetLeft + document.body.scrollLeft + document.documentElement.scrollLeft;
-        var posy = e.clientY - document.getElementById('svg-container').offsetTop + document.body.scrollTop + document.documentElement.scrollTop;
+        var posx = e.clientX - calcOffsetLeft(document.getElementById('svg-container'));
+        var posy = e.clientY - calcOffsetTop(document.getElementById('svg-container'));
         for(var i=0;i<svgData.configData.numOfPlayers;i++){
             if(collidesWithPlayer(svgData, svgData.players[i], posx, posy)){
                 playerMoving = svgData.players[i];
@@ -512,15 +535,15 @@ function enableDrawingPass(svgData){
     var startPosition;
     var drawing = false;
     var continueDrawingPass = function(e) {
-        var posx = e.clientX - document.getElementById('svg-container').offsetLeft + document.body.scrollLeft + document.documentElement.scrollLeft;
-        var posy = e.clientY - document.getElementById('svg-container').offsetTop + document.body.scrollTop + document.documentElement.scrollTop;
+        var posx = e.clientX - calcOffsetLeft(document.getElementById('svg-container'));
+        var posy = e.clientY - calcOffsetTop(document.getElementById('svg-container'));
         if(drawing){
             svgData.pass[svgData.curr].attr({'x2' : posx, 'y2' : posy});
         }
     };
     var startDrawingPass = function(e){
-        var posx = e.clientX - document.getElementById('svg-container').offsetLeft + document.body.scrollLeft + document.documentElement.scrollLeft;
-        var posy = e.clientY - document.getElementById('svg-container').offsetTop + document.body.scrollTop + document.documentElement.scrollTop;
+        var posx = e.clientX - calcOffsetLeft(document.getElementById('svg-container'));
+        var posy = e.clientY - calcOffsetTop(document.getElementById('svg-container'));
         if(collidesWithPlayer(svgData, svgData.playerWithTheBall[svgData.curr], posx, posy)){
             if(svgData.pass[svgData.curr]){
                 svgData.pass[svgData.curr].remove();
@@ -552,8 +575,8 @@ function enableDrawingPass(svgData){
     };
     var endDrawingPass = function(e){
         var i,j;
-        var posx = e.clientX - document.getElementById('svg-container').offsetLeft + document.body.scrollLeft + document.documentElement.scrollLeft;
-        var posy = e.clientY - document.getElementById('svg-container').offsetTop + document.body.scrollTop + document.documentElement.scrollTop;
+        var posx = e.clientX - calcOffsetLeft(document.getElementById('svg-container'));
+        var posy = e.clientY - calcOffsetTop(document.getElementById('svg-container'));
         if(drawing) {
             var clearPass = true;
             for (i = 0; i < svgData.configData.numOfPlayers; i++) {
@@ -1054,6 +1077,7 @@ function saveData(svgData){
             output.pass[j] = svgData.pass[j];
         }
     }
+    document.getElementById('id_name').value = document.getElementById('team-play-name').value;
     document.getElementById('id_data').innerHTML = JSON.stringify(output);
-
+    document.getElementById('send-form').click();
 }
