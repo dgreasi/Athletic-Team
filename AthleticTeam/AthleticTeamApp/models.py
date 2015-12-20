@@ -177,13 +177,13 @@ class Exercise(models.Model):
                                 ('DRI', 'Dribbling'),
                                 ('PAS', 'Pass'),
                                 ('TMW', 'Teamwork'),
-                           ),
+                           )
 
     name = models.CharField(max_length=30, default='')
     type = models.CharField(max_length=1, choices=available_types, default='P')
     time = models.SmallIntegerField(default=0)  # time in minutes
-    obj = MultiSelectField(choices=available_objectives)
-    desc = models.TextField()
+    obj = MultiSelectField(choices=available_objectives, default='')
+    desc = models.TextField(blank=True)
 
     def __str__(self):
         return self.name
