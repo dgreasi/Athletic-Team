@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 # Create your models here.
 class Person(models.Model):
     first_name = models.CharField(max_length=30, blank=True)
@@ -146,3 +147,26 @@ class Ranking(models.Model):
         overall = k / rank_obj.count()
 
         return overall
+
+
+# Create your models here.
+
+class OrganisationalChart(Person):
+
+
+    SOM= 'Sports Organizational Manager'
+    YDTM= 'Youth Department Techincal Manager'
+    # model fields
+    available_positions = (
+                            (SOM,'Sports Organizational Manager'),
+                            (YDTM,'Youth Department Techincal Manager'),
+
+                        )
+    position = models.CharField(max_length=50, choices=available_positions, blank=True)
+
+
+    # model relationships
+    team = models.ForeignKey(Team)
+
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self)) for field in OrganisationalChart._meta.fields]

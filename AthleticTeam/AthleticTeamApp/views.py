@@ -3,7 +3,8 @@ from django.views import generic
 
 from AthleticTeamApp.forms import ContactForm
 
-from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team, Ranking
+from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team, Ranking, OrganisationalChart
+#, OrganisationalChart
 
 from django.http import *
 from django.template import RequestContext
@@ -85,10 +86,21 @@ def contact(request):
             })
             content = template.render(context)
 
-            email = EmailMessage( "New contact form submission", content, "Your website" +'<hi@teamapp.com>', ['youremail@gmail.com'],
+            email = EmailMessage( "New contact form submission", content, "Your website" +'<hi@teamapp.com>', ['anikola@uth.gr'],
                 headers = {'Reply-To': contact_email }
             )
             email.send()
             return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
 
     return render(request, 'home/contact.html', {'form': form_class, })
+
+
+class ShowOrganisationalCharts(generic.ListView):
+    model = OrganisationalChart
+    template_name = 'organisational_chart/showall.html'
+    context_object_name = 'organisational_chart_list'
+
+
+class ShowOrganisationalChart(generic.DetailView):
+    model = OrganisationalChart
+    template_name = 'organisational_chart/show.html'

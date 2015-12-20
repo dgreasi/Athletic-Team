@@ -5,7 +5,7 @@ from . import views, rlviews
 urlpatterns = [
     url(r'^coachingStaffMembers$', views.ShowCoachingStaffMembers.as_view(), name='ShowCoachingStaffMembers'),
     url(r'^coachingStaffMember/(?P<pk>[0-9]+)$', views.ShowCoachingStaffMember.as_view(), name='ShowCoachingStaffMember'),
-    url(r'^players$', views.ShowPlayers.as_view(), name='ShowPlayers'),
+    url(r'^players/$', views.ShowPlayers.as_view(), name='ShowPlayers'),
     url(r'^player/(?P<pk>[0-9]+)$', views.ShowPlayer.as_view(), name='ShowPlayer'),
     url(r'^matches$', views.ShowMatches.as_view(), name='ShowMatches'),
     url(r'^match/(?P<pk>[0-9]+)', views.ShowMatch.as_view(), name='ShowMatch'),
@@ -25,6 +25,12 @@ urlpatterns = [
     url(r'^ranking_results_view/(?P<player_id>[0-9]+)$', rlviews.get_rank, name='view_rank_player'),
     url(r'^first_rank/(?P<pk>[0-9]+)$', rlviews.FirstRank.as_view(), name='firstRank'),
     url(r'^contact/$', views.contact, name='contact'),
+
+    url(r'^organisationalCharts$', views.ShowOrganisationalCharts.as_view(), name='ShowOrganisationalCharts'),
+    url(r'^organisationalChart/(?P<pk>[0-9]+)$', views.ShowOrganisationalChart.as_view(), name='ShowOrganisationalChart'),
+
+    #url(r'^OrganisationalCharts/$', views.ShowOrganisationalCharts.as_view(), name='OrganisationalCharts'),
+    #url(r'^OrganisationalChart/(?P<pk>[0-9]+)$', views.ShowOrganisationalChart.as_view(), name='OrganisationalChart'),
 ]
 
 
