@@ -181,7 +181,7 @@ class Exercise(models.Model):
 
     name = models.CharField(max_length=30, default='')
     type = models.CharField(max_length=1, choices=available_types, default='P')
-    time = models.SmallIntegerField(default=0)  # time in minutes
+    duration = models.SmallIntegerField(default=0)  # time in minutes
     obj = MultiSelectField(choices=available_objectives, blank=True)
     desc = models.TextField(blank=True)
 

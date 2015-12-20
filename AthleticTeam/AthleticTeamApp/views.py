@@ -274,7 +274,7 @@ class ShowExercise(generic.DetailView):
 
 class CreateExercise(generic.CreateView):
     model = Exercise
-    fields = ['name', 'time', 'type', 'desc', 'obj']
+    fields = ['name', 'duration', 'type', 'desc', 'obj']
     template_name = 'exercise/create_form.html'
 
     def get_success_url(self):
@@ -283,7 +283,7 @@ class CreateExercise(generic.CreateView):
 
 class EditExercise(generic.UpdateView):
     model = Exercise
-    fields = ['name', 'time', 'type', 'desc', 'obj']
+    fields = ['name', 'duration', 'type', 'desc', 'obj']
     template_name = 'exercise/edit_form.html'
 
     def get_success_url(self):
