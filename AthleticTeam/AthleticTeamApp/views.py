@@ -167,16 +167,6 @@ class ShowMatch(generic.DetailView):
     template_name = 'match/show.html'
 
 
-# Create your views here.
-class ShowTrainings(generic.ListView):
-    model = Training
-    template_name = 'training/showall.html'
-
-
-class ShowTraining(generic.DetailView):
-    model = Training
-    template_name = 'training/show.html'
-
 ##################
 # Teams Views.
 ##################
@@ -308,3 +298,39 @@ class DeleteExercise(generic.DeleteView):
     def get(self, *args, **kwargs):
         raise Http404
 
+
+# Create your views here.
+class ShowTrainings(generic.ListView):
+    model = Training
+    template_name = 'training/showall.html'
+
+
+class ShowTraining(generic.DetailView):
+    model = Training
+    template_name = 'training/show.html'
+
+
+class CreateTraining(generic.CreateView):
+    model = Training
+    fields = ['date', 'start', 'end', 'location', 'exercises', 'team_plays', 'team']
+    template_name = 'training/create_form.html'
+
+    def get_success_url(self):
+        return reverse('AthleticTeamApp:ShowTraining', args=(self.object.id,))
+
+
+class EditTraining(generic.UpdateView):
+    model = Training
+    fields = ['date', 'start', 'end', 'location', 'exercises', 'team_plays', 'team']
+    template_name = 'training/edit_form.html'
+
+    def get_success_url(self):
+        return reverse('AthleticTeamApp:ShowTraining', args=(self.object.id,))
+
+
+class DeleteTraining(generic.DeleteView):
+    model = Training
+    success_url = reverse_lazy('AthleticTeamApp:ShowExercises')
+
+    def get(self, *args, **kwargs):
+        raise Http404

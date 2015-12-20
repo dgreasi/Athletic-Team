@@ -114,17 +114,6 @@ class MatchPlayerStatistics(models.Model):
         return [(field.name, field.value_to_string(self)) for field in MatchPlayerStatistics._meta.fields]
 
 
-class Training(models.Model):
-  date = models.DateTimeField(blank=True, null=True)
-  duration =models.DurationField(blank=True, null=True) #mporei na min douleuei auto (mono me postgres paizei swsta)
-  training_facility = models.CharField(max_length=30, blank=True)
-  
-  team = models.ForeignKey(Team,null=True)
-     
-  def get_fields(self):
-    return [(field.name, field.value_to_string(self)) for field in Training._meta.fields]
-
-
 class Ranking(models.Model):
     player = models.ForeignKey(Player)
 
@@ -203,3 +192,16 @@ class Exercise(models.Model):
     def get_fields(self):
         return [(field.name, field.value_to_string(self)) for field in TeamPlay._meta.fields]
 
+
+class Training(models.Model):
+    date = models.DateField()
+    start = models.TimeField()
+    end = models.TimeField()
+    location = models.CharField(max_length=30)
+
+    exercises = models.ManyToManyField("Exercise", blank=True)
+    team_plays = models.ManyToManyField("TeamPlay", blank=True)
+    team = models.ForeignKey("Team", on_delete=models.CASCADE)
+
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self)) for field in Training._meta.fields]

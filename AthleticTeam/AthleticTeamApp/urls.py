@@ -37,6 +37,12 @@ urlpatterns = [
     url(r'^teamPlay/(?P<pk>[0-9]+)/edit$', views.EditTeamPlay.as_view(), name='EditTeamPlay'),
     url(r'^teamPlay/(?P<pk>[0-9]+)/delete$', views.DeleteTeamPlay.as_view(), name='DeleteTeamPlay'),
 
+    url(r'^trainings$', views.ShowTrainings.as_view(), name='ShowTrainings'),
+    url(r'^training/create$', views.CreateTraining.as_view(), name='CreateTraining'),
+    url(r'^training/(?P<pk>[0-9]+)$', views.ShowTraining.as_view(), name='ShowTraining'),
+    url(r'^training/(?P<pk>[0-9]+)/edit$', views.EditTraining.as_view(), name='EditTraining'),
+    url(r'^training/(?P<pk>[0-9]+)/delete$', views.DeleteTraining.as_view(), name='DeleteTraining'),
+
     url(r'^exercises$', views.ShowExercises.as_view(), name='ShowExercises'),
     url(r'^exercise/create$', views.CreateExercise.as_view(), name='CreateExercise'),
     url(r'^exercise/(?P<pk>[0-9]+)$', views.ShowExercise.as_view(), name='ShowExercise'),
@@ -45,9 +51,6 @@ urlpatterns = [
     
     url(r'^players$', views.ShowPlayers.as_view(), name='ShowPlayers'),
     url(r'^player/(?P<pk>[0-9]+)$', views.ShowPlayer.as_view(), name='ShowPlayer'),
-    url(r'^trainings$', views.ShowTrainings.as_view(), name='ShowTrainings'),
-    url(r'^training/(?P<pk>[0-9]+)$', views.ShowTraining.as_view(), name='ShowTraining'),
-
     url(r'^edit_players$', views.edit_players.as_view(), name='edit_players'),
     url(r'^create_a_player$', views.create_a_player, name='create_a_player'),
     url(r'^create_player$', views.create_player.as_view(), name='create_player'),

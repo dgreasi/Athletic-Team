@@ -1,9 +1,27 @@
-{% if training_list %}
-    <ul>
-    {% for training in training_list %}
-        <li><a href="{% url 'ShowTraining' training.id %}">{{ training.id}}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No matches are available.</p>
-{% endif %}
+{% extends "container.html" %}
+
+{% block head %}
+    <title>Trainings</title>
+{% endblock %}
+
+{% block container %}
+    {% if training_list %}
+        <h1>Trainings:</h1>
+        <ul>
+        {% for training in training_list %}
+            <li>
+                <a href="{% url 'AthleticTeamApp:ShowTraining' training.id %}">
+                    {{ training.date }} , {{ training.start }} - {{ training.end }} , {{ training.team.team_name }}
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <h1>No trainings are available.</h1>
+    {% endif %}
+    <br>
+    <a type="button" class="btn btn-default" aria-label="Create Training" href="{% url 'AthleticTeamApp:CreateTraining' %}">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create
+    </a>
+    <hr>
+{% endblock %}

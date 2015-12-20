@@ -1,7 +1,51 @@
-<ul>
-{% for name, value in training.get_fields %}
-{#  {% if value %}#}
-    <li>{{ name }} => {{ value }}</li>
-{#  {% endif %}#}
-{% endfor %}
-</ul>
+{% extends "container.html" %}
+
+{% block head %}
+    <title>Training: {{ training.date }}</title>
+{% endblock %}
+
+{% block container %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>
+                Training: {{ training.date }}
+                <a type="button" class="btn btn-default pull-right" aria-label="Create Training" href="{% url 'AthleticTeamApp:EditTraining' training.id %}">
+                  <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
+                </a>
+            </h1>
+            <br>
+            <h1>Team: {{ training.team.team_name }}</h1>
+            <hr>
+            <h2>Start time: {{ training.start }}</h2>
+            <h2>End time: {{ training.end }}</h2>
+            <h2>Location: {{ training.location }}</h2>
+            {% if training.exercises.first %}
+                <hr>
+                <h1>Exercises:</h1>
+                <ul>
+                {% for exercise in training.exercises.all %}
+                    <li>
+                        <a href="{% url 'AthleticTeamApp:ShowExercise' exercise.id %}">
+                            {{ exercise.name}}
+                        </a>
+                    </li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+            {% if training.team_plays.first %}
+                <hr>
+                <h1>Team Plays:</h1>
+                <ul>
+                {% for teamplay in training.team_plays.all %}
+                    <li>
+                        <a href="{% url 'AthleticTeamApp:ShowTeamPlay' teamplay.id %}">
+                            {{ teamplay.name}}
+                        </a>
+                    </li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+    <hr>
+{% endblock %}
