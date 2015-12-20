@@ -333,7 +333,7 @@ class EditTraining(generic.UpdateView):
 
 class DeleteTraining(generic.DeleteView):
     model = Training
-    success_url = reverse_lazy('AthleticTeamApp:ShowExercises')
+    success_url = reverse_lazy('AthleticTeamApp:ShowTrainings')
 
     def get(self, *args, **kwargs):
         raise Http404
