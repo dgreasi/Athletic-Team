@@ -1,6 +1,9 @@
+from bootstrap3_datetime.widgets import DateTimePicker
+from django.forms import modelform_factory
 from django.shortcuts import render, render_to_response, redirect,get_object_or_404
 from django.views import generic
 
+from AthleticTeamApp.forms import TrainingForm
 from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team, Ranking, TeamPlay, Exercise, Training
 from django.http import *
 from django.template import RequestContext
@@ -311,8 +314,8 @@ class ShowTraining(generic.DetailView):
 
 
 class CreateTraining(generic.CreateView):
+    form_class = TrainingForm
     model = Training
-    fields = ['date', 'start', 'end', 'location', 'exercises', 'team_plays', 'team']
     template_name = 'training/create_form.html'
 
     def get_success_url(self):
@@ -320,8 +323,8 @@ class CreateTraining(generic.CreateView):
 
 
 class EditTraining(generic.UpdateView):
+    form_class = TrainingForm
     model = Training
-    fields = ['date', 'start', 'end', 'location', 'exercises', 'team_plays', 'team']
     template_name = 'training/edit_form.html'
 
     def get_success_url(self):

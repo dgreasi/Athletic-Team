@@ -1,2 +1,3 @@
 django-multiselectfield
 django-crispy-forms
+django-datetime-widget

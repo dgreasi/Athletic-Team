@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'mathfilters',
     'multiselectfield',
     'crispy_forms',
+    'datetimewidget',
 )
 
 MIDDLEWARE_CLASSES = (
