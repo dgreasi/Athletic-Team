@@ -29,6 +29,7 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -42,7 +43,7 @@ INSTALLED_APPS = (
     'SinglePagesApp',
     'mathfilters',
     'multiselectfield',
-    # 'crispy_forms',
+    'crispy_forms',
 )
 
 MIDDLEWARE_CLASSES = (

@@ -6,7 +6,7 @@
 
 {% block container %}
     <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-12">
             <h1>
                 Edit Exercise: {{ exercise.name }}
                 <a type="button" class="btn btn-default pull-right" aria-label="Edit Exercise" href="{% url 'AthleticTeamApp:ShowExercise' exercise.id %}">
@@ -14,9 +14,8 @@
                 </a>
             </h1>
             <br>
+            {% include "exercise/_form.html" with submitName='Update'%}
         </div>
     </div>
-    <br>
-    {% include "exercise/_form.html" %}
     <hr>
 {% endblock %}

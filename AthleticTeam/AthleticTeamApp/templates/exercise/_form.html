@@ -1,13 +1,9 @@
-{#{% load crispy_forms_tags %}#}
+{% load crispy_forms_filters %}
 
 <form action="" method="post">{% csrf_token %}
-    {{ form.as_p}}
-    <input class="btn btn-success" type="submit" value="Create" />
+    {{ form |crispy }}
+    <input class="btn btn-success pull-right" type="submit" value="{{ submitName }}" />
 </form>
-{#{% crispy form %}#}
-
 {% if exercise %}
-<div class="col-lg-8">
     {% include "exercise/_delete.html" %}
-</div>
 {% endif %}
