@@ -36,4 +36,9 @@
         </div>
         <button id="save" class="save btn btn-success pull-right">save</button>
     </div>
+    {% if teamplay %}
+    <div class="col-lg-8">
+        {% include "team_play/_delete.html" %}
+    </div>
+    {% endif %}
 </div>

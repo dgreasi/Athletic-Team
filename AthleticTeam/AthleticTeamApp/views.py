@@ -243,6 +243,7 @@ class CreateTeamPlay(generic.CreateView):
     def get_success_url(self):
         return reverse('AthleticTeamApp:ShowTeamPlay', args=(self.object.id,))
 
+
 class EditTeamPlay(generic.UpdateView):
     model = TeamPlay
     fields = ['name', 'data']
@@ -250,3 +251,12 @@ class EditTeamPlay(generic.UpdateView):
 
     def get_success_url(self):
         return reverse('AthleticTeamApp:ShowTeamPlay', args=(self.object.id,))
+
+
+class DeleteTeamPlay(generic.DeleteView):
+    model = TeamPlay
+    success_url = reverse_lazy('AthleticTeamApp:ShowTeamPlays')
+    template_name = 'team_play/edit_form.html'
+
+    def get(self, *args, **kwargs):
+        raise Http404
