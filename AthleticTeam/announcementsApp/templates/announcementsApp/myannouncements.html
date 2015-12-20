@@ -1,0 +1,55 @@
+{% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+  <title>My announcements</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+{% endblock %}
+
+
+{% block container %}
+<h1>My Announcements</h1>
+
+    {% if latest_Announcement_list %}
+        <p><b>Choose an announcement to delete/edit</b></p>
+        <form action="{% url 'announcementsApp:deleteAnnouncement' %}" method="post">
+            <!-- delete one of ur announcements -->
+            {% csrf_token %}
+            <select name="announcement">
+            {% for announcement in latest_Announcement_list %}
+                <option value="{{ announcement.id }}">
+                {{ announcement.announcement_title }}
+                </option>
+            {% endfor %}
+            </select>
+            
+            <div class="margin-top-small">
+                {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+                <input type="submit" name="delete" value="Delete announcement" class="btn btn-success" />
+                <input type="submit" name="edit" value="Edit announcement" class="btn btn-success" />
+            </div>
+        </form>
+    {% else %}
+        <p><strong>You haven't done any announcements yet!</strong></p>
+    {% endif %}
+    <!-- Make new Announcement -->
+    <h2>Create new announcement</h2>
+    
+    <h3>Enter Title</h3>
+
+    <form action="{% url 'announcementsApp:announce'  %}" method="post">
+        {% csrf_token %}
+        <!-- Text area for Title-->
+        <input type="text" class="text_title" id="my_text_title" name="title"/>
+        <br />   
+        
+        <h3>Enter announcement</h3>
+
+        <p><textarea type="textarea" class="text_edit" id="my_text" name="text"></textarea></p>
+
+        <input type="submit" name="submit" value="Submit" class="btn btn-success" />
+    </form>
+    <br />
+    <p><a href="{% url 'announcementsApp:index' %}">Go to recent announcements</a></p>
+
+{% endblock %}

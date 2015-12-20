@@ -1,0 +1,11 @@
+{% extends "container.html" %}
+{% block container %}
+<ul>
+{% for name, value in coachingstaffmember.get_fields %}
+{#  {% if value %}#}
+    <li>{{ name }} => {{ value }}</li>
+{#  {% endif %}#}
+{% endfor %}
+</ul>
+{% endblock %}
+

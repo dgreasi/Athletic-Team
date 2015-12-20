@@ -1,0 +1,117 @@
+{% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+<title>Home</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+{% endblock %}
+
+
+{% block container %}
+  <!-- test Grid -->
+  <div class="container-fluid">
+    <h1>Information Sports Team System</h1>
+
+    {% if user.is_authenticated %}
+      <p>Welcome to our Team's Site USER!!!</p>
+    {% else %}
+      <p>Welcome to our Team's Site GUEST!!!</p>
+    {% endif %}
+
+    <div class="row">
+      <div class="col-sm-3 col-md-6 col-lg-8" >
+      {% if user.is_authenticated %}
+        
+          <!-- ANNOUNCEMETNS PAGING -->
+          <h3>Recent Announcements</h3>
+
+          {% if announcement_list %}
+              <table id="announcements">
+                  {% for announcement in announcement_list %}
+                      <ul>
+                          <li><a href="/announcements/{{ announcement.id }}/" class="see_detail">{{ announcement.announcement_title|upper }}</a></li>
+                      </ul>
+                  {% endfor %}
+              </table>
+              {# .... **Now the pagination section** .... #}
+              {% if is_paginated %}
+                  <div class="pagination">
+                      <span class="page-links">
+                          {% if page_obj.has_previous %}
+                              <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                          {% endif %}
+                          <span class="page-current">
+                              Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                          </span>
+                          {% if page_obj.has_next %}
+                              <a href="?page={{ page_obj.next_page_number }}">next</a>
+                          {% endif %}
+                      </span>
+                  </div>
+              {% endif %}
+          {% else %}
+              <p>No announcements yet, go to Annoucements Tab and make one!</p>
+          {% endif %}
+
+      {% else %}
+        <p>Show current teams!</p>
+        <p>New players!</p>
+      {% endif %}
+      </div>
+    </div>
+  </div>
+
+
+  <br/>
+  <!-- Carousel
+  ================================================== -->
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+      <div class="item active">
+        <img class="first-slide" src="{% static 'home/images/Danbo_March_Wallpaper__by_gloeckchen.jpg' %}" alt="First slide">
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>Our team, enjoy!</h1>
+            <p>Current Stadium, players, more++</p>
+            <p><a class="btn btn-lg btn-primary" href="#" role="button">Be a member</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="item">
+        <img class="second-slide" src="{% static 'home/images/EXP00047-1680.jpg' %}" alt="Second slide">
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>Current Facilities</h1>
+            <p>More text</p>
+            <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="item">
+        <img class="third-slide" src="{% static 'home/images/2560x1440 HDTV.jpg' %}" alt="Third slide">
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>One more for good measure.</h1>
+            <p>System for our team, better communication, efficient, worthy. Watch your investments</p>
+            <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div><!-- /.carousel -->
+{% endblock %}

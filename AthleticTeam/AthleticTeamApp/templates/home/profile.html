@@ -1,0 +1,23 @@
+{% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+  <title>Home</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+{% endblock %}
+
+
+{% block container %}
+  <h1>Your Profile</h1>
+  <p>Username: {{ user.username }}</p>
+  <p>Password: **********</p>
+  <p>First name: {{ user.first_name }}</p>
+  <p>Last name: {{user.last_name}}</p>
+  <p>Email: {{ user.email }}</p>
+  <p>Date joined: {{ user.date_joined }}</p>
+  <button class="btn btn-primary " type="submit" id="change_ps">Change your password</button>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script type="text/javascript"  src="{% static 'js/myscript.js' %}"></script>
+{% endblock %}

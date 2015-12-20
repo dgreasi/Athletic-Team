@@ -1,0 +1,27 @@
+{% extends "container.html" %}
+
+{% block head %}
+    <title>Exercises</title>
+{% endblock %}
+
+{% block container %}
+    {% if exercise_list %}
+        <h1>Exercises:</h1>
+        <ul>
+        {% for exercise in exercise_list %}
+            <li>
+                <a href="{% url 'AthleticTeamApp:ShowExercise' exercise.id %}">
+                    {{ exercise.name}}
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <h1>No exercises are available.</h1>
+    {% endif %}
+    <br>
+    <a type="button" class="btn btn-default" aria-label="Create Exercise" href="{% url 'AthleticTeamApp:CreateExercise' %}">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create
+    </a>
+    <hr>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+<title>Index</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+<script type="text/javascript" src="{% static 'js/myscript.js' %}"></script>
+{% endblock %}
+
+
+{% block container %}
+    <h1>Announcements</h1>
+    {% if latest_Announcement_list %}
+        <ul>
+        {% for announcement in latest_Announcement_list %}
+            <li><a href="{% url 'announcementsApp:detail' announcement.id %}">{{ announcement.announcement_title }}</a></li>
+        {% endfor %}
+        </ul>
+
+        {# .... **Now the pagination section** .... #}
+        {% if is_paginated %}
+            <div class="pagination">
+                <span class="page-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                    {% endif %}
+                    <span class="page-current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">next</a>
+                    {% endif %}
+                </span>
+            </div>
+        {% endif %}
+    {% else %}
+        <p>No announcements are available.</p>
+    {% endif %}
+
+
+    <!-- Make new Announcement -->
+    <h2>Create new announcement</h2>
+    
+    <h3>Enter Title</h3>
+
+    <form action="{% url 'announcementsApp:announce'  %}" method="post">
+        {% csrf_token %}
+        <!-- Text area for Title-->
+        <input type="text" class="text_title" id="my_text_title" name="title"/>
+        <br />   
+        
+        <h3>Enter announcement</h3>
+
+        <p><textarea type="textarea" class="text_edit" id="my_text" name="text"></textarea></p>
+        
+        <input type="submit" name="submit" value="Submit" class="btn btn-success" />
+    </form>
+
+    <br />
+    <p><a href="{% url 'announcementsApp:myannouncements' %}">View my announcements</a></p>
+{% endblock %}

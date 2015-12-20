@@ -1,0 +1,60 @@
+{% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+  <title>Results</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+  <script type="text/javascript" src="{% static 'js/myscript.js' %}"></script> 
+{% endblock %}
+
+
+{% block container %}
+    <h1>Current announcement with his comments and votes</h1>
+    <h2>Title : {{ announcement.announcement_title}}</h2>
+    <p>{{ announcement.announcement_text }}</p>
+    <p>Published by {{ announcement.owner }}</p>
+    <hr>
+
+    <h3>Comments</h3>
+    {% if announcement.comment_set.all %}
+        <ul>
+        {% for comment in announcement.comment_set.all %}
+            <p><li>{{ comment.comment_text }} -- {{ comment.votes }} vote{{ comment.votes|pluralize }} -- By: {{ comment.owner }}</li></p>
+        {% endfor %}
+        </ul>
+
+        <h3>Delete / Edit one of your comments</h3>
+        <!-- Make possible a deletion of a comment -->
+        <form action="{% url 'announcementsApp:delete' announcement.id %}" method="post">
+            {% csrf_token %}
+
+            {% load filter_comm %}
+            {% if user|has_comment:announcement.comment_set.all %}
+                <select name="comment">
+                    {% for comment in announcement.comment_set.all %}
+                        {% ifequal user comment.owner %}
+                            <option value="{{ comment.id }}" >
+                                {{ comment.comment_text }}
+                            </option>
+                        {% endifequal %}
+                    {% endfor %}
+                </select>
+            
+                <!-- Buttons -->
+                <div class="margin-top-small">
+                    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+                    <input type="submit" name="delete" value="Delete comment" class="btn btn-success" />
+                    <input type="submit" name="edit" value="Edit comment" class="btn btn-success" />
+                </div>
+
+            {% else %}
+                <p>You haven't made any comments!</p>
+            {% endif %}
+        </form>
+    {% else %}
+        <p>No comments in this Announcement.</p>
+    {% endif %}
+    <br />
+    <p><a href="{% url 'announcementsApp:detail' announcement.id %}">Vote a comment or make one</a></p>
+    <p><a href="{% url 'announcementsApp:index' %}">Go to recent announcements</a></p>
+{% endblock %}

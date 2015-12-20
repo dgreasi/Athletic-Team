@@ -1,8 +1,75 @@
-<ul>
-{% for name, value in player.get_fields %}
-{#  {% if value %}#}
-    <li>{{ name }} => {{ value }}</li>
-{#  {% endif %}#}
-{% endfor %}
-</ul>
+{% extends "container.html" %}
+{% block head %}
+{% load staticfiles %}
+    <title>Show</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+{% endblock %}
+{% block container %}
+  {% if  player.image %}
+      <img src={{ player.image.url }}  height="300" width="300" align="middle"> 
+  {% else %}
+      <h1> No photo available </h1>    
+  {% endif %} 
+    <div style="float:left; padding: 0; height="500" width="1000"">
+    <table class="table table table-hover" >
+            <tr>
+             <div class="row top-buffer" >
+		 <td><div class="col-md-0">First Name</div></td>
+                 <td><div class="col-md-1">{{player.first_name}}</div></td>
+            </tr>
+             <tr>
+             <div class="row top-buffer">
+		 <td><div class="col-md-0">Last  Name </div></td>
+                 <td><div class="col-md-1">{{player.last_name}}</div></td>
+            </tr>
+             <tr>
+             <div class="row top-buffer">
+		 <td><div class="col-md-0">Height</div></td>
+                 <td><div class="col-md-1">{{player.height}}</div></td>
+            </tr>
+            <tr>
+             <div class="row top-buffer">
+		 <td><div class="col-md-0">Weight </div></td>
+                 <td><div class="col-md-1">{{player.weight}}</div></td>
+            </tr>
+             <tr>
+             <div class="row top-buffer">
+		 <td><div class="col-md-0">Primary Position </div></td>
+                 <td><div class="col-md-1">{{player.primary_position}}</div></td>
+            </tr>
+             <tr>
+             <div class="row top-buffer">
+		 <td><div class="col-md-0">Nationality </div></td>
+                 <td><div class="col-md-1">{{player.nationality}}</div></td>
+            </tr>    
+             <tr>
+             <div class="row top-buffer">
+		 <td><div class="col-md-0">Team </div></td>
+                 <td><div class="col-md-1">{{player.team}}</div></td>
+            </tr>             
+    </table>
+    </div>
+
+    {% load filters %}
+    {% if request.user|has_group:"Coaching Staff Member" %}
+    <div class="button-rov">
+        <a class="btn btn-primary " href="{% url 'AthleticTeamApp:index_ranking' player.id %}">Rank this player</a>
+    </div>
+    {% endif %}
+
+    {% if user.DoesNotExist %}
+    <div class="button-rov">
+        <form action="{% url 'AthleticTeamApp:view_rank_player' player.id %}" method="get">
+            <input type="submit" name="submit" value="Show rate of this player" class="btn btn-primary " />
+        </form>
+    </div>
+    {% endif %}
+
+
+    <div class="button-rov">
+        <a class="btn btn-primary " href="{% url 'AthleticTeamApp:ShowPlayers' %}">Go to see another player</a>
+    </div>
+
+{% endblock %}
 

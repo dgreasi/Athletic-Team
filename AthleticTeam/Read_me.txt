@@ -1,0 +1,1 @@
+Create new directory in AthleticTeam for each function u will materialize, like announcementsApp which is for the Announcements.

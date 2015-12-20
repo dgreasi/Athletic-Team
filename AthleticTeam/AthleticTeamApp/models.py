@@ -1,14 +1,44 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 
 
 # Create your models here.
-class Team(models.Model):
-  team_name = models.CharField(max_length=30,blank=True)
+from multiselectfield import MultiSelectField
 
-  def get_fields(self):
-    return [(field.name, field.value_to_string(self)) for field in Team._meta.fields]  
-class Player(models.Model):
+
+class Person(models.Model):
+    first_name = models.CharField(max_length=30, blank=True)
+    last_name = models.CharField(max_length=30, blank=True)
+    info = models.TextField(blank=True)
+    image = models.ImageField(upload_to='photos/', blank=True)
+    #user = models.ForeignKey(User, default='')
+
+    class Meta:
+        abstract = True
+
+
+class Team(models.Model):
+    team_name = models.CharField(max_length=30, blank=True)
+
+    def __str__(self):              # __unicode__ on Python 2
+        return self.team_name
+
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self)) for field in Team._meta.fields]
+
+
+class CoachingStaffMember(Person):
+    # model fields
+    position = models.CharField(blank=True, max_length=30)
+
+    # model relationships
+    team = models.ForeignKey(Team)
+
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self)) for field in CoachingStaffMember._meta.fields]
+
+
+class Player(Person):
     # model fields
     PG = 'PG'
     SG = 'SG'
@@ -23,23 +53,21 @@ class Player(models.Model):
                             (CE, 'Center'),
                         )
 
-    first_name = models.CharField(max_length=30, blank=True)
-    last_name = models.CharField(max_length=30, blank=True)
     height = models.DecimalField(blank=True, max_digits=3, decimal_places=2, null=True)
     weight = models.PositiveSmallIntegerField(blank=True, null=True)
     birth_date = models.DateField(blank=True, null=True)
     primary_position = models.CharField(max_length=2, choices=available_positions, blank=True)
     secondary_positions = models.CharField(max_length=30, blank=True)
     number = models.PositiveSmallIntegerField(blank=True, null=True)
-    info = models.TextField(blank=True)
+
     nationality = models.CharField(max_length=30, blank=True)
-    # image = models.ImageField()
 
     # model relationships
     team = models.ForeignKey(Team)
 
     def get_fields(self):
         return [(field.name, field.value_to_string(self)) for field in Player._meta.fields]
+
 
 class Match(models.Model):
     # model fields
@@ -85,8 +113,8 @@ class MatchPlayerStatistics(models.Model):
     def get_fields(self):
         return [(field.name, field.value_to_string(self)) for field in MatchPlayerStatistics._meta.fields]
 
-class Training(models.Model):
 
+class Training(models.Model):
   date = models.DateTimeField(blank=True, null=True)
   duration =models.DurationField(blank=True, null=True) #mporei na min douleuei auto (mono me postgres paizei swsta)
   training_facility = models.CharField(max_length=30, blank=True)
@@ -95,3 +123,83 @@ class Training(models.Model):
      
   def get_fields(self):
     return [(field.name, field.value_to_string(self)) for field in Training._meta.fields]
+
+
+class Ranking(models.Model):
+    player = models.ForeignKey(Player)
+
+    owner = models.ForeignKey(User, null=True)
+
+    power_arm = models.PositiveSmallIntegerField(blank=True, null=True)
+    power_body = models.PositiveSmallIntegerField(blank=True, null=True)
+    power_legs = models.PositiveSmallIntegerField(blank=True, null=True)
+    speed = models.PositiveSmallIntegerField(blank=True, null=True)
+    team_play = models.PositiveSmallIntegerField(blank=True, null=True)
+    co_op = models.PositiveSmallIntegerField(blank=True, null=True)
+    rate_of_pos = models.PositiveSmallIntegerField(blank=True, null=True)
+    two_shots = models.PositiveSmallIntegerField(blank=True, null=True)
+    three_shots = models.PositiveSmallIntegerField(blank=True, null=True)
+
+
+    class Meta:
+        unique_together = ("player", "owner")
+
+
+    def ranking_algo(self):
+        temp = (self.power_arm + self.power_legs + self.power_body + self.speed + self.team_play + self.co_op + self.rate_of_pos + self.two_shots + self.three_shots)/9
+
+        return temp
+
+    def ranking_algorithm(self):
+        #get object player
+        fplayer = self.player
+
+        rank_obj = Ranking.objects.filter(player=fplayer)
+
+        k=0
+        for temp in rank_obj:
+            k += temp.ranking_algo()
+
+        overall = k / rank_obj.count()
+
+        return overall
+
+
+class TeamPlay(models.Model):
+    name = models.CharField(max_length=30, default='')
+    data = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self)) for field in TeamPlay._meta.fields]
+
+
+class Exercise(models.Model):
+    available_types = (('P', 'Personal'), ('T', 'Team'),)
+    available_objectives = (
+                                ('SPD', 'Speed'),
+                                ('STA', 'Stamina'),
+                                ('POW', 'Power'),
+                                ('MEN', 'Mentality'),
+                                ('SHO', 'Shoot'),
+                                ('ATK', 'Attack'),
+                                ('DEF', 'Defence'),
+                                ('DRI', 'Dribbling'),
+                                ('PAS', 'Pass'),
+                                ('TMW', 'Teamwork'),
+                           )
+
+    name = models.CharField(max_length=30, default='')
+    type = models.CharField(max_length=1, choices=available_types, default='P')
+    duration = models.SmallIntegerField(default=0)  # time in minutes
+    obj = MultiSelectField(choices=available_objectives, blank=True)
+    desc = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self)) for field in TeamPlay._meta.fields]
+

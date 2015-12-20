@@ -1,0 +1,30 @@
+{% extends "container.html" %}
+
+{% block head %}
+    <title>Exercise: {{ exercise.name }}</title>
+{% endblock %}
+
+{% block container %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>
+                Exercise: {{ exercise.name }}
+                <a type="button" class="btn btn-default pull-right" aria-label="Create Exercise" href="{% url 'AthleticTeamApp:EditExercise' exercise.id %}">
+                  <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
+                </a>
+            </h1>
+            <br>
+            <h2>Duration: {{ exercise.duration }} minutes</h2>
+            <h2>Type: {{ exercise.get_type_display }}</h2>
+            {% if exercise.desc %}
+            <h2>Description: {{ exercise.desc }}</h2>
+            {% endif %}
+            {% if exercise.obj %}
+                <h2>Objectives:
+                {{ exercise.get_obj_display }}
+                </h2>
+            {% endif %}
+        </div>
+    </div>
+    <hr>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+    <title>Create Team Play</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'team_system/css/style.css' %}" />
+    <script type="text/javascript" src="{% static 'team_system/js/team_play_gui.js' %}"></script>
+    <script src="{% static 'team_system/js/snap.svg-min.js' %}"></script>
+{% endblock %}
+
+{% block container %}
+    <div class="row">
+        <div class="col-lg-8">
+            <h1>
+                Create Team Play
+                <a type="button" class="btn btn-default pull-right" aria-label="Create Team Play" href="{% url 'AthleticTeamApp:ShowTeamPlays' %}">
+                    <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span> Back
+                </a>
+            </h1>
+            <br>
+        </div>
+    </div>
+    <br>
+    {% include "team_play/_gui_edit_mode.html" %}
+    <hr>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        window.onload = function(){
+            init(null,'editMode');
+        };
+    </script>
+{% endblock %}

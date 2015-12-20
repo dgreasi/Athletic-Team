@@ -1,0 +1,32 @@
+{% extends "container.html" %}
+
+{% block head %}
+    {% load staticfiles %}
+    <title>Team Plays</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'team_system/css/style.css' %}" />
+    <script type="text/javascript" src="{% static 'team_system/js/team_play_gui.js' %}"></script>
+    <script src="{% static 'team_system/js/snap.svg-min.js' %}"></script>
+{% endblock %}
+
+{% block container %}
+    {% if teamplay_list %}
+        <h1>Team Plays:</h1>
+        <ul>
+        {% for teamplay in teamplay_list %}
+            <li>
+                <a href="{% url 'AthleticTeamApp:ShowTeamPlay' teamplay.id %}">
+                    {{ teamplay.name}}
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <h1>No team plays are available.</h1>
+    {% endif %}
+    <br>
+    <a type="button" class="btn btn-default" aria-label="Create Team Play" href="{% url 'AthleticTeamApp:CreateTeamPlay' %}">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create
+    </a>
+    <hr>
+{% endblock %}

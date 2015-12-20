@@ -1,0 +1,7 @@
+#branding #id_site-name > a {
+    color: purple;
+}
+
+body {
+	background: white url("../images/symphony.png") repeat right top;
+}

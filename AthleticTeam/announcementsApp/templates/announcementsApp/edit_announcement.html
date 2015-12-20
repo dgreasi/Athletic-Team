@@ -1,0 +1,38 @@
+{% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+  <title>Edit announcement</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+  <script type="text/javascript" src="{% static 'js/myscript.js' %}"></script> 
+{% endblock %}
+
+{% block container %}
+    <h1>Edit Current Announcement</h1>
+
+    <h2>Title : {{ announcement.announcement_title}}</h2>
+    <p>{{ announcement.announcement_text }}</p>
+    <p>Published by {{ announcement.owner }}</p>
+    
+    <hr>
+
+    <h3>Enter New Title</h3>
+
+    <form action="{% url 'announcementsApp:edit_announce' announcement.id %}" method="post">
+        {% csrf_token %}
+        
+        <input type="text" class="text_title" id="my_text_title" name="title"/>
+        <br />   
+        
+        <h3>Enter New Body</h3>
+
+        <p><textarea type="textarea" class="text_edit" id="my_text" name="text"></textarea></p>
+        
+        <input type="submit" name="submit" value="Submit" class="btn btn-success" />
+    </form>
+
+    <br />
+    <p><a href="{% url 'announcementsApp:myannouncements' %}">View my announcements</a></p>
+    <p><a href="{% url 'announcementsApp:index' %}">Go to recent announcements</a></p>
+
+{% endblock %}

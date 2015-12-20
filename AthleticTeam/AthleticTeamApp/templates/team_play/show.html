@@ -1,0 +1,35 @@
+{% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+    <title>Team Play: {{ teamplay.name }}</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'team_system/css/style.css' %}" />
+    <script type="text/javascript" src="{% static 'team_system/js/team_play_gui.js' %}"></script>
+    <script src="{% static 'team_system/js/snap.svg-min.js' %}"></script>
+{% endblock %}
+
+{% block container %}
+    <div class="row">
+        <div class="col-lg-8">
+            <h1>
+                Team Play: {{ teamplay.name }}
+                <a type="button" class="btn btn-default pull-right" aria-label="Edit Team Play" href="{% url 'AthleticTeamApp:EditTeamPlay' teamplay.id %}">
+                  <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
+                </a>
+            </h1>
+            <br>
+        </div>
+    </div>
+    {% include "team_play/_gui_view_mode.html" %}
+    <hr>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        window.onload = function(){
+            var data = {{ teamplay.data|safe }};
+            init(data);
+        };
+    </script>
+{% endblock %}
