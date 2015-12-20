@@ -1,1 +1,2 @@
 django-multiselectfield
+django-crispy-forms

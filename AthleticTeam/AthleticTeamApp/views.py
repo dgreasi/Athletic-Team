@@ -1,7 +1,7 @@
 from django.shortcuts import render, render_to_response, redirect,get_object_or_404
 from django.views import generic
 
-from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team, Ranking, TeamPlay
+from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team, Ranking, TeamPlay, Exercise
 from django.http import *
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
@@ -243,6 +243,7 @@ class CreateTeamPlay(generic.CreateView):
     def get_success_url(self):
         return reverse('AthleticTeamApp:ShowTeamPlay', args=(self.object.id,))
 
+
 class EditTeamPlay(generic.UpdateView):
     model = TeamPlay
     fields = ['name', 'data']
@@ -250,3 +251,48 @@ class EditTeamPlay(generic.UpdateView):
 
     def get_success_url(self):
         return reverse('AthleticTeamApp:ShowTeamPlay', args=(self.object.id,))
+
+
+class DeleteTeamPlay(generic.DeleteView):
+    model = TeamPlay
+    success_url = reverse_lazy('AthleticTeamApp:ShowTeamPlays')
+    template_name = 'team_play/edit_form.html'
+
+    def get(self, *args, **kwargs):
+        raise Http404
+
+
+class ShowExercises(generic.ListView):
+    model = Exercise
+    template_name = 'exercise/showall.html'
+
+
+class ShowExercise(generic.DetailView):
+    model = Exercise
+    template_name = 'exercise/show.html'
+
+
+class CreateExercise(generic.CreateView):
+    model = Exercise
+    fields = ['name', 'time', 'type', 'desc', 'obj']
+    template_name = 'exercise/create_form.html'
+
+    def get_success_url(self):
+        return reverse('AthleticTeamApp:ShowExercise', args=(self.object.id,))
+
+
+class EditExercise(generic.UpdateView):
+    model = Exercise
+    fields = ['name', 'time', 'type', 'desc', 'obj']
+    template_name = 'exercise/edit_form.html'
+
+    def get_success_url(self):
+        return reverse('AthleticTeamApp:ShowExercise', args=(self.object.id,))
+
+
+class DeleteExercise(generic.DeleteView):
+    model = Exercise
+    success_url = reverse_lazy('AthleticTeamApp:ShowExercises')
+
+    def get(self, *args, **kwargs):
+        raise Http404

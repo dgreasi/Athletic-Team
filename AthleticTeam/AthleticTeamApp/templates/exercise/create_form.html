@@ -1,0 +1,22 @@
+{% extends "container.html" %}
+
+{% block head %}
+    <title>Create Exercise</title>
+{% endblock %}
+
+{% block container %}
+    <div class="row">
+        <div class="col-lg-8">
+            <h1>
+                Create Exercise
+                <a type="button" class="btn btn-default pull-right" aria-label="Create Exercise" href="{% url 'AthleticTeamApp:ShowExercises' %}">
+                    <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span> Back
+                </a>
+            </h1>
+            <br>
+        </div>
+    </div>
+    <br>
+    {% include "exercise/_form.html" %}
+    <hr>
+{% endblock %}

@@ -35,7 +35,13 @@ urlpatterns = [
     url(r'^teamPlay/create$', views.CreateTeamPlay.as_view(), name='CreateTeamPlay'),
     url(r'^teamPlay/(?P<pk>[0-9]+)$', views.ShowTeamPlay.as_view(), name='ShowTeamPlay'),
     url(r'^teamPlay/(?P<pk>[0-9]+)/edit$', views.EditTeamPlay.as_view(), name='EditTeamPlay'),
+    url(r'^teamPlay/(?P<pk>[0-9]+)/delete$', views.DeleteTeamPlay.as_view(), name='DeleteTeamPlay'),
 
+    url(r'^exercises$', views.ShowExercises.as_view(), name='ShowExercises'),
+    url(r'^exercise/create$', views.CreateExercise.as_view(), name='CreateExercise'),
+    url(r'^exercise/(?P<pk>[0-9]+)$', views.ShowExercise.as_view(), name='ShowExercise'),
+    url(r'^exercise/(?P<pk>[0-9]+)/edit$', views.EditExercise.as_view(), name='EditExercise'),
+    url(r'^exercise/(?P<pk>[0-9]+)/delete$', views.DeleteExercise.as_view(), name='DeleteExercise'),
     
     url(r'^players$', views.ShowPlayers.as_view(), name='ShowPlayers'),
     url(r'^player/(?P<pk>[0-9]+)$', views.ShowPlayer.as_view(), name='ShowPlayer'),

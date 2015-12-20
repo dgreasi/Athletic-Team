@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'SinglePagesApp',
     'mathfilters',
     'multiselectfield',
+    # 'crispy_forms',
 )
 
 MIDDLEWARE_CLASSES = (
