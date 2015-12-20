@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'announcementsApp',
     'SinglePagesApp',
     'mathfilters',
+    'multiselectfield',
 )
 
 MIDDLEWARE_CLASSES = (

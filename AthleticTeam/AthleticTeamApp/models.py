@@ -2,13 +2,16 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
+from multiselectfield import MultiSelectField
+
+
 class Person(models.Model):
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
     info = models.TextField(blank=True)
     image = models.ImageField(upload_to='photos/', blank=True)
     #user = models.ForeignKey(User, default='')
-    
+
     class Meta:
         abstract = True
 
@@ -160,3 +163,30 @@ class TeamPlay(models.Model):
     def get_fields(self):
         return [(field.name, field.value_to_string(self)) for field in TeamPlay._meta.fields]
 
+
+class Exercise(models.Model):
+    available_types = (('P', 'Personal'), ('T', 'Team'),)
+    available_objectives = (
+                                ('SPD', 'Speed'),
+                                ('STA', 'Stamina'),
+                                ('POW', 'Power'),
+                                ('MEN', 'Mentality'),
+                                ('SHO', 'Shoot'),
+                                ('ATK', 'Attack'),
+                                ('DEF', 'Defence'),
+                                ('DRI', 'Dribbling'),
+                                ('PAS', 'Pass'),
+                                ('TMW', 'Teamwork'),
+                           ),
+
+    name = models.CharField(max_length=30, default='')
+    type = models.CharField(max_length=1, choices=available_types, default='P')
+    time = models.SmallIntegerField(default=0)  # time in minutes
+    obj = MultiSelectField(choices=available_objectives)
+    desc = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self)) for field in TeamPlay._meta.fields]
