@@ -9,7 +9,8 @@
 
 {% block container %}
 <h1>Teams</h1>
-<p><b>Choose a team to delete/edit</b></p>
+{% if team_players_list %}
+    <p><b>Choose a team to delete/edit</b></p>
     <form action="{% url 'AthleticTeamApp:edit_a_team' %}" method="post">
         <!-- delete one of ur teamss -->
         {% csrf_token %}
@@ -26,7 +27,10 @@
             <input type="submit" name="delete" value="Delete team" class="btn btn-success" />
             <input type="submit" name="edit" value="Edit team" class="btn btn-success" />
         </div>
-    </form>    
+    </form>
+{% else %}
+    <p>No teams yet, create one!</p>
+{% endif %}   
     <!-- Make new Team -->
     <h2>Create new Team</h2>
     

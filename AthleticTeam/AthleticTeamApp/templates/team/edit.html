@@ -4,6 +4,7 @@
 {% load staticfiles %}
   <title>Edit announcement</title>
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
   <script type="text/javascript" src="{% static 'js/myscript.js' %}"></script> 
 {% endblock %}
 
@@ -15,8 +16,8 @@
     <form action="{% url 'AthleticTeamApp:edit' team.id %}" method="post">
         {% csrf_token %}
         
-        <input type="text" class="text_title" id="my_text_title" name="title"/>
-        <br />
+        <p><input type="text" class="text_title" id="my_text_title" name="title"/></p>
+        
         <input type="submit" name="submit" value="Submit" class="btn btn-success" />
     </form>
 

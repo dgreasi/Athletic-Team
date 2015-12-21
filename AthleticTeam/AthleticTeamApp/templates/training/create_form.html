@@ -1,7 +1,10 @@
 {% extends "container.html" %}
 
 {% block head %}
+{% load staticfiles %}
     <title>Create Training</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
 {% endblock %}
 

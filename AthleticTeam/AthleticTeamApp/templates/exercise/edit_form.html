@@ -1,7 +1,10 @@
 {% extends "container.html" %}
 
 {% block head %}
+{% load staticfiles %}
     <title>Edit Exercise: {{ exercise.name }}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
 {% endblock %}
 
 {% block container %}

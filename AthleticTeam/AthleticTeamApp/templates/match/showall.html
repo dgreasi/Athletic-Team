@@ -8,40 +8,40 @@
 {% endblock %}
 
 {% block container %}
-<h2> Matches</h2>
-{% if matches_list %}
-    <ul>
-    {% for match in matches_list %}
-        {% load filters %}
-        {% if match.home_away|str_equal:"Team A" %}
-            <li><a href="{% url 'AthleticTeamApp:ShowMatch' match.id %}">{{ match.home_team }} Vs {{ match.away_team }}</a></li>
-        {% else %}
-            <li><a href="{% url 'AthleticTeamApp:ShowMatch' match.id %}">{{ match.away_team }} Vs {{ match.home_team }}</a></li>
-        {% endif %}
-    {% endfor %}
-    </ul>
+    <h2> Matches</h2>
+    {% if matches_list %}
+        <ul>
+        {% for match in matches_list %}
+            {% load filters %}
+            {% if match.home_away|str_equal:"Team A" %}
+                <li><a href="{% url 'AthleticTeamApp:ShowMatch' match.id %}">{{ match.home_team }} Vs {{ match.away_team }}</a></li>
+            {% else %}
+                <li><a href="{% url 'AthleticTeamApp:ShowMatch' match.id %}">{{ match.away_team }} Vs {{ match.home_team }}</a></li>
+            {% endif %}
+        {% endfor %}
+        </ul>
 
-    {# .... **Now the pagination section** .... #}
-    {% if is_paginated %}
-        <div class="pagination">
-            <span class="page-links">
-                {% if page_obj.has_previous %}
-                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-                {% endif %}
-                <span class="page-current">
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        {# .... **Now the pagination section** .... #}
+        {% if is_paginated %}
+            <div class="pagination">
+                <span class="page-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                    {% endif %}
+                    <span class="page-current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">next</a>
+                    {% endif %}
                 </span>
-                {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}">next</a>
-                {% endif %}
-            </span>
-        </div>
+            </div>
+        {% endif %}
+        
+        
+    {% else %}
+        <p>No matches are available.</p>
     {% endif %}
-    
-    
-{% else %}
-    <p>No matches are available.</p>
-{% endif %}
 
     {% load filters %}
     {% if request.user|has_group:"Match Creator" %}
