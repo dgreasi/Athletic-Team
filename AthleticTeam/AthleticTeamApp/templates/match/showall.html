@@ -38,16 +38,17 @@
         </div>
     {% endif %}
     
+    
+{% else %}
+    <p>No matches are available.</p>
+{% endif %}
+
     {% load filters %}
     {% if request.user|has_group:"Match Creator" %}
         <div class="button-rov">
             <button class="btn btn-lg btn-primary" name="create" id="create_match">Create a new Match</button>
         </div>
     {% endif %}
-    
-{% else %}
-    <p>No matches are available.</p>
-{% endif %}
 {% endblock%}
 
 {% block scripts %}
