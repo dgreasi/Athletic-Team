@@ -1,8 +1,16 @@
 from django.contrib import admin
-from AthleticTeamApp.models import MatchPlayerStatistics, Match, Player, Team, CoachingStaffMember, Ranking
+from AthleticTeamApp.models import MatchPlayerStatistics, Match, Player, Team, CoachingStaffMember, Ranking, OrganisationalChart
+    #, OrganisationalChart
 
 
 # Register your models here.
+
+
+#class OrganisationalChartInline(admin.TabularInline):
+#    model = OrganisationalChart
+ #   extra = 1
+
+
 class CoachingStaffMemberInline(admin.TabularInline):
     model = CoachingStaffMember
     extra = 1
@@ -35,8 +43,10 @@ class RankingAdmin(admin.ModelAdmin):
 
 	list_display = ('player', 'owner', 'power_arm', 'power_body', 'power_legs', 'speed', 'team_play', 'co_op', 'rate_of_pos')
 
-
+admin.site.register(CoachingStaffMember)
 admin.site.register(Team, TeamAdmin)
 admin.site.register(Match, MatchAdmin)
 admin.site.register(Player)
 admin.site.register(Ranking, RankingAdmin)
+admin.site.register(OrganisationalChart)
+
