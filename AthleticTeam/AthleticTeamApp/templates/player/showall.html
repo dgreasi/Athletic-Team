@@ -14,6 +14,7 @@
             <tr>
              <div class="row top-buffer">
 		 <td><div class="col-md-0">#</div></td>
+		 <td><div class="col-md-0">Image</div></td>
                  <td><div class="col-md-1">First Name</div></td>
                  <td><div class="col-md-2">Last Name</div></td>
                  <td><div class="col-md-3">Team</div></td>
@@ -26,6 +27,7 @@
             <tr>
                 <div class="row top-buffer">
                     <td><div class="col-md-0">{{ player.number}}</div></td>
+                    <td><div class="col-md-0"> <img src={{ player.image.url }} class="img-rounded" height="100" width="100"></div></td>
                     <td><div class="col-md-1"><a href="{% url 'AthleticTeamApp:ShowPlayer' player.id %}">{{ player.first_name }}</div></td>
                     <td><div class="col-md-2"><a href="{% url 'AthleticTeamApp:ShowPlayer' player.id %}">{{ player.last_name }}</div></td>
                     <td><div class="col-md-2"><a href="{% url 'AthleticTeamApp:ShowTeam' player.team.id %}">{{ player.team }}</div></td>
