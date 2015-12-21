@@ -2,8 +2,11 @@ from django.forms import modelform_factory
 from django.shortcuts import render, render_to_response, redirect,get_object_or_404
 from django.views import generic
 
+
 from AthleticTeamApp.forms import TrainingForm
-from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team, Ranking, TeamPlay, Exercise, Training, MatchPlayerStatistics
+from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team, Ranking, TeamPlay, Exercise, Training, MatchPlayerStatistics, OrganisationalChart
+
+from AthleticTeamApp.forms import ContactForm
 
 from django.http import *
 from django.template import RequestContext
@@ -21,7 +24,13 @@ from django.template import RequestContext
 import datetime
 from django.utils import timezone
 
+from django.template.loader import get_template
+from django.core.mail import EmailMessage
+from django.template import Context
+
+
 # Create your views here.
+
 class ShowCoachingStaffMembers(generic.ListView):
     model = CoachingStaffMember
     template_name = 'coaching_staff_member/showall.html'
@@ -248,7 +257,6 @@ def edit(request,team_id):
 class ShowTeam(generic.DetailView):
     model = Team
     template_name = 'team/show.html'
-
 
 
 class ShowTeamPlays(generic.ListView):
@@ -485,4 +493,44 @@ def all_stats(request):
     temp.save()
 
   return HttpResponseRedirect(reverse('AthleticTeamApp:ShowMatches'))
+
+def contact(request):
+    form_class = ContactForm
+
+    if request.method == 'POST':
+        form = form_class(data=request.POST)
+
+        if form.is_valid():
+            contact_name = request.POST.get('contact_name', '')
+            contact_email = request.POST.get('contact_email', '')
+            form_content = request.POST.get('content', '')
+
+            # Email the profile with the
+            # contact information
+            template = get_template('home/contact_template.txt')
+            context = Context({
+                'contact_name': contact_name,
+                'contact_email': contact_email,
+                'form_content': form_content,
+            })
+            content = template.render(context)
+
+            email = EmailMessage( "New contact form submission", content, "Your website" +'<hi@teamapp.com>', ['anikola@uth.gr'],
+                headers = {'Reply-To': contact_email }
+            )
+            email.send()
+            return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
+
+    return render(request, 'home/contact.html', {'form': form_class, })
+
+
+class ShowOrganisationalCharts(generic.ListView):
+    model = OrganisationalChart
+    template_name = 'organisational_chart/showall.html'
+    context_object_name = 'organisational_chart_list'
+
+
+class ShowOrganisationalChart(generic.DetailView):
+    model = OrganisationalChart
+    template_name = 'organisational_chart/show.html'
 

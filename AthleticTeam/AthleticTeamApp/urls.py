@@ -6,7 +6,8 @@ urlpatterns = [
     url(r'^coachingStaffMembers$', views.ShowCoachingStaffMembers.as_view(), name='ShowCoachingStaffMembers'),
     url(r'^coachingStaffMember/(?P<pk>[0-9]+)$', views.ShowCoachingStaffMember.as_view(), name='ShowCoachingStaffMember'),
 
-    
+
+
     url(r'^matches$', views.ShowMatches.as_view(), name='ShowMatches'),
     url(r'^match/(?P<pk>[0-9]+)', views.ShowMatch.as_view(), name='ShowMatch'),
     
@@ -70,7 +71,14 @@ urlpatterns = [
     url(r'^player_stats/(?P<pk>[0-9]+)$', views.Players_stats.as_view(), name='Players_stats'),
     url(r'^all_stats/$', views.all_stats, name='all_stats'),
 
+    url(r'^contact/$', views.contact, name='contact'),
+
+    url(r'^organisationalCharts$', views.ShowOrganisationalCharts.as_view(), name='ShowOrganisationalCharts'),
+    url(r'^organisationalChart/(?P<pk>[0-9]+)$', views.ShowOrganisationalChart.as_view(), name='ShowOrganisationalChart'),
+
+    #url(r'^OrganisationalCharts/$', views.ShowOrganisationalCharts.as_view(), name='OrganisationalCharts'),
+    #url(r'^OrganisationalChart/(?P<pk>[0-9]+)$', views.ShowOrganisationalChart.as_view(), name='OrganisationalChart'),
+
 
 ]
 
-    

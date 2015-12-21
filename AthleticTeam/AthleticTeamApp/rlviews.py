@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect,get_object_or_404
 from django.views import generic
 
@@ -17,7 +18,6 @@ from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
 
 from django.utils import timezone
-
 
 
 class IndexRanking(generic.DetailView):

@@ -18,8 +18,11 @@
 {% else %}
     <p>No players are available.</p>
 {% endif %}
+
 <form action="{% url 'AthleticTeamApp:edit_team'  %}" method="get">
         {% csrf_token %}   
         <input type="submit" name="submit" value="Edit/Create Team" class="btn btn-success" />
     </form>  
 {% endblock %}
+
+

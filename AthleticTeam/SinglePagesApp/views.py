@@ -4,7 +4,8 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 # Create your views here.
 from AthleticTeam.settings import MEDIA_ROOT
-from SinglePagesApp.forms import EditContactUsForm, EditHistoryForm, EditTicketsForm, EditFacilitiesForm
+
+from SinglePagesApp.forms import EditHistoryForm, EditTicketsForm, EditFacilitiesForm, EditAboutUsForm, EditSponsorshipsForm
 
 def history(request):
     data = read_file('history.json')
@@ -22,20 +23,17 @@ def edit_history(request):
         data.pop('csrfmiddlewaretoken', None)
         write_file('history.json', data)
         return redirect('SinglePagesApp:history')
+
+def sponsorships(request):
+    data = read_file('sponsorships.json')
+
+    if data['visible'] != '':
+        return render(request, 'single_pages/sponsorships.html', context={'data': data})
     else:
         name = 'history'
         data = read_file('history.json')
         form = EditHistoryForm(data)
         return render(request, 'single_pages/edit.html', context={'name': name, 'form': form})
-
-
-def contact_us(request):
-    data = read_file('contact_us.json')
-
-    if data['visible'] != '':
-        return render(request, 'single_pages/contact_us.html', context={'data': data})
-    else:
-        raise Http404("Contact Us Page isn't used")
 
 def about_us(request):
     data = read_file('about_us.json')
@@ -44,6 +42,20 @@ def about_us(request):
         return render(request, 'single_pages/about_us.html', context={'data': data})
     else:
         raise Http404("About Us Page isn't used")
+
+
+def edit_sponsorships(request):
+    if request.method == 'POST':
+        data = request.POST
+        data = data.copy()
+        data.pop('csrfmiddlewaretoken', None)
+        write_file('sponsorships.json', data)
+        return redirect('SinglePagesApp:sponsorships')
+    else:
+        name = 'sponsorships'
+        data = read_file('sponsorships.json')
+        form = EditSponsorshipsForm(data)
+        return render(request, 'single_pages/edit.html', context={'name': name, 'form': form})
 
 
 def edit_about_us(request):
@@ -59,18 +71,18 @@ def edit_about_us(request):
         form = EditAboutUsForm(data)
         return render(request, 'single_pages/edit.html', context={'name': name, 'form': form})
 
-def edit_contact_us(request):
-    if request.method == 'POST':
-        data = request.POST
-        data = data.copy()
-        data.pop('csrfmiddlewaretoken', None)
-        write_file('contact_us.json', data)
-        return redirect('SinglePagesApp:contact_us')
-    else:
-        name = 'Contact Us'
-        data = read_file('contact_us.json')
-        form = EditContactUsForm(data)
-        return render(request, 'single_pages/edit.html', context={'name': name, 'form': form})
+#def edit_contact_us(request):
+ #   if request.method == 'POST':
+  #      data = request.POST
+   #     data = data.copy()
+    #    data.pop('csrfmiddlewaretoken', None)
+     #   write_file('contact_us.json', data)
+      #  return redirect('SinglePagesApp:contact_us')
+    #else:
+     #   name = 'Contact Us'
+      #  data = read_file('contact_us.json')
+       # form = EditContactUsForm(data)
+        #return render(request, 'single_pages/edit.html', context={'name': name, 'form': form})
 
 
 def read_file(file_name):
