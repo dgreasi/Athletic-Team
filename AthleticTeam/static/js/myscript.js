@@ -1,3 +1,5 @@
+
+
 $('#change_ps').click(function() {
   window.location='/change_info';
 });
@@ -116,5 +118,4 @@ function mod_selection (val1,val2) {
         textArea.value = begin + val1 + selection + val2 + end;
     }
 }
-
 

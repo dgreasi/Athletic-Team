@@ -10,7 +10,7 @@ class Person(models.Model):
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
     info = models.TextField(blank=True)
-    image = models.ImageField(upload_to='photos/', blank=True)
+    image = models.ImageField(upload_to='photos/', blank=True ,default = 'photos/index.png')
     #user = models.ForeignKey(User, default='')
 
     def __str__(self):              # __unicode__ on Python 2

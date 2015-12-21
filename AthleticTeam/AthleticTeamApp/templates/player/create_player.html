@@ -2,14 +2,16 @@
 
 {% block head %}
 {% load staticfiles %}
-    <title>ShowAll</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+<title>Create a Player</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/jquery.timepicker.css' %}" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 {% endblock %}
 
 {% block container %}
 <p><b>Choose New Player's Team</b></p>
-    <form action="{% url 'AthleticTeamApp:create_a_player' %}" method="post">
+    <form action="{% url 'AthleticTeamApp:create_a_player' %}" method="post" enctype="multipart/form-data">
         <!-- delete one of ur teamss -->
         {% csrf_token %}
       <select name="team">
@@ -25,19 +27,62 @@
     <input  type="text" class="text_title" id="my_text_title" name="first_name"/>
     <h3>Enter New Player Last Name</h3>
     <input   type="text" class="text_title" id="my_text_title" name="last_name"/>
-<!--     <h3>Enter New Player Primary Position</h3> -->
-<!--     <input   type="text" class="text_title" id="my_text_title" name="primary_postition"/> -->
-<!--    <h3>Enter New Player Secondary Positions</h3>
-    <input  type="text" class="text_title" id="my_text_title" name="secondary_postitions"/>-->
+    <h3>Enter New Player Primary Position</h3>
+    <select  name="thesi" size ="5">
+	  <option> 
+	      PG
+	  </option>
+	  <option> 
+	      SG
+	  </option>
+	  <option> 
+	      SF
+	  </option>	  
+	  <option> 
+	      PF
+	  </option>	  
+	  <option> 
+	      C
+	  </option>	  
+    </select>
+    <h3>Enter New Player Secondary Positions(Ctrl + click for multiple selection)</h3>
+    <select multiple='multiple' name="secondary_positions" size ="5">
+	  <option> 
+	      PG
+	  </option>
+	  <option> 
+	      SG
+	  </option>
+	  <option> 
+	      SF
+	  </option>	  
+	  <option> 
+	      PF
+	  </option>	  
+	  <option> 
+	      C
+	  </option>
+    </select>	  
     <h3>Enter New Player Number</h3>
     <input   type="text" class="text_title" id="my_text_title" name="number"/>
-    <h3>Enter New Player Height</h3>
+    <h3>Enter New Player Height(m.cm)</h3>
     <input   type="text" class="text_title" id="my_text_title" name="height"/>
     <h3>Enter New Player Weight</h3>
     <input   type="text" class="text_title" id="my_text_title" name="weight"/>
     <h3>Enter New Player Nationality</h3>
     <input  type="text" class="text_title" id="my_text_title" name="nationality"/>
+    <h3>Enter Birth Date</h3>
+    <input type="text" id="datepicker" name="date"/>
+<!--    <h3>Upload photo</h3>
+    <input type='file' id="my_photo" name"photo">-->
+    </br>
     <input type="submit" name="submit" value="Submit" class="btn btn-success" />
     </form> 
 {% endblock %}    
 
+{% block scripts %}
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script type="text/javascript" src="{% static 'js/myscript.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.timepicker.js' %}"></script>
+{% endblock %}
