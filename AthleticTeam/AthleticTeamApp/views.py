@@ -1,14 +1,10 @@
-from bootstrap3_datetime.widgets import DateTimePicker
 from django.forms import modelform_factory
 from django.shortcuts import render, render_to_response, redirect,get_object_or_404
 from django.views import generic
 
-<<<<<<< HEAD
 from AthleticTeamApp.forms import TrainingForm
-from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team, Ranking, TeamPlay, Exercise, Training
-=======
-from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team, Ranking, MatchPlayerStatistics
->>>>>>> MergingMatchPlayerStats
+from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team, Ranking, TeamPlay, Exercise, Training, MatchPlayerStatistics
+
 from django.http import *
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
