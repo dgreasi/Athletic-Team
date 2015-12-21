@@ -11,7 +11,7 @@
 
 {% block container %}
 <p><b>Choose New Player's Team</b></p>
-    <form action="{% url 'AthleticTeamApp:create_a_player' %}" method="post">
+    <form action="{% url 'AthleticTeamApp:create_a_player' %}" method="post" enctype="multipart/form-data">
         <!-- delete one of ur teamss -->
         {% csrf_token %}
       <select name="team">
@@ -65,7 +65,7 @@
     </select>	  
     <h3>Enter New Player Number</h3>
     <input   type="text" class="text_title" id="my_text_title" name="number"/>
-    <h3>Enter New Player Height</h3>
+    <h3>Enter New Player Height(m.cm)</h3>
     <input   type="text" class="text_title" id="my_text_title" name="height"/>
     <h3>Enter New Player Weight</h3>
     <input   type="text" class="text_title" id="my_text_title" name="weight"/>
@@ -73,6 +73,8 @@
     <input  type="text" class="text_title" id="my_text_title" name="nationality"/>
     <h3>Enter Birth Date</h3>
     <input type="text" id="datepicker" name="date"/>
+<!--    <h3>Upload photo</h3>
+    <input type='file' id="my_photo" name"photo">-->
     </br>
     <input type="submit" name="submit" value="Submit" class="btn btn-success" />
     </form> 

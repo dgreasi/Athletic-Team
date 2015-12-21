@@ -102,9 +102,7 @@ def create_a_player(request):
     new_weight = request.POST['weight']
     new_nationality = request.POST['nationality']
     new_birth_date = request.POST['date']
-    
-
-    print new_secondary_positions
+    #new_photo = request.FILES['photo']
     
     temp = Player(first_name = new_first_name,team_id = selected_team.id)
     temp.last_name = new_last_name

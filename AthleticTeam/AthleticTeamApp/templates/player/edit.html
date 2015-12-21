@@ -24,8 +24,7 @@
     <h3>Enter New Player Last Name</h3>
     <input  value={{player.last_name}} type="text" class="text_title" id="my_text_title" name="last_name"/>
     <h3>Enter New Player Primary Position</h3>
-        <h3>Enter New Player Primary Position</h3>
-    <select  name="thesi" value={{player.primary_position}} size ="5">
+    <select  name="thesi" value="{{player.primary_position}}" size ="5" selected="selected">
 	  <option> 
 	      PG
 	  </option>
@@ -43,7 +42,7 @@
 	  </option>	  
     </select>
     <h3>Enter New Player Secondary Positions(Ctrl + click for multiple selection)</h3>
-    <select multiple='multiple' name="secondary_positions" value={{player.secondary_positions} size ="5">
+    <select multiple='multiple' name="secondary_positions" value="{{player.get_secondary_positions_display}" size ="5" >
 	  <option> 
 	      PG
 	  </option>
