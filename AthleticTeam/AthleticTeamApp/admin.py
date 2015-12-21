@@ -45,3 +45,5 @@ admin.site.register(Training)
 admin.site.register(Player)
 admin.site.register(Ranking, RankingAdmin)
 admin.site.register(Exercise)
+admin.site.register(MatchPlayerStatistics)
+

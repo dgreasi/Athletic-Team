@@ -69,9 +69,9 @@ def logout_view(request):
     return HttpResponseRedirect(reverse('AthleticTeamApp:index'))
 
 class HomeView(generic.ListView):
-    model = Announcement
+    model = Match
     template_name = 'home/base_site.html'
-    context_object_name = "announcement_list"
+    context_object_name = "matches_list"
     paginate_by = 3
 
     def get_queryset(self):
@@ -79,9 +79,9 @@ class HomeView(generic.ListView):
         Return all published Announcements (not including those set to be
         published in the future).
         """
-        return Announcement.objects.filter(
-            pub_date__lte=timezone.now()
-        ).order_by('-pub_date')
+        return Match.objects.filter(
+            date__lte=timezone.now()
+        ).order_by('-date')
 
 
 class IndexView(TemplateView):

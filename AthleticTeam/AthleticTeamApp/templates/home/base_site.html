@@ -21,43 +21,40 @@
 
     <div class="row">
       <div class="col-sm-3 col-md-6 col-lg-8" >
-      {% if user.is_authenticated %}
-        
-          <!-- ANNOUNCEMETNS PAGING -->
-          <h3>Recent Announcements</h3>
+          <!-- MATCHES PAGING -->
+          <h3>Latest Matches Results</h3>
 
-          {% if announcement_list %}
-              <table id="announcements">
-                  {% for announcement in announcement_list %}
-                      <ul>
-                          <li><a href="/announcements/{{ announcement.id }}/" class="see_detail">{{ announcement.announcement_title|upper }}</a></li>
-                      </ul>
-                  {% endfor %}
-              </table>
-              {# .... **Now the pagination section** .... #}
-              {% if is_paginated %}
-                  <div class="pagination">
-                      <span class="page-links">
-                          {% if page_obj.has_previous %}
-                              <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-                          {% endif %}
-                          <span class="page-current">
-                              Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                          </span>
-                          {% if page_obj.has_next %}
-                              <a href="?page={{ page_obj.next_page_number }}">next</a>
-                          {% endif %}
-                      </span>
-                  </div>
-              {% endif %}
+          {% if matches_list %}
+            <ul>
+            {% for match in matches_list %}
+                {% load filters %}
+                {% if match.home_away|str_equal:"Team A" %}
+                    <li><a href="{% url 'AthleticTeamApp:ShowMatch' match.id %}">{{ match.home_team }} Vs {{ match.away_team }}</a></li>
+                {% else %}
+                    <li><a href="{% url 'AthleticTeamApp:ShowMatch' match.id %}">{{ match.away_team }} Vs {{ match.home_team }}</a></li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+
+            {# .... **Now the pagination section** .... #}
+            {% if is_paginated %}
+                <div class="pagination">
+                    <span class="page-links">
+                        {% if page_obj.has_previous %}
+                            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                        {% endif %}
+                        <span class="page-current">
+                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                        </span>
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}">next</a>
+                        {% endif %}
+                    </span>
+                </div>
+            {% endif %}
           {% else %}
-              <p>No announcements yet, go to Annoucements Tab and make one!</p>
+              <p>No Matches added yet!</p>
           {% endif %}
-
-      {% else %}
-        <p>Show current teams!</p>
-        <p>New players!</p>
-      {% endif %}
       </div>
     </div>
   </div>
@@ -80,7 +77,7 @@
           <div class="carousel-caption">
             <h1>Our team, enjoy!</h1>
             <p>Current Stadium, players, more++</p>
-            <p><a class="btn btn-lg btn-primary" href="#" role="button">Be a member</a></p>
+            <p><a class="btn btn-lg btn-primary" href="/teams" role="button">Observe our Teams and Players!</a></p>
           </div>
         </div>
       </div>
@@ -100,7 +97,9 @@
           <div class="carousel-caption">
             <h1>One more for good measure.</h1>
             <p>System for our team, better communication, efficient, worthy. Watch your investments</p>
-            <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse</a></p>
+            {% if user.is_authenticated %}
+              <p><a class="btn btn-lg btn-primary" href="/announcements/" role="button">Recent Announcements</a></p>
+            {% endif %}
           </div>
         </div>
       </div>
@@ -114,4 +113,8 @@
       <span class="sr-only">Next</span>
     </a>
   </div><!-- /.carousel -->
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{% static 'js/myscript.js' %}"></script>
 {% endblock %}

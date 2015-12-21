@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'^ranking_results/(?P<pk>[0-9]+)$', rlviews.RankingResults.as_view(), name='rank_results'),
     url(r'^ranking_results_view/(?P<player_id>[0-9]+)$', rlviews.get_rank, name='view_rank_player'),
     url(r'^first_rank/(?P<pk>[0-9]+)$', rlviews.FirstRank.as_view(), name='firstRank'),
+
     url(r'^teamPlays$', views.ShowTeamPlays.as_view(), name='ShowTeamPlays'),
     url(r'^teamPlay/create$', views.CreateTeamPlay.as_view(), name='CreateTeamPlay'),
     url(r'^teamPlay/(?P<pk>[0-9]+)$', views.ShowTeamPlay.as_view(), name='ShowTeamPlay'),
@@ -60,4 +61,16 @@ urlpatterns = [
     url(r'^all_teams$', views.all_teams, name='all_teams'),
     url(r'^players_teams$', views.add_players_to_teams.as_view(), name='players_teams'),
    
+
+    url(r'^create_match/$', views.CreateMatch.as_view(), name='CreateMatch'),
+    url(r'^creating_match_stage_1/$', views.match_creator, name='match_stg1'),
+    url(r'^edit_match/(?P<pk>[0-9]+)$', views.EditMatches.as_view(), name='EditMatch'),
+    url(r'^edit_match_go_to_form/(?P<match_id>[0-9]+)$', views.edit_match, name='editmatch'),
+    url(r'^match_edit/(?P<match_id>[0-9]+)$', views.match_edit, name='match_edit'),
+    url(r'^player_stats/(?P<pk>[0-9]+)$', views.Players_stats.as_view(), name='Players_stats'),
+    url(r'^all_stats/$', views.all_stats, name='all_stats'),
+
+
 ]
+
+    

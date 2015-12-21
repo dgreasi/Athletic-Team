@@ -1,10 +1,158 @@
 {% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+<title>Home</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+{% endblock %}
+
 {% block container %}
+
+{% load filters %}
+{% if match.home_away|str_equal:"Team B" %}
+    <div class="table-responsive">  
+        <table class="table" width="300">
+            <thead>
+                <th width="100">{{match.away_team}}</th>
+                <th width="100">VS</th>
+                <th width="100">{{match.home_team}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td width="100">{{match.away_pts}}</td>
+                <td width="100">-</td>
+                <td width="100">{{match.home_pts}}</td>
+              </tr>
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <div class="table-responsive">  
+        <table class="table" width="300">
+            <thead>
+                <th width="100">{{ match.home_team }}</th>
+                <th width="100">VS</th>
+                <th width="100">{{ match.away_team }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td width="100">{{ match.home_pts }}</td>
+                <td width="100">-</td>
+                <td width="100">{{ match.away_pts }}</td>
+              </tr>
+            </tbody>
+        </table>
+    </div>
+{% endif %}
+
+<h3>Information about match</h3>
 <ul>
-{% for name, value in match.get_fields %}
-{#  {% if value %}#}
-    <li>{{ name }} => {{ value }}</li>
-{#  {% endif %}#}
-{% endfor %}
+    <p>Stadium: {{ match.stadium }}</p>
+    <p>Date of match: {{ match.date }}</p>
+    <p>Time of match: {{ match.time }}</p>
+    <p>Comments about match: {{ match.info }}</p>
 </ul>
+
+<h3>Players</h3>
+      
+    <div class="container">
+        <h1>Team : {{match.home_team}} Players Stats</h1>
+        {% if match.players %}
+        <div id="table" class="table-editable">
+            <table class="table" >
+                <tr>
+                    {% for name,value in match.matchplayerstatistics_set.first.get_fields %}
+                        <th>{{ name }}</th>
+                    {% endfor %}
+                </tr>
+                {% for matchPlayer in match.matchplayerstatistics_set.all %}
+                    <tr>
+                        {% for key,value in matchPlayer.get_fields %}
+                            <td>{{ value }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+
+<!--         <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>MIN</th>
+          <th>2PT-A</th>
+          <th>2PT-M</th>
+          <th>3PT-A</th>
+          <th>3PT-M</th>
+          <th>F-A</th>
+          <th>F-M</th>
+          <th>T0</th>
+          <th>OFF</th>
+          <th>DEF</th>
+          <th>ST</th>
+          <th>AST</th>
+          <th>BLK</th>
+          <th>PF</th>
+          <th>PTS</th> 
+        </tr>
+
+        { for player in match.players.all }
+          
+
+          <tr>
+            <td class='tdinput'><input size = 10 name = "player1" type="text" value="{{player.first_name}}" readonly/></td>
+            <td class='tdinput'><input size = 10 name = "player2" type="text" value="{{player.last_name}}" readonly/></td>
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics.get_fields.time_played }}" size = 3 name = "min" type="text"readonly /></td>
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics.get_fields.two_pa }}" size = 2 name = "2pt-a" type="text"readonly /></td>
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics.two_pm }}" size = 2 name = "2pt_m" type="text"readonly /></td>
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics.three_pa }}" size = 2 name = "3pt-a" type="text"readonly /></td>
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics.three_pm }}" size = 2 name = "3pt-m" type="text"readonly /></td>
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics.fta }}" size = 2 name = "f-a" type="text"readonly / ></td>
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics.ftm }}" size = 2 name = "f-m" type="text"readonly /></td>
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics.tov }}" size = 2 name = "to" type="text"readonly /></td>
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics.oreb }}" size = 2 name = "off" type="text"readonly /></td>
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics.dreb }}" size = 2 name = "def" type="text"readonly / ></td>
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics.ast }}" size = 2 name = "st" type="text"readonly /></td>
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics.stl }}" size = 2 name = "ass" type="text"readonly /></td>
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics.blk }}" size = 2 name = "blk" type="text"readonly /></td>
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics.pf }}" size = 2 name = "pf" type="text"readonly /></td>
+            <td  class='tdinput'><input value="{{ player.matchplayerstatistics.pts }}" size = 2 name = "pts" type="text"readonly /></td>
+          </tr>
+ -->
+            </table>
+       <!--  { endfor } -->
+        {% endif %}
+        </div>
+    </div>
+
+<!--     <p>No players added to this match yet</p> -->
+
+
+
+{% load filters %}
+{% if request.user|has_group:"Match Creator" %}
+    <form action="{% url 'AthleticTeamApp:editmatch' match.id %}" method="post">    {% csrf_token %}
+        <div class="button-rov">
+            <input type="submit" name="edit" value="Edit match's details" class="btn btn-md btn-primary" />
+        <!-- </div>
+
+        <div class="button-rov"> -->
+            <input type="submit" name="delete" value="Delete current match" class="btn btn-md btn-primary" />
+        <!-- </div> -->
+    </form>
+
+
+    <!-- <div class="button-rov"> -->
+        <button class="btn btn-md btn-primary" name="create" id="create_match">Create a new Match</button>
+    </div>
+{% endif %}
+
+<div class="button-rov">
+    <button class="btn btn-md btn-primary" name="matches" id="matches_id" type="submit">Show all matches</button>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="{% static 'js/myscript.js' %}"></script>
 {% endblock %}

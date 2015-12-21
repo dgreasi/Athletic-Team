@@ -13,6 +13,10 @@ class Person(models.Model):
     image = models.ImageField(upload_to='photos/', blank=True)
     #user = models.ForeignKey(User, default='')
 
+    def __str__(self):              # __unicode__ on Python 2
+        return self.last_name
+
+
     class Meta:
         abstract = True
 
@@ -68,7 +72,9 @@ class Player(Person):
     def get_fields(self):
         return [(field.name, field.value_to_string(self)) for field in Player._meta.fields]
 
-
+    def __str__(self):              # __unicode__ on Python 2
+	return self.last_name
+  
 class Match(models.Model):
     # model fields
     home_pts = models.PositiveSmallIntegerField(blank=True, null=True)
@@ -81,13 +87,17 @@ class Match(models.Model):
 
     # model relationships
     home_team = models.ForeignKey(Team, related_name='home_team',null=True)
-    away_team = models.ForeignKey(Team, related_name='away_team',null=True)
+    away_team = models.CharField(max_length=30, blank=True)
+
+    home_away = models.CharField(max_length=30, blank=True)
 
     players = models.ManyToManyField(Player, through='MatchPlayerStatistics')
 
     def get_fields(self):
         return [(field.name, field.value_to_string(self)) for field in Match._meta.fields]
 
+    def __str__(self):              # __unicode__ on Python 2
+	return self.stadium
 
 class MatchPlayerStatistics(models.Model):
     match = models.ForeignKey(Match)
