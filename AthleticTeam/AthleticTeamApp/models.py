@@ -15,7 +15,8 @@ class Person(models.Model):
 
 class Team(models.Model):
     team_name = models.CharField(max_length=30, blank=True)
-
+    image = models.ImageField(upload_to='photos/', blank=True ,default = 'photos/index.png')
+    
     def __str__(self):              # __unicode__ on Python 2
         return self.team_name
 

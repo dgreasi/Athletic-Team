@@ -9,14 +9,26 @@
 
 {% block container %}
 <h2>Teams</h2>
+  <table class="table table table-hover">
+  <tr>
+  <div class="row top-buffer">
+    <td><div class="col-md-0">Image</div></td>
+    <td><div class="col-md-1">Name</div></td>
+    <td><div class="col-md-2">Category</div></td>
+    </tr>
 {% if team_players_list%}
-    <ul>
     {% for team in team_players_list %}
-        <li><a href="{% url 'AthleticTeamApp:ShowTeam' team.id %}">{{ team.team_name}}</a></li>
+      <tr>
+      <div class="row top-buffer">
+	<td><div class="col-md-0"><img src={{ team.image.url }} class="img-rounded" height="100" width="100"></div></td>
+        <td><div class="col-md-1"> <a href="{% url 'AthleticTeamApp:ShowTeam' team.id %}">{{ team.team_name}}</a></div></td>
+	<td><div class="col-md-2">No category yet</div></td>
+      </div>
+      </tr>
     {% endfor %}
-    </ul>
+    </table>
 {% else %}
-    <p>No players are available.</p>
+    <p>No teams.</p>
 {% endif %}
 <form action="{% url 'AthleticTeamApp:edit_team'  %}" method="get">
         {% csrf_token %}   
