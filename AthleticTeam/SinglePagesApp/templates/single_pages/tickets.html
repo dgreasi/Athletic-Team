@@ -1,8 +1,20 @@
-tickets page
+{% extends "container.html" %}
 
+{% block head %}
+{% load staticfiles %}
+<title>tickets page</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+{% endblock %}
+
+{% block container %}
+
+<h2> Tickets available now!!</h2>
 <ul>
 {% for key, value in data.items %}
   <li>{{key}} - {{value}}</li>
- {% endfor %}
+{% endfor %}
 </ul>
-<p> Tickets available now!!</p>
+
+
+{% endblock %}

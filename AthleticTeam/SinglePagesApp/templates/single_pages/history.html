@@ -1,7 +1,19 @@
-history page
+{% extends "container.html" %}
 
-<ul>
-{% for key, value in data.items %}
-  <li>{{key}} - {{value}}</li>
- {% endfor %}
-</ul>
+{% block head %}
+{% load staticfiles %}
+<title>history page</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+{% endblock %}
+
+
+{% block container %}
+    <h2>History Page</h2>
+    <ul>
+    {% for key, value in data.items %}
+      <li>{{key}} - {{value}}</li>
+     {% endfor %}
+    </ul>
+{% endblock %}
+

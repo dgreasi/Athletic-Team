@@ -1,7 +1,21 @@
-facilities page
+{% extends "container.html" %}
 
+{% block head %}
+{% load staticfiles %}
+<title>facilities page</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+{% endblock %}
+
+
+
+
+{% block container %}
+<h2>Facilities</h2>
 <ul>
 {% for key, value in data.items %}
   <li>{{key}} - {{value}}</li>
  {% endfor %}
 </ul>
+
+{% endblock %}
