@@ -22,11 +22,11 @@
     <h2>Create new Player</h2>
     <hr/>
     <h3>Enter New Player First Name</h3>
-    <input  type="text" class="text_title" id="my_text_title" name="first_name"/>
+    <input  type="text" class="text_title" id="my_text_title" name="first_name" required autofocus />
     <h3>Enter New Player Last Name</h3>
-    <input   type="text" class="text_title" id="my_text_title" name="last_name"/>
+    <input   type="text" class="text_title" id="my_text_title" name="last_name" required autofocus />
     <h3>Enter New Player Primary Position</h3>
-    <select  name="thesi" size ="5">
+    <select  name="thesi" size ="5" required autofocus>
 	  <option> 
 	      PG
 	  </option>
@@ -44,7 +44,7 @@
 	  </option>	  
     </select>
     <h3>Enter New Player Secondary Positions(Ctrl + click for multiple selection)</h3>
-    <select multiple='multiple' name="secondary_positions" size ="5">
+    <select multiple='multiple' name="secondary_positions" size ="5" required autofocus>
 	  <option> 
 	      PG
 	  </option>
@@ -62,17 +62,17 @@
 	  </option>
     </select>	  
     <h3>Enter New Player Number</h3>
-    <input   type="text" class="text_title" id="my_text_title" name="number"/>
+    <input   type="text" class="text_title" id="my_text_title" name="number" required autofocus />
     <h3>Enter New Player Height(m.cm)</h3>
-    <input   type="text" class="text_title" id="my_text_title" name="height"/>
+    <input   type="text" class="text_title" id="my_text_title" name="height" required autofocus />
     <h3>Enter New Player Weight</h3>
-    <input   type="text" class="text_title" id="my_text_title" name="weight"/>
+    <input   type="text" class="text_title" id="my_text_title" name="weight" required autofocus />
     <h3>Enter New Player Nationality</h3>
-    <input  type="text" class="text_title" id="my_text_title" name="nationality"/>
+    <input  type="text" class="text_title" id="my_text_title" name="nationality" required autofocus />
     <h3>Enter Birth Date</h3>
-    <input type="text" id="datepicker" name="date"/>
+    <input type="text" id="datepicker" name="date" required autofocus />
     <h3>Enter Player Image</h3>
-    <input id="id_image" type="file" class="" name="image">
+    <input id="id_image" type="file" class="" name="image" />
     </br>
     <input type="submit" name="submit" value="Submit" class="btn btn-success" />
     </form> 

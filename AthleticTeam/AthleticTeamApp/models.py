@@ -7,9 +7,9 @@ from multiselectfield import MultiSelectField
 
 
 class Person(models.Model):
-    first_name = models.CharField(max_length=30, blank=True)
-    last_name = models.CharField(max_length=30, blank=True)
-    info = models.TextField(blank=True)
+    first_name = models.CharField(max_length=30,)
+    last_name = models.CharField(max_length=30)
+    info = models.TextField()
     image = models.ImageField(upload_to='photos/', blank=True ,default = 'photos/index.png')
     #user = models.ForeignKey(User, default='')
 
@@ -22,7 +22,7 @@ class Person(models.Model):
 
 
 class Team(models.Model):
-    team_name = models.CharField(max_length=30, blank=True)
+    team_name = models.CharField(max_length=30)
     image = models.ImageField(upload_to='photos/', blank=True ,default = 'photos/index.png')
     
     def __str__(self):              # __unicode__ on Python 2
@@ -58,14 +58,14 @@ class Player(Person):
                             (CE, 'Center'),
                         )
 
-    height = models.DecimalField(blank=True, max_digits=3, decimal_places=2, null=True)
-    weight = models.PositiveSmallIntegerField(blank=True, null=True)
-    birth_date = models.DateField(blank=True, null=True)
-    primary_position = models.CharField(max_length=2, choices=available_positions, blank=True)
-    secondary_positions = models.CharField(max_length=30, blank=True)
-    number = models.PositiveSmallIntegerField(blank=True, null=True)
+    height = models.DecimalField(max_digits=3, decimal_places=2, null=True)
+    weight = models.PositiveSmallIntegerField(null=True)
+    birth_date = models.DateField(null=True)
+    primary_position = models.CharField(max_length=2, choices=available_positions)
+    secondary_positions = models.CharField(max_length=30)
+    number = models.PositiveSmallIntegerField(null=True)
 
-    nationality = models.CharField(max_length=30, blank=True)
+    nationality = models.CharField(max_length=30)
 
     # model relationships
     team = models.ForeignKey(Team)
@@ -78,19 +78,19 @@ class Player(Person):
   
 class Match(models.Model):
     # model fields
-    home_pts = models.PositiveSmallIntegerField(blank=True, null=True)
-    away_pts = models.PositiveSmallIntegerField(blank=True, null=True)
+    home_pts = models.PositiveSmallIntegerField(null=True)
+    away_pts = models.PositiveSmallIntegerField(null=True)
 
-    stadium = models.CharField(max_length=30, blank=True)
-    date = models.DateField(blank=True, null=True)
-    time = models.TimeField(blank=True,null=True)
-    info = models.TextField(blank=True)
+    stadium = models.CharField(max_length=30)
+    date = models.DateField(null=True)
+    time = models.TimeField(null=True)
+    info = models.TextField()
 
     # model relationships
     home_team = models.ForeignKey(Team, related_name='home_team',null=True)
-    away_team = models.CharField(max_length=30, blank=True)
+    away_team = models.CharField(max_length=30)
 
-    home_away = models.CharField(max_length=30, blank=True)
+    home_away = models.CharField(max_length=30)
 
     players = models.ManyToManyField(Player, through='MatchPlayerStatistics')
 
@@ -105,21 +105,21 @@ class MatchPlayerStatistics(models.Model):
     player = models.ForeignKey(Player)
 
     started = models.BooleanField()
-    time_played = models.CharField(max_length=10, blank=True)
-    pts = models.PositiveSmallIntegerField(blank=True, null=True)
-    two_pa = models.PositiveSmallIntegerField(blank=True, null=True)
-    two_pm = models.PositiveSmallIntegerField(blank=True, null=True)
-    three_pa = models.PositiveSmallIntegerField(blank=True, null=True)
-    three_pm = models.PositiveSmallIntegerField(blank=True, null=True)
-    fta = models.PositiveSmallIntegerField(blank=True, null=True)
-    ftm = models.PositiveSmallIntegerField(blank=True, null=True)
-    tov = models.PositiveSmallIntegerField(blank=True, null=True)
-    oreb = models.PositiveSmallIntegerField(blank=True, null=True)
-    dreb = models.PositiveSmallIntegerField(blank=True, null=True)
-    ast = models.PositiveSmallIntegerField(blank=True, null=True)
-    stl = models.PositiveSmallIntegerField(blank=True, null=True)
-    blk = models.PositiveSmallIntegerField(blank=True, null=True)
-    pf = models.PositiveSmallIntegerField(blank=True, null=True)
+    time_played = models.CharField(max_length=10)
+    pts = models.PositiveSmallIntegerField(null=True)
+    two_pa = models.PositiveSmallIntegerField(null=True)
+    two_pm = models.PositiveSmallIntegerField(null=True)
+    three_pa = models.PositiveSmallIntegerField(null=True)
+    three_pm = models.PositiveSmallIntegerField(null=True)
+    fta = models.PositiveSmallIntegerField(null=True)
+    ftm = models.PositiveSmallIntegerField(null=True)
+    tov = models.PositiveSmallIntegerField(null=True)
+    oreb = models.PositiveSmallIntegerField(null=True)
+    dreb = models.PositiveSmallIntegerField(null=True)
+    ast = models.PositiveSmallIntegerField(null=True)
+    stl = models.PositiveSmallIntegerField(null=True)
+    blk = models.PositiveSmallIntegerField(null=True)
+    pf = models.PositiveSmallIntegerField(null=True)
 
     def get_fields(self):
         return [(field.name, field.value_to_string(self)) for field in MatchPlayerStatistics._meta.fields]
@@ -195,7 +195,7 @@ class Exercise(models.Model):
     type = models.CharField(max_length=1, choices=available_types, default='P')
     duration = models.SmallIntegerField(default=0)  # time in minutes
     obj = MultiSelectField(choices=available_objectives, blank=True)
-    desc = models.TextField(blank=True)
+    desc = models.TextField()
 
     def __str__(self):
         return self.name

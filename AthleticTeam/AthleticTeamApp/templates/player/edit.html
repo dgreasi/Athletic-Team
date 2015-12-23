@@ -10,19 +10,20 @@
 
 {% block container %}
     <h1>Edit {{player.first_name}} {{player.last_name}}</h1>
-    <h3>Enter New Player Fist Name</h3>
+    
 
     <form action="{% url 'AthleticTeamApp:edit_player' player.id %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        
-        <input value={{player.first_name}} type="text" class="text_title" id="my_text_title" name="first_name"/>
-        <br />
+    
+    <h3>Enter New Player Fist Name</h3>  
+    <input value={{player.first_name}} type="text" class="text_title" id="my_text_title" name="first_name" required autofocus />
+    <br />
         
     
     <h3>Enter New Player Last Name</h3>
-    <input  value={{player.last_name}} type="text" class="text_title" id="my_text_title" name="last_name"/>
+    <input  value={{player.last_name}} type="text" class="text_title" id="my_text_title" name="last_name" required autofocus />
     <h3>Enter New Player Primary Position</h3>
-    <select  name="thesi" value="{{player.primary_position}}" size ="5" selected="selected">
+    <select  name="thesi" value="{{player.primary_position}}" size ="5" selected="selected" required autofocus >
 	  <option> 
 	      PG
 	  </option>
@@ -40,7 +41,7 @@
 	  </option>	  
     </select>
     <h3>Enter New Player Secondary Positions(Ctrl + click for multiple selection)</h3>
-    <select multiple='multiple' name="secondary_positions" value="{{player.get_secondary_positions_display}" size ="5" >
+    <select multiple='multiple' name="secondary_positions" value="{{player.get_secondary_positions_display}" size ="5" required autofocus >
 	  <option> 
 	      PG
 	  </option>
@@ -61,15 +62,15 @@
     <h3>Enter New Player Secondary Positions</h3>
     <input  value={{player.secondary_positions}} type="text" class="text_title" id="my_text_title" name="secondary_postitions"/>-->
     <h3>Enter New Player Number</h3>
-    <input  value={{player.number}} type="text" class="text_title" id="my_text_title" name="number"/>
+    <input  value={{player.number}} type="text" class="text_title" id="my_text_title" name="number" required autofocus />
     <h3>Enter New Player Height</h3>
-    <input  value={{player.height}} type="text" class="text_title" id="my_text_title" name="height"/>
+    <input  value={{player.height}} type="text" class="text_title" id="my_text_title" name="height" required autofocus />
     <h3>Enter New Player Weight</h3>
-    <input  value={{player.weight}} type="text" class="text_title" id="my_text_title" name="weight"/>
+    <input  value={{player.weight}} type="text" class="text_title" id="my_text_title" name="weight" required autofocus />
     <h3>Enter New Player Nationality</h3>
-    <input  value={{player.nationality}} type="text" class="text_title" id="my_text_title" name="nationality"/>
+    <input  value={{player.nationality}} type="text" class="text_title" id="my_text_title" name="nationality" required autofocus />
     <h3>Enter Birth Date</h3>
-    <input type="text" id="datepicker" name="date"/>
+    <input type="text" id="datepicker" name="date" value="{{ player.birth_date|date:"Y-m-d" }}"  required autofocus />
     <h3>Enter Player Image</h3>
     <input id="id_image" type="file" class="" name="image" value={{player.image}}>
     </br>

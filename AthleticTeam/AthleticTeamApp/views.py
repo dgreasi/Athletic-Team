@@ -154,12 +154,12 @@ def edit_player(request,player_id):
     temp.last_name = last_name
     temp.primary_position = new_primary_position
     temp.secondary_positions = '/'.join(new_secondary_positions)
-    temp.number = number
+    temp.number = int(number)
     temp.height = height
-    temp.weight = weight
+    temp.weight = int(weight)
     temp.nationality = nationality
-    temp.birth_date= new_birth_date
-    temp.image =new_photo
+    temp.birth_date = new_birth_date
+    temp.image = new_photo
     temp.save()
 
     return HttpResponseRedirect(reverse('AthleticTeamApp:ShowPlayers'))  
@@ -203,9 +203,10 @@ class ShowTeams(generic.ListView):
     
 def create_team(request):
     title = request.POST['title']
-    new_photo = request.FILES['image']
+    if request.FILES['image']:
+        new_photo = request.FILES['image']
     temp = Team(team_name=title)
-    temp.image =new_photo
+    temp.image = new_photo
     temp.save()
 
     return HttpResponseRedirect(reverse('AthleticTeamApp:ShowTeams'))

@@ -16,7 +16,7 @@
     <form action="{% url 'announcementsApp:edit_comm' comment.id %}" method="post">
         {% csrf_token %}
         
-        <p><input type="text" class="text" id="my_text" name="text"/></p>   
+        <p><input type="text" class="text" id="my_text" name="text" value="{{ comment.comment_text }}" required autofocus /></p>   
         
         <input type="submit" name="submit" value="Submit" class="btn btn-success" />
     </form>
