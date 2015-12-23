@@ -1,6 +1,7 @@
 {% extends "container.html" %}
 
 {% block head %}
+{% load staticfiles %}
 <title>Home</title>
 {% endblock %}
 
@@ -106,6 +107,5 @@
 {% endblock %}
 
 {% block scripts %}
-{% load staticfiles %}
     <script type="text/javascript" src="{% static 'js/myscript.js' %}"></script>
 {% endblock %}
