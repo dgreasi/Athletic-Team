@@ -1,10 +1,7 @@
 {% extends "container.html" %}
 
 {% block head %}
-{% load staticfiles %}
     <title>ShowAll</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
 {% endblock %}
 
 {% block container %}
@@ -13,8 +10,8 @@
     <table class="table table table-hover">
             <tr>
              <div class="row top-buffer">
-		 <td><div class="col-md-0">#</div></td>
-		 <td><div class="col-md-0">Image</div></td>
+         <td><div class="col-md-0">#</div></td>
+         <td><div class="col-md-0">Image</div></td>
                  <td><div class="col-md-1">First Name</div></td>
                  <td><div class="col-md-2">Last Name</div></td>
                  <td><div class="col-md-3">Team</div></td>
@@ -42,14 +39,19 @@
 {% else %}
     <p>No players are available.</p>
 {% endif %}
-    <hr/>
-    <form action="{% url 'AthleticTeamApp:edit_players'  %}" method="get">
-        {% csrf_token %}   
-        <input type="submit" name="submit" value="Edit Players" class="btn btn-success" />
-    </form>
 
-    <form action="{% url 'AthleticTeamApp:create_player'  %}" method="get">
-        {% csrf_token %}   
-	    <input type="submit" name="submit" value="Create New Player" class="btn btn-success" />
-    </form>  
+    {% load filters %}
+    {% if request.user|has_group:"Match Creator" %}
+        <hr/>
+        <form action="{% url 'AthleticTeamApp:edit_players'  %}" method="get">
+            {% csrf_token %}   
+            <input type="submit" name="submit" value="Edit Players" class="btn btn-success" />
+        </form>
+        <div class="margin-top-small">
+            <form action="{% url 'AthleticTeamApp:create_player'  %}" method="get">
+                {% csrf_token %}   
+                <input type="submit" name="submit" value="Create New Player" class="btn btn-success" />
+            </form>
+        </div>
+    {% endif %}
 {% endblock%}

@@ -1,14 +1,13 @@
 {% extends "container.html" %}
 
 {% block head %}
-{% load staticfiles %}
     <title>Edit Training: {{ training.name }}</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
 {% endblock %}
 
 {% block container %}
+
+{% load filters %}
+{% if request.user|has_group:"Coaching Staff Member" %}
     <div class="row">
         <div class="col-lg-12">
             <h1>
@@ -22,4 +21,12 @@
         </div>
     </div>
     <hr>
+{% else %}
+    <h2>Not authorized</h2>
+{% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
 {% endblock %}

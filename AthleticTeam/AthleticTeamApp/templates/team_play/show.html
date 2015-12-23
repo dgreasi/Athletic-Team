@@ -5,12 +5,11 @@
     <title>Team Play: {{ teamplay.name }}</title>
     {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static 'team_system/css/style.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
-    
 {% endblock %}
 
 {% block container %}
+
+{% if user.is_authenticated %}
     <div class="row">
         <div class="col-lg-8">
             <h1>
@@ -24,6 +23,10 @@
     </div>
     {% include "team_play/_gui_view_mode.html" %}
     <hr>
+{% else %}
+    <h2>Not authorized!</h2>
+{% endif %}
+
 {% endblock %}
 
 {% block scripts %}

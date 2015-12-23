@@ -1,11 +1,7 @@
 {% extends "container.html" %}
 
 {% block head %}
-{% load staticfiles %}
   <title>Edit announcement</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
-  <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
-  <script type="text/javascript" src="{% static 'js/myscript.js' %}"></script> 
 {% endblock %}
 
 {% block container %}
@@ -22,4 +18,9 @@
     </form>
 
     <br />
+{% endblock %}
+
+{% block scripts %}
+  {% load staticfiles %}
+  <script type="text/javascript" src="{% static 'js/myscript.js' %}"></script>
 {% endblock %}

@@ -23,15 +23,18 @@
                 <li>
                     <a href="/players" title="Show all players of our Team!">Players</a>
                 </li>
-                <li>
-                    <a href="{% url 'AthleticTeamApp:ShowTeamPlays'%}">Team Plays</a>
-                </li>
-                <li>
-                    <a href="{% url 'AthleticTeamApp:ShowExercises'%}">Exercises</a>
-                </li>
-                <li>
-                    <a href="{% url 'AthleticTeamApp:ShowTrainings'%}">Trainings</a>
-                </li>
+                {% if user.is_authenticated %}
+                    <li>
+                        <a href="{% url 'AthleticTeamApp:ShowTeamPlays'%}">Team Plays</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'AthleticTeamApp:ShowExercises'%}">Exercises</a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'AthleticTeamApp:ShowTrainings'%}">Trainings</a>
+                    </li>
+                {% endif %}
                 <li>
                     <a href="/matches" title="Show matches">Matches</a>
                 </li>

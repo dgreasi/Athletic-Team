@@ -5,11 +5,10 @@
     <title>Team Plays</title>
     {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static 'team_system/css/style.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
 {% endblock %}
 
 {% block container %}
+{% if user.is_authenticated %}
     {% if teamplay_list %}
         <h1>Team Plays:</h1>
         <ul>
@@ -24,11 +23,21 @@
     {% else %}
         <h1>No team plays are available.</h1>
     {% endif %}
-    <br>
-    <a type="button" class="btn btn-default" aria-label="Create Team Play" href="{% url 'AthleticTeamApp:CreateTeamPlay' %}">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create
-    </a>
-    <hr>
+
+    
+    {% load filters %}
+    {% if request.user|has_group:"Coaching Staff Member" %}
+        <br>
+        <a type="button" class="btn btn-default" aria-label="Create Team Play" href="{% url 'AthleticTeamApp:CreateTeamPlay' %}">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create
+        </a>
+        <hr>
+    {% endif %}
+
+{% else %}
+    <p><strong>Not authorized!</strong></p>
+{% endif %}
+
 {% endblock %}
 
 {% block scripts %}

@@ -1,13 +1,12 @@
 {% extends "container.html" %}
 
 {% block head %}
-{% load staticfiles %}
     <title>Training: {{ training.date }}</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
 {% endblock %}
 
 {% block container %}
+
+{% if user.is_authenticated %}
     <div class="row">
         <div class="col-lg-12">
             <h1>
@@ -51,4 +50,6 @@
         </div>
     </div>
     <hr>
+{% endif %}
+
 {% endblock %}

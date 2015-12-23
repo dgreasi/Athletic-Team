@@ -1,10 +1,7 @@
 {% extends "container.html" %}
 
 {% block head %}
-{% load staticfiles %}
   <title>Edit announcement</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
-  <script type="text/javascript" src="{% static 'js/myscript.js' %}"></script> 
 {% endblock %}
 
 {% block container %}
@@ -35,4 +32,9 @@
     <p><a href="{% url 'announcementsApp:myannouncements' %}">View my announcements</a></p>
     <p><a href="{% url 'announcementsApp:index' %}">Go to recent announcements</a></p>
 
+{% endblock %}
+
+{% block scripts %}
+{% load staticfiles %}
+   <script type="text/javascript" src="{% static 'js/myscript.js' %}"></script> 
 {% endblock %}

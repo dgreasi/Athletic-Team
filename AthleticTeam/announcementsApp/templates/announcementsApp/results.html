@@ -1,10 +1,7 @@
 {% extends "container.html" %}
 
 {% block head %}
-{% load staticfiles %}
   <title>Results</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
-  <script type="text/javascript" src="{% static 'js/myscript.js' %}"></script> 
 {% endblock %}
 
 
@@ -57,4 +54,10 @@
     <br />
     <p><a href="{% url 'announcementsApp:detail' announcement.id %}">Vote a comment or make one</a></p>
     <p><a href="{% url 'announcementsApp:index' %}">Go to recent announcements</a></p>
+{% endblock %}
+
+
+{% block scripts %}
+{% load staticfiles %}
+   <script type="text/javascript" src="{% static 'js/myscript.js' %}"></script> 
 {% endblock %}

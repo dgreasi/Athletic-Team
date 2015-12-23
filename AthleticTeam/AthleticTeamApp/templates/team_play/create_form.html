@@ -3,13 +3,14 @@
 {% block head %}
 {% load staticfiles %}
     <title>Create Team Play</title>
-    {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static 'team_system/css/style.css' %}" />
     <script type="text/javascript" src="{% static 'team_system/js/team_play_gui.js' %}"></script>
     <script src="{% static 'team_system/js/snap.svg-min.js' %}"></script>
 {% endblock %}
 
 {% block container %}
+{% load filters %}
+{% if request.user|has_group:"Coaching Staff Member" %}
     <div class="row">
         <div class="col-lg-8">
             <h1>
@@ -24,6 +25,10 @@
     <br>
     {% include "team_play/_gui_edit_mode.html" %}
     <hr>
+{% else %}
+    <h2>Not authorized!</h2>
+{% endif %}
+
 {% endblock %}
 
 {% block scripts %}

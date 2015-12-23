@@ -3,8 +3,6 @@
 {% block head %}
 {% load staticfiles %}
 <title>Edit a Player</title>
-<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.timepicker.css' %}" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 {% endblock %}
@@ -72,15 +70,15 @@
     <input  value={{player.nationality}} type="text" class="text_title" id="my_text_title" name="nationality"/>
     <h3>Enter Birth Date</h3>
     <input type="text" id="datepicker" name="date" value = {{player.birth_date}} />
-    </br>
-    <input type="submit" name="submit" value="Submit" class="btn btn-success" />
+    <div class="margin-top-small">
+        <input type="submit" name="submit" value="Submit" class="btn btn-success" />
+    </div>
     </form>
-    <br />
 {% endblock %}
 
 {% block scripts %}
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<script type="text/javascript" src="{% static 'js/myscript.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/jquery.timepicker.js' %}"></script>
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script type="text/javascript" src="{% static 'js/myscript.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.timepicker.js' %}"></script>
 {% endblock %}

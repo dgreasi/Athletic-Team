@@ -1,13 +1,12 @@
 {% extends "container.html" %}
 
 {% block head %}
-{% load staticfiles %}
     <title>Trainings</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
 {% endblock %}
 
 {% block container %}
+
+{% if user.is_authenticated %}
     {% if training_list %}
         <h1>Trainings:</h1>
         <ul>
@@ -22,9 +21,16 @@
     {% else %}
         <h1>No trainings are available.</h1>
     {% endif %}
-    <br>
-    <a type="button" class="btn btn-default" aria-label="Create Training" href="{% url 'AthleticTeamApp:CreateTraining' %}">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create
-    </a>
-    <hr>
+    {% load filters %}
+    {% if request.user|has_group:"Coaching Staff Member" %}
+        <br>
+        <a type="button" class="btn btn-default" aria-label="Create Training" href="{% url 'AthleticTeamApp:CreateTraining' %}">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create
+        </a>
+        <hr>
+    {% endif %}
+{% else %}
+    <h2>Not authorized</h2>
+{% endif %}
+
 {% endblock %}
