@@ -1,7 +1,6 @@
 {% extends "container.html" %}
 
 {% block head %}
-{% load staticfiles %}
 <title>Home</title>
 {% endblock %}
 
@@ -10,13 +9,6 @@
   <!-- test Grid -->
   <div class="container-fluid">
     <h1>Information Sports Team System</h1>
-
-    {% if user.is_authenticated %}
-      <p>Welcome to our Team's Site USER!!!</p>
-    {% else %}
-      <p>Welcome to our Team's Site GUEST!!!</p>
-    {% endif %}
-
     <div class="row">
       <div class="col-sm-3 col-md-6 col-lg-8" >
           <!-- MATCHES PAGING -->
@@ -114,5 +106,6 @@
 {% endblock %}
 
 {% block scripts %}
+{% load staticfiles %}
     <script type="text/javascript" src="{% static 'js/myscript.js' %}"></script>
 {% endblock %}
