@@ -16,10 +16,9 @@ from django.views.generic import TemplateView
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
 from django.template import RequestContext
-
-
 import datetime
 from django.utils import timezone
+
 
 # Create your views here.
 class ShowCoachingStaffMembers(generic.ListView):
@@ -98,7 +97,8 @@ def all_teams(request):
 def create_a_player(request):     
     p = Team.objects.all()
     selected_team = get_object_or_404(Team, pk=request.POST['team'])
-
+    #form = ImageUploadForm(request.POST, request.FILES)
+    
     new_first_name = request.POST['first_name']
     new_last_name = request.POST['last_name']
     new_primary_position = request.POST.get('thesi',False)
@@ -108,7 +108,7 @@ def create_a_player(request):
     new_weight = request.POST['weight']
     new_nationality = request.POST['nationality']
     new_birth_date = request.POST['date']
-    #new_photo = request.FILES['photo']
+    new_photo = request.FILES['image']
     
     temp = Player(first_name = new_first_name,team_id = selected_team.id)
     temp.last_name = new_last_name
@@ -119,8 +119,9 @@ def create_a_player(request):
     temp.weight = new_weight
     temp.nationality = new_nationality
     temp.birth_date = new_birth_date
+    temp.image =new_photo 
     temp.save()
-
+    
     return HttpResponseRedirect(reverse('AthleticTeamApp:ShowPlayers'))
   
 def edit_a_player(request):     
@@ -147,6 +148,7 @@ def edit_player(request,player_id):
     weight = request.POST['weight']
     nationality = request.POST['nationality']
     new_birth_date = request.POST['date']
+    new_photo = request.FILES['image']
     
     temp.first_name = first_name
     temp.last_name = last_name
@@ -157,7 +159,7 @@ def edit_player(request,player_id):
     temp.weight = weight
     temp.nationality = nationality
     temp.birth_date= new_birth_date
-    #temp.pub_date = timezone.now()
+    temp.image =new_photo
     temp.save()
 
     return HttpResponseRedirect(reverse('AthleticTeamApp:ShowPlayers'))  
@@ -201,7 +203,9 @@ class ShowTeams(generic.ListView):
     
 def create_team(request):
     title = request.POST['title']
+    new_photo = request.FILES['image']
     temp = Team(team_name=title)
+    temp.image =new_photo
     temp.save()
 
     return HttpResponseRedirect(reverse('AthleticTeamApp:ShowTeams'))
@@ -234,10 +238,10 @@ def edit(request,team_id):
     temp = get_object_or_404(Team, pk=team_id)
 
     title = request.POST['title']
-    #text = request.POST['text']
+    new_photo = request.FILES['image']
     
     temp.team_name = title
-    ##temp.announcement_text = text
+    temp.image =new_photo
     #temp.pub_date = timezone.now()
     temp.save()
 
