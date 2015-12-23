@@ -8,31 +8,33 @@
 <h2>Team : {{team.team_name}}  <img src={{ team.image.url }} class="img-rounded" height="100" width="100"></h2>
 
 <table class="table table table-hover">
-            <tr>
-             <div class="row top-buffer">
-		 <td><div class="col-md-0">#</div></td>
-		 <td><div class="col-md-0">Image</div></td>
-                 <td><div class="col-md-1">First Name</div></td>
-                 <td><div class="col-md-2">Last Name</div></td>
-                 <td><div class="col-md-3">Birth Date</div></td>
-                 <td><div class="col-md-4">Height</div></td>
-                 <td><div class="col-md-5">Position</div></td>
-                 <td><div class="col-md-6">Nationality</div></td>
-            </tr>
+    <tr>
+        <div class="row top-buffer">
+            <td><div class="col-md-0">#</div></td>
+            <td><div class="col-md-0">Image</div></td>
+            <td><div class="col-md-1">First Name</div></td>
+            <td><div class="col-md-2">Last Name</div></td>
+            <td><div class="col-md-3">Birth Date</div></td>
+            <td><div class="col-md-4">Height</div></td>
+            <td><div class="col-md-5">Position</div></td>
+            <td><div class="col-md-6">Nationality</div></td>
+        </div>
+    </tr>
+
 {% for player in team.player_set.all %}
 {#  {% if player %} #}
-                <tr>
-                <div class="row top-buffer">
-                    <td><div class="col-md-0">{{ player.number}}</div></td>
-                    <td><div class="col-md-0"> <img src={{ player.image.url }} class="img-rounded" height="100" width="100"></div></td>
-                    <td><div class="col-md-1"><a href="{% url 'AthleticTeamApp:ShowPlayer' player.id %}">{{ player.first_name }}</div></td>
-                    <td><div class="col-md-2"><a href="{% url 'AthleticTeamApp:ShowPlayer' player.id %}">{{ player.last_name }}</div></td>
-                    <td><div class="col-md-3">{{ player.birth_date }}</div></td>
-                    <td><div class="col-md-1">{{ player.height }}</div></td>
-                    <td><div class="col-md-2">{{ player.primary_position }}</div></td>
-                    <td><div class="col-md-3">{{ player.nationality}}</div></td>
-                </div>
-            </tr>
+    <tr>
+        <div class="row top-buffer">
+            <td><div class="col-md-0">{{ player.number}}</div></td>
+            <td><div class="col-md-0"> <img src={{ player.image.url }} class="img-rounded" height="100" width="100"></div></td>
+            <td><div class="col-md-1"><a href="{% url 'AthleticTeamApp:ShowPlayer' player.id %}">{{ player.first_name }}</div></td>
+            <td><div class="col-md-2"><a href="{% url 'AthleticTeamApp:ShowPlayer' player.id %}">{{ player.last_name }}</div></td>
+            <td><div class="col-md-3">{{ player.birth_date }}</div></td>
+            <td><div class="col-md-1">{{ player.height }}</div></td>
+            <td><div class="col-md-2">{{ player.primary_position }}</div></td>
+            <td><div class="col-md-3">{{ player.nationality}}</div></td>
+        </div>
+    </tr>
 {#  {% endif %}#}
 {% endfor %}
 </table>

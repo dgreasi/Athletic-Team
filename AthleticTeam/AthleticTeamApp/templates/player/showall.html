@@ -43,6 +43,7 @@
     {% load filters %}
     {% if request.user|has_group:"Match Creator" %}
         <hr/>
+        
         <form action="{% url 'AthleticTeamApp:edit_players'  %}" method="get">
             {% csrf_token %}   
             <input type="submit" name="submit" value="Edit Players" class="btn btn-success" />
