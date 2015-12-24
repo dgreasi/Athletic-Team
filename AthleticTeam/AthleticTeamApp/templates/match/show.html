@@ -83,10 +83,10 @@
                 {% for matchPlayer in match.matchplayerstatistics_set.all %}
 		      <tr>
 			  {% for key,value in matchPlayer.get_fields %}
-			    {% if forloop.counter > 2 %}
+			    {% if forloop.counter > 1 %}
 			      {% if key == 'player' %}
 				{% for player in match.players.all %}
-				    {% if forloop.counter == value|add:0 %}
+				    {% if player.id|add:0 == value|add:0 %}
 				      <td>{{player.first_name}} {{player.last_name}}</td>
 				    {% else %}  
 				    {% endif %}  

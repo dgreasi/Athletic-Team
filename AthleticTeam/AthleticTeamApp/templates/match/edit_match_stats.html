@@ -92,14 +92,14 @@
 			    {% if forloop.counter > 2 %}
 			      {% if key == 'player' %}
 				{% for player in match.players.all %}
-				    {% if forloop.counter == value|add:0 %}
+				    {% if player.id|add:0 == value|add:0 %}
 				      <td>{{player.first_name}} {{player.last_name}}</td>
 				      <input type="hidden" size = 2 name = "{{key}}" type="text" value="{{ value }}"/>
 				    {% else %}  
 				    {% endif %}  
 				  {% endfor %}
 			      {% else %}
-			      <td class='tdinput'><input size = 2 name = "{{key}}" type="text" value="{{ value }}"/></td>
+				<td class='tdinput'><input size = 2 name = "{{key}}" type="text" value="{{ value }}"/></td>
 			      {% endif %}
 			     {% endif %} 
 			  {% endfor %}
