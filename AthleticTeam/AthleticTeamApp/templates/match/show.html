@@ -83,7 +83,7 @@
                 {% for matchPlayer in match.matchplayerstatistics_set.all %}
 		      <tr>
 			  {% for key,value in matchPlayer.get_fields %}
-			    {% if forloop.counter > 1 %}
+			    {% if forloop.counter > 2 %}
 			      {% if key == 'player' %}
 				{% for player in match.players.all %}
 				    {% if player.id|add:0 == value|add:0 %}
