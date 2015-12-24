@@ -189,7 +189,10 @@ class EditMatches(generic.DetailView):
 class ShowMatch(generic.DetailView):
     model = Match
     template_name = 'match/show.html'
-
+    
+class EditMatchStats(generic.DetailView):
+    model = Match
+    template_name = 'match/edit_match_stats.html'    
 
 
 ##################
@@ -435,6 +438,8 @@ def edit_match(request, match_id):
 
     if 'edit' in request.POST:
         return HttpResponseRedirect(reverse('AthleticTeamApp:EditMatch', args=(selected_match.id,)))
+    elif 'edit_stats' in request.POST:
+	return HttpResponseRedirect(reverse('AthleticTeamApp:EditMatchStats', args=(selected_match.id,)))
     elif 'delete' in request.POST:
         selected_match.delete()
         return HttpResponseRedirect(reverse('AthleticTeamApp:ShowMatches'))
@@ -491,3 +496,48 @@ def all_stats(request):
 
   return HttpResponseRedirect(reverse('AthleticTeamApp:ShowMatches'))
 
+def match_stats(request):
+  
+  agwnas = request.POST['match1']
+  paiktis = request.POST.getlist('player')
+  minutes = request.POST.getlist('time_played')
+  two_a = request.POST.getlist('two_pa')
+  two_m = request.POST.getlist('two_pm')
+  threept_a = request.POST.getlist('three_pa')
+  threept_m = request.POST.getlist('three_pm')
+  f_a = request.POST.getlist('fta')
+  f_m = request.POST.getlist('ftm')
+  to = request.POST.getlist('tov')
+  off = request.POST.getlist('oreb')
+  defreb = request.POST.getlist('dreb')
+  blk = request.POST.getlist('blk')
+  pf = request.POST.getlist('pf')
+  pts = request.POST.getlist('pts')
+  ass = request.POST.getlist('ast')
+  st = request.POST.getlist('stl')
+  
+  
+  for i in range(len(paiktis)):
+    
+    paiktis1 = Player.objects.get(pk = paiktis[i]) 
+    #temp = MatchPlayerStatistics(match=match1 ,player=paiktis,started=1)
+    temp = get_object_or_404(MatchPlayerStatistics, match=agwnas ,player=paiktis1)
+    temp.time_played = int(minutes[i]) 
+    temp.pts = int(pts[i])
+    temp.two_pa = int(two_a[i])
+    temp.two_pm = int(two_m[i])
+    temp.three_pa = int(threept_a[i])
+    temp.three_pm = int(threept_m[i])
+    temp.fta = int(f_a[i])
+    temp.ftm = int(f_m[i])
+    temp.tov = int(to[i])
+    temp.oreb = int(off[i])
+    temp.dreb = int(defreb[i])
+    temp.ast = int(ass[i])
+    temp.stl = int(st[i])
+    temp.blk = int(blk[i])
+    temp.pf = int(pf[i])
+    
+    temp.save()
+
+  return HttpResponseRedirect(reverse('AthleticTeamApp:ShowMatches'))
