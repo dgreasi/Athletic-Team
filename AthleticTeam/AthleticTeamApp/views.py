@@ -108,7 +108,8 @@ def create_a_player(request):
     new_weight = request.POST['weight']
     new_nationality = request.POST['nationality']
     new_birth_date = request.POST['date']
-    new_photo = request.FILES['image']
+    if 'image' in request.FILES:
+      new_photo = request.FILES['image']
     
     temp = Player(first_name = new_first_name,team_id = selected_team.id)
     temp.last_name = new_last_name
@@ -119,7 +120,8 @@ def create_a_player(request):
     temp.weight = new_weight
     temp.nationality = new_nationality
     temp.birth_date = new_birth_date
-    temp.image =new_photo 
+    if 'image' in request.FILES:
+      temp.image =new_photo 
     temp.save()
     
     return HttpResponseRedirect(reverse('AthleticTeamApp:ShowPlayers'))
@@ -148,7 +150,8 @@ def edit_player(request,player_id):
     weight = request.POST['weight']
     nationality = request.POST['nationality']
     new_birth_date = request.POST['date']
-    new_photo = request.FILES['image']
+    if 'image' in request.FILES:
+      new_photo = request.FILES['image']
     
     temp.first_name = first_name
     temp.last_name = last_name
@@ -159,7 +162,8 @@ def edit_player(request,player_id):
     temp.weight = int(weight)
     temp.nationality = nationality
     temp.birth_date = new_birth_date
-    temp.image = new_photo
+    if 'image' in request.FILES: 
+      temp.image = new_photo
     temp.save()
 
     return HttpResponseRedirect(reverse('AthleticTeamApp:ShowPlayers'))  
@@ -206,10 +210,11 @@ class ShowTeams(generic.ListView):
     
 def create_team(request):
     title = request.POST['title']
-    if request.FILES['image']:
-        new_photo = request.FILES['image']
+    if 'image' in request.FILES:
+      new_photo = request.FILES['image']
     temp = Team(team_name=title)
-    temp.image = new_photo
+    if 'image' in request.FILES:
+      temp.image = new_photo
     temp.save()
 
     return HttpResponseRedirect(reverse('AthleticTeamApp:ShowTeams'))
@@ -242,10 +247,12 @@ def edit(request,team_id):
     temp = get_object_or_404(Team, pk=team_id)
 
     title = request.POST['title']
-    new_photo = request.FILES['image']
+    if 'image' in request.FILES:
+      new_photo = request.FILES['image']
     
     temp.team_name = title
-    temp.image =new_photo
+    if 'image' in request.FILES:  
+      temp.image =new_photo
     #temp.pub_date = timezone.now()
     temp.save()
 
