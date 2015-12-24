@@ -69,8 +69,8 @@ urlpatterns = [
     url(r'^match_edit/(?P<match_id>[0-9]+)$', views.match_edit, name='match_edit'),
     url(r'^player_stats/(?P<pk>[0-9]+)$', views.Players_stats.as_view(), name='Players_stats'),
     url(r'^all_stats/$', views.all_stats, name='all_stats'),
-
-
+    url(r'^edit_match_stats/(?P<pk>[0-9]+)$', views.EditMatchStats.as_view(), name='EditMatchStats'),
+    url(r'^match_stats/$', views.match_stats, name='match_stats'),
 ]
 
     

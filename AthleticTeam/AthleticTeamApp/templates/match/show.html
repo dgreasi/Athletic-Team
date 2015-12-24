@@ -157,6 +157,7 @@
     <form action="{% url 'AthleticTeamApp:editmatch' match.id %}" method="post">    {% csrf_token %}
         <div class="button-rov">
             <input type="submit" name="edit" value="Edit match's details" class="btn btn-md btn-primary" />
+	    <input type="submit" name="edit_stats" value="Edit match's stats" class="btn btn-md btn-primary" />
         <!-- </div>
 
         <div class="button-rov"> -->
