@@ -17,7 +17,7 @@ class EditAboutUsForm(forms.Form):
 
 class EditHistoryForm(forms.Form):
     visible = forms.ChoiceField(label='Visible:', choices=(('Visible', 'Visible'), ('', 'Hidden')), required=False)
-    info = forms.CharField(label='info:', required=False,max_length=30)
+    info = forms.CharField(label='info:', widget=forms.Textarea)
 
 class EditTicketsForm(forms.Form):
     visible = forms.ChoiceField(label='Visible:', choices=(('Visible', 'Visible'), ('', 'Hidden')), required=False)
