@@ -18,9 +18,11 @@
         <p>4. Speed: {{ ranking.speed }}</p>
         <p>5. Team play: {{ ranking.team_play }}</p>
         <p>6. Cooperative: {{ ranking.co_op }}</p>
-        <p>7. Rate for his position: {{ ranking.ranking_of_pos }}</p>
+        <p>7. Rate for his position: {{ ranking.rate_of_pos }}</p>
         <p>8. Percent at 2-point shots: {{ ranking.two_shots }}</p>
         <p>9. Percent at 3-point shots: {{ ranking.three_shots }}</p>
+
+        <p><b>Overall of this rank: {{ranking.average_rank}}</b></p>
 
     {% endfor %}
     

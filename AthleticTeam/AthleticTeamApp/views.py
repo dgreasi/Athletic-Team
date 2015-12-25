@@ -39,12 +39,14 @@ class ShowPlayers(generic.ListView):
     template_name = 'player/showall.html'
     context_object_name = 'players_list'
 
-#def create_player(request):
-    #title = request.POST['title']
-    ##temp = Player(first_name = title,team_id = 22)
-   ##temp.save()
-    
-    #return HttpResponseRedirect(reverse('AthleticTeamApp:ShowPlayers'))
+# Trying to order, not a chance
+    # def get_queryset(self):
+    #     """
+    #     Return the last three published Announcements (not including those set to be
+    #     published in the future).
+    #     """
+    #     return Player.objects.filter().order_by('-ranking')
+
 
 class ShowPlayer(generic.DetailView):
     model = Player
@@ -52,9 +54,6 @@ class ShowPlayer(generic.DetailView):
 
 
 class create_player(generic.ListView):  
-    #title = request.POST['title']
-    #temp = Team(team_name=title)
-    #temp.save()
     model = Team
     template_name = 'player/create_player.html'
     context_object_name = 'teams_list'   
