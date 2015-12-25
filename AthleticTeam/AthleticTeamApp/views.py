@@ -15,7 +15,6 @@ from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import TemplateView
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
-from django.template import RequestContext
 import datetime
 from django.utils import timezone
 
