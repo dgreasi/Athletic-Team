@@ -4,6 +4,7 @@ from django.views import generic
 from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team, Ranking
 from announcementsApp.models import Announcement
 from django.contrib.auth.models import User
+from django.contrib import messages
 
 from django.http import *
 from django.template import RequestContext
@@ -122,6 +123,7 @@ def change_pass(request):
         return HttpResponseRedirect(reverse('AthleticTeamApp:index'))
     else:
         #prin error mesg MESSAGES DJANGO
+        messages.error(request, 'Passwords don''t match, try again!')
         return HttpResponseRedirect(reverse('AthleticTeamApp:changePass'))
 
 def get_rank(request, player_id):
