@@ -1,0 +1,27 @@
+{% extends "container.html" %}
+
+{% block head %}
+    <title>Leagues</title>
+{% endblock %}
+
+{% block container %}
+    {% if league_list %}
+        <h1>Leagues:</h1>
+        <ul>
+        {% for league in league_list %}
+            <li>
+                <a href="{% url 'AthleticTeamApp:ShowLeague' league.id %}">
+                    {{ league.name}}
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <h1>No leagues are available.</h1>
+    {% endif %}
+    <br>
+    <a type="button" class="btn btn-default" aria-label="Create League" href="{% url 'AthleticTeamApp:CreateLeague' %}">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create
+    </a>
+    <hr>
+{% endblock %}

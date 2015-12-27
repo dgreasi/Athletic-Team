@@ -1,7 +1,7 @@
 from datetimewidget.widgets import DateWidget, TimeWidget
 from django import forms
 
-from AthleticTeamApp.models import Training
+from AthleticTeamApp.models import Training, League
 
 
 class TrainingForm(forms.ModelForm):
@@ -13,3 +13,11 @@ class TrainingForm(forms.ModelForm):
             'start': TimeWidget(usel10n=True, bootstrap_version=3),
             'end': TimeWidget(usel10n=True, bootstrap_version=3),
         }
+
+
+class LeagueForm(forms.ModelForm):
+    class Meta:
+        model = League
+        fields = ['name', 'season', 'teams']
+
+

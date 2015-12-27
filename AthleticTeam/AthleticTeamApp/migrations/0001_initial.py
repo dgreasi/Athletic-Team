@@ -39,6 +39,28 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
+            name='League',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(default=b'name', max_length=30)),
+                ('season', models.CharField(default=b'2015-2016', max_length=30)),
+            ],
+            options={
+                'abstract': False,
+            },
+        ),
+        migrations.CreateModel(
+            name='LeagueTeamRel',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('gp', models.PositiveSmallIntegerField(default=0)),
+                ('wins', models.PositiveSmallIntegerField(default=0)),
+                ('loses', models.PositiveSmallIntegerField(default=0)),
+                ('pts_difference', models.SmallIntegerField(default=0)),
+                ('league', models.ForeignKey(to='AthleticTeamApp.League')),
+            ],
+        ),
+        migrations.CreateModel(
             name='Match',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
@@ -159,6 +181,16 @@ class Migration(migrations.Migration):
             model_name='match',
             name='players',
             field=models.ManyToManyField(to='AthleticTeamApp.Player', through='AthleticTeamApp.MatchPlayerStatistics'),
+        ),
+        migrations.AddField(
+            model_name='leagueteamrel',
+            name='team',
+            field=models.ForeignKey(to='AthleticTeamApp.Team'),
+        ),
+        migrations.AddField(
+            model_name='league',
+            name='teams',
+            field=models.ManyToManyField(to='AthleticTeamApp.Team', through='AthleticTeamApp.LeagueTeamRel'),
         ),
         migrations.AddField(
             model_name='coachingstaffmember',

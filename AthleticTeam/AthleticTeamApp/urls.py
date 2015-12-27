@@ -70,7 +70,11 @@ urlpatterns = [
     url(r'^player_stats/(?P<pk>[0-9]+)$', views.Players_stats.as_view(), name='Players_stats'),
     url(r'^all_stats/$', views.all_stats, name='all_stats'),
 
-
+    url(r'^leagues$', views.ShowLeagues.as_view(), name='ShowLeagues'),
+    url(r'^league/create$', views.create_league, name='CreateLeague'),
+    url(r'^league/(?P<pk>[0-9]+)$', views.ShowLeague.as_view(), name='ShowLeague'),
+    url(r'^league/(?P<pk>[0-9]+)/edit$', views.edit_league, name='EditLeague'),
+    url(r'^league/(?P<pk>[0-9]+)/edit_data$', views.edit_league_data, name='EditLeagueData'),
+    url(r'^league/(?P<pk>[0-9]+)/delete$', views.DeleteLeague.as_view(), name='DeleteLeague'),
 ]
 
-    
