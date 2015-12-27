@@ -27,8 +27,8 @@
     {% endfor %}
     
     <hr>
-    <p><big><strong>Overall rate from all coaches's rates: {{ player.ranking_set.first.ranking_algorithm }}</strong></big></p>
     
+    <p><big><strong>Overall rate from all coaches's rates: {{ player.overall_rank }}</strong></big></p>
 
     {% load filters %}
     {% if request.user|has_group:"Coaching Staff Member" %}

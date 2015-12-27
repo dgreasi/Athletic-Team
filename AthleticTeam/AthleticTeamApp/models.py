@@ -64,7 +64,7 @@ class Player(Person):
     primary_position = models.CharField(max_length=2, choices=available_positions)
     secondary_positions = models.CharField(max_length=30)
     number = models.PositiveSmallIntegerField(null=True)
-
+    overall_rank = models.PositiveSmallIntegerField(blank=True, null=True, default=0)
     nationality = models.CharField(max_length=30)
 
     # model relationships
@@ -140,6 +140,7 @@ class Ranking(models.Model):
     two_shots = models.PositiveSmallIntegerField(blank=True, null=True, default=0)
     three_shots = models.PositiveSmallIntegerField(blank=True, null=True, default=0)
     average_rank = models.PositiveSmallIntegerField(blank=True, null=True, default=0)
+
 
     class Meta:
         unique_together = ("player", "owner")

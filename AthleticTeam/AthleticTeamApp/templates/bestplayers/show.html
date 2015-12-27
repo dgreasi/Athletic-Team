@@ -1,0 +1,24 @@
+{% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+    <title>Best Players</title>
+{% endblock %}
+
+{% block container %}
+    
+    {% for p in players_list %}
+        <h3>{{ forloop.counter }})<a href="{% url 'AthleticTeamApp:ShowPlayer' p.id %}">{{ p.first_name }} {{ p.last_name }}</a> - Rate: {{ p.overall_rank }}</h3>
+    {% endfor %}
+
+
+    
+    <div class="button-rov">
+        <a class="btn btn-primary " href="{% url 'AthleticTeamApp:ShowPlayers' %}">Go back</a>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

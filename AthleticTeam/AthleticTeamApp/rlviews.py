@@ -171,6 +171,8 @@ def rank(request, player_id):
         pl_ranking.save()
         pl_ranking.average_rank = pl_ranking.ranking_algo()
         pl_ranking.save()
+        player_ranked.overall_rank = pl_ranking.ranking_algorithm()
+        player_ranked.save()
 
         return HttpResponseRedirect(reverse('AthleticTeamApp:rank_results', args=(player_id,)))
     else:
@@ -181,6 +183,10 @@ def rank(request, player_id):
         p.save()
         p.average_rank = p.ranking_algo()
         p.save()
+        player_ranked.overall_rank = pl_ranking.ranking_algorithm()
+        player_ranked.save()
+
+
 
         return HttpResponseRedirect(reverse('AthleticTeamApp:rank_results', args=(player_id,)))
 
@@ -190,3 +196,19 @@ def username_present(username):
         return True
 
     return False
+
+#####################
+# Best Players View #
+#####################
+class ShowBestPlayers(generic.ListView):
+    model = Player
+    template_name = 'bestplayers/show.html'
+    context_object_name = 'players_list'
+
+    def get_queryset(self):
+        """
+        Return the last three published Announcements (not including those set to be
+        published in the future).
+        """
+        return Player.objects.filter().order_by('-overall_rank')
+

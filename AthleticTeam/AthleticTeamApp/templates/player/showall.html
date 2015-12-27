@@ -1,6 +1,7 @@
 {% extends "container.html" %}
 
 {% block head %}
+{% load staticfiles %}
 <title>ShowAll Players</title>
 {% endblock %}
 
@@ -10,20 +11,18 @@
     <table class="table table table-hover">
             <tr>
              <div class="row top-buffer">
-         <td><div class="col-md-0">#</div></td>
-         <td><div class="col-md-0">Image</div></td>
-                 <td><div class="col-md-1">First Name</div></td>
-                 <td><div class="col-md-2">Last Name</div></td>
-                 <td><div class="col-md-3">Team</div></td>
-                 <td><div class="col-md-4">Birth Date</div></td>
-                 <td><div class="col-md-5">Height</div></td>
-                 <td><div class="col-md-6">Position</div></td>
-                 <td><div class="col-md-7">Nationality</div></td>
+                <td><div class="col-md-0">Image</div></td>
+                <td><div class="col-md-1">First Name</div></td>
+                <td><div class="col-md-2">Last Name</div></td>
+                <td><div class="col-md-3">Team</div></td>
+                <td><div class="col-md-4">Birth Date</div></td>
+                <td><div class="col-md-5">Height</div></td>
+                <td><div class="col-md-6">Position</div></td>
+                <td><div class="col-md-7">Nationality</div></td>
             </tr>
     {% for player in players_list %}
             <tr>
                 <div class="row top-buffer">
-                    <td><div class="col-md-0">{{ player.number}}</div></td>
                     <td><div class="col-md-0"> <img src={{ player.image.url }} class="img-rounded" height="100" width="100"></div></td>
                     <td><div class="col-md-1"><a href="{% url 'AthleticTeamApp:ShowPlayer' player.id %}">{{ player.first_name }}</div></td>
                     <td><div class="col-md-2"><a href="{% url 'AthleticTeamApp:ShowPlayer' player.id %}">{{ player.last_name }}</div></td>
@@ -54,5 +53,13 @@
                 <input type="submit" name="submit" value="Create New Player" class="btn btn-success" />
             </form>
         </div>
+
+        <div class="margin-top-small">
+            <button class="btn btn-md btn-success" name="best_players" id="best_players" type="submit">Top players</button>
+        </div>
     {% endif %}
 {% endblock%}
+
+{% block scripts %}
+    <script type="text/javascript" src="{% static 'js/myscript.js' %}"></script>
+{% endblock %}
