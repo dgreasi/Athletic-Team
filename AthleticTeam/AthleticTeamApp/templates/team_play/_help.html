@@ -1,0 +1,28 @@
+<button id="help" class="help btn btn-info pull-right" data-toggle="modal" data-target="#help-teamplay-{{ teamplay.id }}">Help</button>
+
+<div class="modal fade" id="help-teamplay-{{ teamplay.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                {% if mode == 'edit' %}
+                    <h3>This is the edit mode!</h3><hr>
+                    1. With '<b>Next</b>' Button you can see next movements/pass<br>
+                    2. With '<b>Previous</b>' Button you can return to the previous stage of Team Play<br>
+                    3. With '<b>Move Player</b>' Button you can change player's start position (only if its the 1st movement)<br>
+                    4. With '<b>Move Ball</b>' Button you can change ball position (when you change possession of the ball you clear all passes)<br>
+                    5. With '<b>Draw Player's Path</b>' Button you can draw player's next movement (when you redraw path you clear all player's next paths)<br>
+                    6. With '<b>Draw Pass</b>' Button you can draw next pass (when you redraw pass you clear all next ball passes)<br>
+                    7. With '<b>Delete Path</b>' Button you can delete Player's path (on delete you clear all player's next paths)<br>
+                    8. With '<b>Delete Pass</b>' Button you can delete next pass (on delete you clear all next ball passes<br>
+                {% else %}
+                    <h3>This is the view mode!</h3><hr>
+                    1. With '<b>Next</b>' Button you can see next movements/pass<br>
+                    2. With '<b>Previous</b>' Button you can return to the previous stage of Team Play<br>
+                {% endif %}
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default pull-right" type="button" data-dismiss="modal" >Back</button>
+            </div>
+        </div>
+    </div>
+</div>

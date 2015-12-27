@@ -20,21 +20,21 @@
     </div>
     <div class="col-lg-8">
         <div class="btn-group" role="group">
-            <button id="prevIter" class="prevIter btn btn-primary">prevIter</button>
-            <button id="nextIter" class="nextIter btn btn-primary">nextIter</button>
+            <button id="prevIter" class="prevIter btn btn-primary">Previous</button>
+            <button id="nextIter" class="nextIter btn btn-primary">Next</button>
         </div>
-        <button id="help" class="help btn btn-info pull-right">help</button>
+        {% include "team_play/_help.html" with mode='edit' %}
     </div>
     <div class="col-lg-8">
         <div class="btn-group" role="group">
-            <button id="movePlayer" class="movePlayer btn btn-primary">movePlayer</button>
-            <button id="moveBall" class="moveBall btn btn-primary">moveBall</button>
-            <button id="drawPath" class="drawPath btn btn-primary">drawPath</button>
-            <button id="drawPass" class="drawPass btn btn-primary">drawPass</button>
-            <button id="deletePath" class="deletePath btn btn-primary">deletePath</button>
-            <button id="deletePass" class="deletePass btn btn-primary">deletePass</button>
+            <button id="movePlayer" class="movePlayer btn btn-primary">Move Player</button>
+            <button id="moveBall" class="moveBall btn btn-primary">Move Ball</button>
+            <button id="drawPath" class="drawPath btn btn-primary">Draw Player's Path</button>
+            <button id="drawPass" class="drawPass btn btn-primary">Draw Pass</button>
+            <button id="deletePath" class="deletePath btn btn-primary">Delete Player's Path</button>
+            <button id="deletePass" class="deletePass btn btn-primary">Delete Pass</button>
         </div>
-        <button id="save" class="save btn btn-success pull-right">save</button>
+        <button id="save" class="save btn btn-success pull-right">Save</button>
     </div>
     {% if teamplay %}
     <div class="col-lg-8">

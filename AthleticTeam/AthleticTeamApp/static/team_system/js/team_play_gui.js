@@ -75,12 +75,6 @@ function init(data,editMode){
     document.getElementById('nextIter').onclick = function(){
         changeMode(svgData,'nextIter');
     };
-    document.getElementById('help').onclick = function(){
-        var svg = document.getElementById('svgData');
-        svg.innerHTML = 'numOfIter : ' + svgData.numOfIterations + '<br>' +
-                    'curr : ' + svgData.curr + '<br>' +
-                    'playerWithTheBall :  ' + svgData.playerWithTheBall[svgData.curr].g.attr('id');
-    };
     disableButtons(svgData);
     enableButtons(svgData);
     return svgData;
@@ -1046,11 +1040,19 @@ function disableButtons(svgData){
 
 function saveData(svgData){
     changeMode(svgData,'idle');
-    var i,j;
+    var i, j, movePoint;
     var r = svgData.configData.r;
     var ball = svgData.ball.clone();
-    var x = parseInt(svgData.playerWithTheBall[0].elem.attr('cx')) + r / 2;
-    var y = parseInt(svgData.playerWithTheBall[0].elem.attr('cy')) + r / 2;
+    if(svgData.playerWithTheBall[0].move[0]){
+        movePoint = svgData.playerWithTheBall[0].move[0].getPointAtLength(0);
+        x = movePoint.x + r / 2;
+        y = movePoint.y + r / 2;
+    }
+    else{
+        var x = parseInt(svgData.playerWithTheBall[0].elem.attr('cx')) + r / 2;
+        var y = parseInt(svgData.playerWithTheBall[0].elem.attr('cy')) + r / 2;
+    }
+    alert([svgData.ball.attr('cx'), x]);
     ball.attr({'cx' : x, 'cy' : y});
     ball.remove();
     var output = {
@@ -1069,7 +1071,7 @@ function saveData(svgData){
             'move' : []
         };
         if(svgData.players[i].move[0]) {
-            var movePoint = svgData.players[i].move[0].getPointAtLength(0);
+            movePoint = svgData.players[i].move[0].getPointAtLength(0);
             output.players[i].g.select('circle').attr({ cx: movePoint.x, cy: movePoint.y });
             output.players[i].g.select('text').attr({'x':movePoint.x-r/4, 'y':movePoint.y+r/4});
         }
