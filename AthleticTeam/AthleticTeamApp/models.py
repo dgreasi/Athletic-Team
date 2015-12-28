@@ -64,7 +64,7 @@ class Player(Person):
     primary_position = models.CharField(max_length=2, choices=available_positions)
     secondary_positions = models.CharField(max_length=30)
     number = models.PositiveSmallIntegerField(null=True)
-
+    overall_rank = models.PositiveSmallIntegerField(blank=True, null=True, default=0)
     nationality = models.CharField(max_length=30)
 
     # model relationships
@@ -130,15 +130,16 @@ class Ranking(models.Model):
 
     owner = models.ForeignKey(User, null=True)
 
-    power_arm = models.PositiveSmallIntegerField(blank=True, null=True)
-    power_body = models.PositiveSmallIntegerField(blank=True, null=True)
-    power_legs = models.PositiveSmallIntegerField(blank=True, null=True)
-    speed = models.PositiveSmallIntegerField(blank=True, null=True)
-    team_play = models.PositiveSmallIntegerField(blank=True, null=True)
-    co_op = models.PositiveSmallIntegerField(blank=True, null=True)
-    rate_of_pos = models.PositiveSmallIntegerField(blank=True, null=True)
-    two_shots = models.PositiveSmallIntegerField(blank=True, null=True)
-    three_shots = models.PositiveSmallIntegerField(blank=True, null=True)
+    power_arm = models.PositiveSmallIntegerField(blank=True, null=True, default=0)
+    power_body = models.PositiveSmallIntegerField(blank=True, null=True, default=0)
+    power_legs = models.PositiveSmallIntegerField(blank=True, null=True, default=0)
+    speed = models.PositiveSmallIntegerField(blank=True, null=True, default=0)
+    team_play = models.PositiveSmallIntegerField(blank=True, null=True, default=0)
+    co_op = models.PositiveSmallIntegerField(blank=True, null=True, default=0)
+    rate_of_pos = models.PositiveSmallIntegerField(blank=True, null=True, default=0)
+    two_shots = models.PositiveSmallIntegerField(blank=True, null=True, default=0)
+    three_shots = models.PositiveSmallIntegerField(blank=True, null=True, default=0)
+    average_rank = models.PositiveSmallIntegerField(blank=True, null=True, default=0)
 
 
     class Meta:

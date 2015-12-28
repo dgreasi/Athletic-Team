@@ -71,6 +71,8 @@ urlpatterns = [
     url(r'^all_stats/$', views.all_stats, name='all_stats'),
     url(r'^edit_match_stats/(?P<pk>[0-9]+)$', views.EditMatchStats.as_view(), name='EditMatchStats'),
     url(r'^match_stats/$', views.match_stats, name='match_stats'),
+    url(r'^best_players/$', rlviews.ShowBestPlayers.as_view(), name='BestPlayers')
+
 ]
 
     

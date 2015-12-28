@@ -1,4 +1,8 @@
+//My jquey
 
+$('#best_players').click(function() {
+  window.location='/best_players';
+});
 
 $('#change_ps').click(function() {
   window.location='/change_info';
