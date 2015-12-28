@@ -212,3 +212,8 @@ class ShowBestPlayers(generic.ListView):
         """
         return Player.objects.filter().order_by('-overall_rank')
 
+    #U can come here only if u are logged in
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ShowBestPlayers, self).dispatch(*args, **kwargs)
+

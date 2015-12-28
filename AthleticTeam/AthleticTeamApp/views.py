@@ -38,14 +38,6 @@ class ShowPlayers(generic.ListView):
     template_name = 'player/showall.html'
     context_object_name = 'players_list'
 
-# Trying to order, not a chance
-    # def get_queryset(self):
-    #     """
-    #     Return the last three published Announcements (not including those set to be
-    #     published in the future).
-    #     """
-    #     return Player.objects.filter().order_by('-ranking')
-
 
 class ShowPlayer(generic.DetailView):
     model = Player
