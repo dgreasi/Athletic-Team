@@ -10,12 +10,10 @@
 
 
 {% block container %}
-    <div id="n">
-<h3>History Page new</h3>
+    <h3>History Page new</h3>
     <p align="center">{{ data.info }}</p>
    <div class="image" align="center">
    <img src="{% static "a.jpg" %}" alt="My image"/>
-
    </div>
 {% endblock %}
-</div>
+
