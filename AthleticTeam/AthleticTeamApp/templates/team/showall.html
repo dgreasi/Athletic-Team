@@ -15,13 +15,15 @@
       </tr>
   {% if team_players_list%}
       {% for team in team_players_list %}
-        <tr>
-        <div class="row top-buffer">
-    <td><div class="col-md-0"><img src={{ team.image.url }} class="img-rounded" height="100" width="100"></div></td>
-          <td><div class="col-md-1"> <a href="{% url 'AthleticTeamApp:ShowTeam' team.id %}">{{ team.team_name}}</a></div></td>
-    <td><div class="col-md-2">No category yet</div></td>
-        </div>
-        </tr>
+	{% if team.owned %}
+	  <tr>
+	  <div class="row top-buffer">
+      <td><div class="col-md-0"><img src={{ team.image.url }} class="img-rounded" height="100" width="100"></div></td>
+	    <td><div class="col-md-1"> <a href="{% url 'AthleticTeamApp:ShowTeam' team.id %}">{{ team.team_name}}</a></div></td>
+      <td><div class="col-md-2">No category yet</div></td>
+	  </div>
+	  </tr>
+	{% endif %}
       {% endfor %}
       </table>
   {% else %}
