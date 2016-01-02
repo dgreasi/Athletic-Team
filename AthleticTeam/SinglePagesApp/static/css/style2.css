@@ -1,0 +1,20 @@
+
+  
+
+   .contain {
+max-width:960px;
+text-align:center;
+}
+
+.category {
+position:relative;
+display: inline-block;
+float:left;
+padding:10px;
+}
+
+    
+
+/*#n{
+background-image: url(/static/b.png);
+*/

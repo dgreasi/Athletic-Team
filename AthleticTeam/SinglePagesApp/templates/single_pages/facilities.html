@@ -5,6 +5,7 @@
 <title>facilities page</title>
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/style2.css' %}" />
 {% endblock %}
 
 
@@ -12,10 +13,24 @@
 
 {% block container %}
 <h2>Facilities</h2>
-<ul>
-{% for key, value in data.items %}
-  <li>{{key}} - {{value}}</li>
- {% endfor %}
-</ul>
-
+<p>
+<p align="center">{{ data.info }}</p>
+</p>
+<div class="image" align="bottom">
+   
+   </div>
+<div align="center" class="category">
+        <img src="{% static "rooms.jpg" %}" alt="My image"/>  <img src="{% static "b.jpg" %}" alt="My image"/>
+	<p>changerooms3</p>
+        <img src="{% static "d.jpg" %}" alt="My image"/>
+	<p>rooms4</p><img src="{% static "c.jpg" %}" alt="My image"/>
+        </div>
+        <div align="center" class="category">
+        
+	
+        </div>
+        <div align="center" class="category">
+        
+	
+</div>
 {% endblock %}
