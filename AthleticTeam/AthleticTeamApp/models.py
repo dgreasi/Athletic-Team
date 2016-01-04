@@ -89,7 +89,7 @@ class Match(models.Model):
 
     # model relationships
     home_team = models.ForeignKey(Team, related_name='home_team', null=True)
-    away_team = models.CharField(max_length=30)
+    away_team = models.ForeignKey(Team, related_name='away_team', null=True)
 
     home_away = models.CharField(max_length=30)
 

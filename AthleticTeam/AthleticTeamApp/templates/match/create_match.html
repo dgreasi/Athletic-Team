@@ -22,15 +22,25 @@
         <h3>Select Team A from your teams</h3>
         <select name="team_a">
             {% for team in teams_list %}
+	      {% if team.owned %}
                 <option value="{{ team.id }}">
                 {{ team.team_name }}
                 </option>
+               {% endif %} 
             {% endfor %}
         </select>
         <br />
 
         <h3>Name of Team B</h3>
-        <input type="text" class="text_title" id="TeamB" name="team_b" required autofocus />
+        <select name="team_b">
+            {% for team in teams_list %}
+	      {% if team.owned == False %}
+                <option value="{{ team.id }}">
+                {{ team.team_name }}
+                </option>
+              {% endif %}  
+            {% endfor %}
+        </select>
         <br />
 
         <h3>Enter Points of Team A</h3>

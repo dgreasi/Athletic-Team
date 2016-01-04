@@ -6,7 +6,9 @@
 
 {% block container %}
 <h2>Team : {{team.team_name}}  <img src={{ team.image.url }} class="img-rounded" height="100" width="100"></h2>
-
+{% for key,value in team.get_fields %}
+    {{key}} 
+{% endfor %}    
 <table class="table table table-hover">
     <tr>
         <div class="row top-buffer">
@@ -20,7 +22,6 @@
             <td><div class="col-md-6">Nationality</div></td>
         </div>
     </tr>
-
 {% for player in team.player_set.all %}
 {#  {% if player %} #}
     <tr>

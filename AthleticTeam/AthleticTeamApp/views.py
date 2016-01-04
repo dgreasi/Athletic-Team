@@ -405,7 +405,8 @@ def match_creator(request):
     team_a_id = request.POST['team_a']
     team_a = get_object_or_404(Team, pk=team_a_id)
 
-    team_b = request.POST['team_b']
+    team_b_id = request.POST['team_b']
+    team_b = get_object_or_404(Team, pk=team_b_id)
 
     points_a = int(request.POST.get('points_a', False))
     points_b = int(request.POST.get('points_b', False))
