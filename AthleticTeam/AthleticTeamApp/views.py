@@ -691,9 +691,10 @@ def contact(request):
             })
             content = template.render(context)
 
-            email = EmailMessage( "New contact form submission", content, 'myteamvolos@gmail.com', [contact_email],
+            email = EmailMessage( "New contact form submission", content,'myteamvolos@gmail.com', ['myteamvolos@gmail.com'],
                 headers = {'Reply-To': contact_email }
             )
+
             email.send()
             return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
 
