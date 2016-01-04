@@ -1,22 +1,18 @@
-from django.forms import modelform_factory
-from django.shortcuts import render, render_to_response, redirect,get_object_or_404
-from django.views import generic
-
-from AthleticTeamApp.forms import TrainingForm
-from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team, Ranking, TeamPlay, Exercise, Training, MatchPlayerStatistics
-
-from django.http import *
-from django.template import RequestContext
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login, logout
-from django.core.urlresolvers import reverse_lazy
-
-from django.views.generic.detail import SingleObjectMixin
-from django.views.generic import TemplateView
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
 import datetime
+from django.core.urlresolvers import reverse_lazy
+from django.forms import Form
+from django.http import *
+from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
+from django.views import generic
+from django.views.generic.edit import ModelFormMixin
+from AthleticTeamApp.forms import TrainingForm, LeagueForm
+from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team, TeamPlay, Exercise, Training, \
+    MatchPlayerStatistics, \
+    League, LeagueTeamRel
+
 
 
 # Create your views here.
@@ -29,6 +25,7 @@ class ShowCoachingStaffMembers(generic.ListView):
 class ShowCoachingStaffMember(generic.DetailView):
     model = CoachingStaffMember
     template_name = 'coaching_staff_member/show.html'
+
 
 ##################
 # Players Views.
@@ -44,60 +41,65 @@ class ShowPlayer(generic.DetailView):
     template_name = 'player/show.html'
 
 
-class create_player(generic.ListView):  
+class create_player(generic.ListView):
     model = Team
     template_name = 'player/create_player.html'
-    context_object_name = 'teams_list'   
-    
+    context_object_name = 'teams_list'
+
+
 class edit_players(generic.ListView):
     model = Player
     template_name = 'player/edit_players.html'
     context_object_name = 'players_list'
-   
+
+
 class EditPlayer(generic.DetailView):
     model = Player
     template_name = 'player/edit.html'
+
 
 class add_players_to_teams(generic.ListView):
     model = Team
     template_name = 'player/player_team.html'
     context_object_name = 'teams_list'
-    
+
+
 def all_teams(request):
     players = request.POST.getlist('players')
-    try :
-      team = request.POST['teams']
+    try:
+        team = request.POST['teams']
     except (KeyError, Team.DoesNotExist):
         # Redisplay the Announcement voting form.
         return render(request, 'player/player_team.html', {
-            'teams_list': Team.objects.all ,
+            'teams_list': Team.objects.all,
             'error_message': "Oops you didn't select a Team. Please choose again",
         })
-    else:  
-      print "Team:" + team
-      print  players
-      for player in players:
-	
-	temp = get_object_or_404(Player, pk=player)
-	temp.team = Team.objects.get(id=team)
-	temp.save()
-      
-      return HttpResponseRedirect(reverse('AthleticTeamApp:ShowPlayers'))
-  
-def create_a_player(request):     
+    else:
+        print "Team:" + team
+        print  players
+        for player in players:
+            temp = get_object_or_404(Player, pk=player)
+            temp.team = Team.objects.get(id=team)
+            temp.save()
+
+        return HttpResponseRedirect(reverse('AthleticTeamApp:ShowPlayers'))
+
+
+def create_a_player(request):
     p = Team.objects.all()
     selected_team = get_object_or_404(Team, pk=request.POST['team'])
     #form = ImageUploadForm(request.POST, request.FILES)
     
     new_first_name = request.POST['first_name']
     new_last_name = request.POST['last_name']
-    new_primary_position = request.POST.get('thesi',False)
+    new_primary_position = request.POST.get('thesi', False)
     new_secondary_positions = request.POST.getlist('secondary_positions')
     new_number = request.POST['number']
     new_height = request.POST['height']
     new_weight = request.POST['weight']
     new_nationality = request.POST['nationality']
     new_birth_date = request.POST['date']
+
     if 'image' in request.FILES:
       new_photo = request.FILES['image']
     
@@ -106,7 +108,7 @@ def create_a_player(request):
     temp.primary_position = new_primary_position
     temp.secondary_positions = '/'.join(new_secondary_positions)
     temp.number = new_number
-    temp.height =new_height
+    temp.height = new_height
     temp.weight = new_weight
     temp.nationality = new_nationality
     temp.birth_date = new_birth_date
@@ -115,34 +117,37 @@ def create_a_player(request):
     temp.save()
     
     return HttpResponseRedirect(reverse('AthleticTeamApp:ShowPlayers'))
-  
-def edit_a_player(request):     
+
+
+def edit_a_player(request):
     p = Player.objects.all()
     selected_player = get_object_or_404(Player, pk=request.POST['player'])
     if 'delete' in request.POST:
-      selected_player.delete()
-            ## Always return an HttpResponseRedirect after successfully dealing
-            ## with POST data. This prevents data from being posted twice if a
-            ## user hits the Back button.
-      return  HttpResponseRedirect(reverse('AthleticTeamApp:ShowPlayers'))
-    elif 'edit' in request.POST:  
-      return HttpResponseRedirect(reverse('AthleticTeamApp:EditPlayer',args=(selected_player.id,))) 
-    
-def edit_player(request,player_id):
+        selected_player.delete()
+        ## Always return an HttpResponseRedirect after successfully dealing
+        ## with POST data. This prevents data from being posted twice if a
+        ## user hits the Back button.
+        return HttpResponseRedirect(reverse('AthleticTeamApp:ShowPlayers'))
+    elif 'edit' in request.POST:
+        return HttpResponseRedirect(reverse('AthleticTeamApp:EditPlayer', args=(selected_player.id,)))
+
+
+def edit_player(request, player_id):
     temp = get_object_or_404(Player, pk=player_id)
 
     first_name = request.POST['first_name']
     last_name = request.POST['last_name']
-    new_primary_position = request.POST.get('thesi',False)
+    new_primary_position = request.POST.get('thesi', False)
     new_secondary_positions = request.POST.getlist('secondary_positions')
     number = request.POST['number']
     height = request.POST['height']
     weight = request.POST['weight']
     nationality = request.POST['nationality']
     new_birth_date = request.POST['date']
+
     if 'image' in request.FILES:
       new_photo = request.FILES['image']
-    
+
     temp.first_name = first_name
     temp.last_name = last_name
     temp.primary_position = new_primary_position
@@ -152,13 +157,15 @@ def edit_player(request,player_id):
     temp.weight = int(weight)
     temp.nationality = nationality
     temp.birth_date = new_birth_date
+
     if 'image' in request.FILES: 
       temp.image = new_photo
+
     temp.save()
 
-    return HttpResponseRedirect(reverse('AthleticTeamApp:ShowPlayers'))  
+    return HttpResponseRedirect(reverse('AthleticTeamApp:ShowPlayers'))
 
-	  
+
 ##################
 # Matches Views.
 ##################
@@ -175,10 +182,11 @@ class ShowMatches(generic.ListView):
         """
         return Match.objects.filter(date__lte=timezone.now()).order_by('-date')
 
+
 class EditMatches(generic.DetailView):
     model = Match
     template_name = 'match/edit_match.html'
-        
+
 
 class ShowMatch(generic.DetailView):
     model = Match
@@ -188,7 +196,6 @@ class EditMatchStats(generic.DetailView):
     model = Match
     template_name = 'match/edit_match_stats.html'    
 
-
 ##################
 # Teams Views.
 ##################
@@ -197,7 +204,8 @@ class ShowTeams(generic.ListView):
     model = Team
     template_name = 'team/showall.html'
     context_object_name = 'team_players_list'
-    
+
+
 def create_team(request):
     title = request.POST['title']
     if 'image' in request.FILES:
@@ -209,34 +217,39 @@ def create_team(request):
 
     return HttpResponseRedirect(reverse('AthleticTeamApp:ShowTeams'))
 
-class edit_team(generic.ListView):  
-    #title = request.POST['title']
-    #temp = Team(team_name=title)
-    #temp.save()
+
+class edit_team(generic.ListView):
+    # title = request.POST['title']
+    # temp = Team(team_name=title)
+    # temp.save()
     model = Team
     template_name = 'team/edit_team.html'
     context_object_name = 'team_players_list'
 
-def edit_a_team(request):     
+
+def edit_a_team(request):
     p = Team.objects.all()
     selected_team = get_object_or_404(Team, pk=request.POST['team'])
     if 'delete' in request.POST:
-      selected_team.delete()
-            ## Always return an HttpResponseRedirect after successfully dealing
-            ## with POST data. This prevents data from being posted twice if a
-            ## user hits the Back button.
-      return  HttpResponseRedirect(reverse('AthleticTeamApp:ShowTeams'))
-    elif 'edit' in request.POST:  
-      return HttpResponseRedirect(reverse('AthleticTeamApp:EditTeam',args=(selected_team.id,)))
+        selected_team.delete()
+        ## Always return an HttpResponseRedirect after successfully dealing
+        ## with POST data. This prevents data from being posted twice if a
+        ## user hits the Back button.
+        return HttpResponseRedirect(reverse('AthleticTeamApp:ShowTeams'))
+    elif 'edit' in request.POST:
+        return HttpResponseRedirect(reverse('AthleticTeamApp:EditTeam', args=(selected_team.id,)))
+
 
 class EditTeam(generic.DetailView):
     model = Team
     template_name = 'team/edit.html'
-	  
-def edit(request,team_id):
+
+
+def edit(request, team_id):
     temp = get_object_or_404(Team, pk=team_id)
 
     title = request.POST['title']
+
     if 'image' in request.FILES:
       new_photo = request.FILES['image']
     
@@ -244,16 +257,17 @@ def edit(request,team_id):
     if 'image' in request.FILES:  
       temp.image =new_photo
     #temp.pub_date = timezone.now()
+
     temp.save()
 
     return HttpResponseRedirect(reverse('AthleticTeamApp:ShowTeams'))
 
-    #return HttpResponseRedirect(reverse('AthleticTeamApp:ShowTeams'))
+    # return HttpResponseRedirect(reverse('AthleticTeamApp:ShowTeams'))
+
 
 class ShowTeam(generic.DetailView):
     model = Team
     template_name = 'team/show.html'
-
 
 
 class ShowTeamPlays(generic.ListView):
@@ -365,6 +379,7 @@ class DeleteTraining(generic.DeleteView):
     def get(self, *args, **kwargs):
         raise Http404
 
+
 ##################
 # Match Views.
 ##################
@@ -372,6 +387,7 @@ class CreateMatch(generic.ListView):
     model = Team
     template_name = 'match/create_match.html'
     context_object_name = "teams_list"
+
 
 def match_creator(request):
     team_a_id = request.POST['team_a']
@@ -389,9 +405,10 @@ def match_creator(request):
 
     home_away_team = request.POST['home_away']
 
-    match_to_send = Match(home_pts=points_a, away_pts=points_b, stadium=stadium, date=date_match, time=time_match, info=info, home_team=team_a, away_team=team_b, home_away=home_away_team)
+    match_to_send = Match(home_pts=points_a, away_pts=points_b, stadium=stadium, date=date_match, time=time_match,
+                          info=info, home_team=team_a, away_team=team_b, home_away=home_away_team)
 
-    match_to_send.save()  
+    match_to_send.save()
 
     # list1 = Player.objects.filter(team=team_a)
 
@@ -400,6 +417,7 @@ def match_creator(request):
     #     temp.save()
 
     return HttpResponseRedirect(reverse('AthleticTeamApp:Players_stats', args=(match_to_send.id,)))
+
 
 def match_edit(request, match_id):
     match_to_edit = get_object_or_404(Match, pk=match_id)
@@ -426,9 +444,10 @@ def match_edit(request, match_id):
     match_to_edit.away_team = team_b
     match_to_edit.home_away = home_away_team
 
-    match_to_edit.save()  
+    match_to_edit.save()
 
     return HttpResponseRedirect(reverse('AthleticTeamApp:ShowMatches'))
+
 
 def edit_match(request, match_id):
     selected_match = get_object_or_404(Match, pk=match_id)
@@ -441,57 +460,57 @@ def edit_match(request, match_id):
         selected_match.delete()
         return HttpResponseRedirect(reverse('AthleticTeamApp:ShowMatches'))
 
+
 class Players_stats(generic.DetailView):
     model = Match
     template_name = 'match/players_stats.html'
-    
-def all_stats(request):
-  
-  agwnas = request.POST['match']
-  name1 = request.POST.getlist('player1')
-  name2 = request.POST.getlist('player2')
-  minutes = request.POST.getlist('min')
-  two_a = request.POST.getlist('2pt-a')
-  two_m = request.POST.getlist('2pt_m')
-  threept_a = request.POST.getlist('3pt-a')
-  threept_m = request.POST.getlist('3pt-m')
-  f_a = request.POST.getlist('f-a')
-  f_m = request.POST.getlist('f-m')
-  to = request.POST.getlist('to')
-  off = request.POST.getlist('off')
-  defreb = request.POST.getlist('def')
-  blk = request.POST.getlist('blk')
-  pf = request.POST.getlist('pf')
-  pts = request.POST.getlist('pts')
-  player = request.POST.getlist('players')
-  ass = request.POST.getlist('ass')
-  st = request.POST.getlist('st')
-  
-  
-  for i in range(len(name1)):
-    
-    paiktis = Player.objects.get(first_name = name1[i] , last_name = name2[i]) 
-    match1 = Match.objects.get(pk = agwnas)  
-    temp = MatchPlayerStatistics(match=match1 ,player=paiktis,started=1)
-    temp.time_played = int(minutes[i]) 
-    temp.pts = int(pts[i])
-    temp.two_pa = int(two_a[i])
-    temp.two_pm = int(two_m[i])
-    temp.three_pa = int(threept_a[i])
-    temp.three_pm = int(threept_m[i])
-    temp.fta = int(f_a[i])
-    temp.ftm = int(f_m[i])
-    temp.tov = int(to[i])
-    temp.oreb = int(off[i])
-    temp.dreb = int(defreb[i])
-    temp.ast = int(ass[i])
-    temp.stl = int(st[i])
-    temp.blk = int(blk[i])
-    temp.pf = int(pf[i])
-    
-    temp.save()
 
-  return HttpResponseRedirect(reverse('AthleticTeamApp:ShowMatches'))
+
+def all_stats(request):
+    agwnas = request.POST['match']
+    name1 = request.POST.getlist('player1')
+    name2 = request.POST.getlist('player2')
+    minutes = request.POST.getlist('min')
+    two_a = request.POST.getlist('2pt-a')
+    two_m = request.POST.getlist('2pt_m')
+    threept_a = request.POST.getlist('3pt-a')
+    threept_m = request.POST.getlist('3pt-m')
+    f_a = request.POST.getlist('f-a')
+    f_m = request.POST.getlist('f-m')
+    to = request.POST.getlist('to')
+    off = request.POST.getlist('off')
+    defreb = request.POST.getlist('def')
+    blk = request.POST.getlist('blk')
+    pf = request.POST.getlist('pf')
+    pts = request.POST.getlist('pts')
+    player = request.POST.getlist('players')
+    ass = request.POST.getlist('ass')
+    st = request.POST.getlist('st')
+
+    for i in range(len(name1)):
+        paiktis = Player.objects.get(first_name=name1[i], last_name=name2[i])
+        match1 = Match.objects.get(pk=agwnas)
+        temp = MatchPlayerStatistics(match=match1, player=paiktis, started=1)
+        temp.time_played = int(minutes[i])
+        temp.pts = int(pts[i])
+        temp.two_pa = int(two_a[i])
+        temp.two_pm = int(two_m[i])
+        temp.three_pa = int(threept_a[i])
+        temp.three_pm = int(threept_m[i])
+        temp.fta = int(f_a[i])
+        temp.ftm = int(f_m[i])
+        temp.tov = int(to[i])
+        temp.oreb = int(off[i])
+        temp.dreb = int(defreb[i])
+        temp.ast = int(ass[i])
+        temp.stl = int(st[i])
+        temp.blk = int(blk[i])
+        temp.pf = int(pf[i])
+
+        temp.save()
+
+    return HttpResponseRedirect(reverse('AthleticTeamApp:ShowMatches'))
+
 
 def match_stats(request):
   
@@ -538,3 +557,98 @@ def match_stats(request):
     temp.save()
 
   return HttpResponseRedirect(reverse('AthleticTeamApp:ShowMatches'))
+
+
+class ShowLeagues(generic.ListView):
+    model = League
+    template_name = 'league/showall.html'
+
+
+class ShowLeague(generic.DetailView):
+    model = League
+    template_name = 'league/show.html'
+
+
+def create_league(request):
+    if request.method == 'POST':
+        form = LeagueForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            season = form.cleaned_data['season']
+            league = League(name=name, season=season)
+            league.save()
+            for team in form.cleaned_data['teams']:
+                league_team_rel = LeagueTeamRel(league=league, team=team)
+                league_team_rel.save()
+            return redirect('AthleticTeamApp:ShowLeague', league.id)
+    else:
+        form = LeagueForm()
+
+    return render(request, 'league/create_form.html', {'form': form})
+
+
+def edit_league(request, pk):
+    league = get_object_or_404(League, pk=pk)
+    if request.method == 'POST':
+        form = LeagueForm(request.POST)
+        if form.is_valid():
+            league.name = form.cleaned_data['name']
+            league.season = form.cleaned_data['season']
+            teams = form.cleaned_data['teams']
+
+            for team in league.teams.all():
+                to_delete = True
+                for team2 in teams:
+                    if team == team2:
+                        to_delete = False
+                        break
+                if to_delete:
+                    league.leagueteamrel_set.filter(team=team).delete()
+
+            for team2 in teams:
+                to_create = True
+                for team in league.teams.all():
+                    if team2 == team:
+                        to_create = False
+                        break
+                if to_create:
+                    league_team_rel = LeagueTeamRel(league=league, team=team2)
+                    league_team_rel.save()
+            league.save()
+            return redirect('AthleticTeamApp:ShowLeague', league.id)
+    else:
+        form = LeagueForm(instance=league)
+
+    return render(request, 'league/edit_form.html', {'league': league, 'form': form})
+
+
+def edit_league_data(request, pk):
+    league = get_object_or_404(League, pk=pk)
+    if request.method == 'POST':
+        gp = request.POST.getlist('gp')
+        wins = request.POST.getlist('wins')
+        loses = request.POST.getlist('loses')
+        pts_difference = request.POST.getlist('pts_difference')
+        pts = request.POST.getlist('pts')
+
+        i = 0
+        for rel in league.leagueteamrel_set.all():
+            rel.gp = gp[i]
+            rel.wins = wins[i]
+            rel.loses = loses[i]
+            rel.pts_difference = pts_difference[i]
+            rel.pts = pts[i]
+            rel.save()
+            i += 1
+        return redirect('AthleticTeamApp:ShowLeague', league.id)
+    else:
+        return render(request, 'league/edit_data_form.html', {'league': league})
+
+
+class DeleteLeague(generic.DeleteView):
+    model = League
+    success_url = reverse_lazy('AthleticTeamApp:ShowLeagues')
+
+    def get(self, *args, **kwargs):
+        raise Http404
+

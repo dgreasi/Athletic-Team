@@ -1,0 +1,53 @@
+<style>
+    .input-as-td {display: block; padding: 0; margin: 0; border: 0; width: 100%;}
+    .form-td {margin: 0; padding: 0;}
+</style>
+
+<form action="" method="post">{% csrf_token %}
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Team Name</th>
+                <th>GP</th>
+                <th>Wins</th>
+                <th>Loses</th>
+                <th>Pts Difference</th>
+                <th>Pts</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rel in league.leagueteamrel_set.all|dictsortreversed:"pts" %}
+                <tr>
+                    <td class="form-td">{{ rel.team.team_name }}</td>
+                    <td class="form-td">
+                        <input type="number" class="form-control input-as-td" name="gp" value="{{ rel.gp }}" required>
+                    </td>
+                    <td class="form-td">
+                        <input type="number" class="form-control input-as-td" name="wins" value="{{ rel.wins }}" required>
+                    </td>
+                    <td class="form-td">
+                        <input type="number" class="form-control input-as-td" name="loses" value="{{ rel.loses }}" required>
+                    </td>
+                    <td class="form-td">
+                        <input type="number" class="form-control input-as-td" name="pts_difference" value="{{ rel.pts_difference }}" required>
+                    </td>
+                    <td class="form-td">
+                        <input type="number" class="form-control input-as-td" name="pts" value="{{ rel.pts }}" required>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <input class="btn btn-success pull-right" type="submit" value="Update Data" />
+</form>
+
+
+{##}
+{#<div id="div_id_name" class="form-group">#}
+{#    <label for="id_name" class="control-label  requiredField">#}
+{#                Name<span class="asteriskField">*</span> </label>#}
+{#    <div class="controls ">#}
+{#            <input class="textinput textInput form-control" id="id_name" maxlength="30" name="name" type="text" value="name" /> </div> </div> <div id="div_id_season" class="form-group"> <label for="id_season" class="control-label  requiredField">#}
+{#                Season<span class="asteriskField">*</span> </label> <div class="controls "> <input class="textinput textInput form-control" id="id_season" maxlength="30" name="season" type="text" value="2015-2016" /> </div> </div> <div id="div_id_teams" class="form-group"> <label for="id_teams" class="control-label  requiredField">#}
+{#</div>#}

@@ -74,7 +74,7 @@ class Player(Person):
         return [(field.name, field.value_to_string(self)) for field in Player._meta.fields]
 
     def __str__(self):              # __unicode__ on Python 2
-	return self.last_name
+        return self.last_name
   
 class Match(models.Model):
     # model fields
@@ -87,7 +87,7 @@ class Match(models.Model):
     info = models.TextField()
 
     # model relationships
-    home_team = models.ForeignKey(Team, related_name='home_team',null=True)
+    home_team = models.ForeignKey(Team, related_name='home_team', null=True)
     away_team = models.CharField(max_length=30)
 
     home_away = models.CharField(max_length=30)
@@ -98,7 +98,8 @@ class Match(models.Model):
         return [(field.name, field.value_to_string(self)) for field in Match._meta.fields]
 
     def __str__(self):              # __unicode__ on Python 2
-	return self.stadium
+        return self.stadium
+
 
 class MatchPlayerStatistics(models.Model):
     match = models.ForeignKey(Match)
@@ -217,3 +218,34 @@ class Training(models.Model):
 
     def get_fields(self):
         return [(field.name, field.value_to_string(self)) for field in Training._meta.fields]
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=30, default='name')
+    season = models.CharField(max_length=30, default='2015-2016')
+
+    def __str__(self):              # __unicode__ on Python 2
+        return self.name
+
+    class Meta:
+        abstract = True
+
+
+class League(Category):
+    teams = models.ManyToManyField(Team, through='LeagueTeamRel')
+
+
+class LeagueTeamRel(models.Model):
+    gp = models.PositiveSmallIntegerField(default=0)
+    wins = models.PositiveSmallIntegerField(default=0)
+    loses = models.PositiveSmallIntegerField(default=0)
+    pts_difference = models.SmallIntegerField(default=0)
+    pts = models.SmallIntegerField(default=0)
+
+    league = models.ForeignKey(League)
+    team = models.ForeignKey(Team)
+
+    def __str__(self):
+        return self.league.name + ' TO ' + self.team.team_name + ' RELATIONSHIP'
+
+

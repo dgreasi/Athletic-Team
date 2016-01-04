@@ -1,0 +1,22 @@
+{% extends "container.html" %}
+
+{% block head %}
+    <title>Edit League: {{ league.name }}</title>
+{% endblock %}
+
+{% block container %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>
+                Edit League: {{ league.name }}
+                <a type="button" class="btn btn-default pull-right" aria-label="Edit League" href="{% url 'AthleticTeamApp:ShowLeague' league.id %}">
+                  <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span> Back
+                </a>
+            </h1>
+            <br>
+
+            {% include "league/_data_form.html" %}
+        </div>
+    </div>
+    <hr>
+{% endblock %}
