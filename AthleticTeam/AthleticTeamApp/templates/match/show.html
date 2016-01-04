@@ -6,10 +6,11 @@
 {% endblock %}
 
 {% block container %}
-
+> 
 {% load filters %}
 {% if match.home_away|str_equal:"Team B" %}
-    <div class="table-responsive">  
+
+    <div class="table-responsive"> 
         <table class="table" width="300">
             <thead>
                 <th width="100">{{match.away_team}}</th>
