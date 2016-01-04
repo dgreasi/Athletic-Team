@@ -11,11 +11,12 @@
                 <th>GP</th>
                 <th>Wins</th>
                 <th>Loses</th>
-                <th>PTS Difference</th>
+                <th>Pts Difference</th>
+                <th>Pts</th>
             </tr>
         </thead>
         <tbody>
-            {% for rel in league.leagueteamrel_set.all %}
+            {% for rel in league.leagueteamrel_set.all|dictsortreversed:"pts" %}
                 <tr>
                     <td class="form-td">{{ rel.team.team_name }}</td>
                     <td class="form-td">
@@ -29,6 +30,9 @@
                     </td>
                     <td class="form-td">
                         <input type="number" class="form-control input-as-td" name="pts_difference" value="{{ rel.pts_difference }}" required>
+                    </td>
+                    <td class="form-td">
+                        <input type="number" class="form-control input-as-td" name="pts" value="{{ rel.pts }}" required>
                     </td>
                 </tr>
             {% endfor %}

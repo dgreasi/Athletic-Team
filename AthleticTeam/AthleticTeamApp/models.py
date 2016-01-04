@@ -238,6 +238,7 @@ class LeagueTeamRel(models.Model):
     wins = models.PositiveSmallIntegerField(default=0)
     loses = models.PositiveSmallIntegerField(default=0)
     pts_difference = models.SmallIntegerField(default=0)
+    pts = models.SmallIntegerField(default=0)
 
     league = models.ForeignKey(League)
     team = models.ForeignKey(Team)

@@ -26,17 +26,19 @@
                         <th>GP</th>
                         <th>Wins</th>
                         <th>Loses</th>
-                        <th>PTS Difference</th>
+                        <th>Pts Difference</th>
+                        <th>Pts</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for rel in league.leagueteamrel_set.all %}
+                    {% for rel in league.leagueteamrel_set.all|dictsortreversed:"pts" %}
                         <tr>
                             <td>{{ rel.team.team_name }}</td>
                             <td>{{ rel.gp }}</td>
                             <td>{{ rel.wins }}</td>
                             <td>{{ rel.loses }}</td>
                             <td>{{ rel.pts_difference }}</td>
+                            <td>{{ rel.pts }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

@@ -565,6 +565,7 @@ def edit_league_data(request, pk):
         wins = request.POST.getlist('wins')
         loses = request.POST.getlist('loses')
         pts_difference = request.POST.getlist('pts_difference')
+        pts = request.POST.getlist('pts')
 
         i = 0
         for rel in league.leagueteamrel_set.all():
@@ -572,6 +573,7 @@ def edit_league_data(request, pk):
             rel.wins = wins[i]
             rel.loses = loses[i]
             rel.pts_difference = pts_difference[i]
+            rel.pts = pts[i]
             rel.save()
             i += 1
         return redirect('AthleticTeamApp:ShowLeague', league.id)
