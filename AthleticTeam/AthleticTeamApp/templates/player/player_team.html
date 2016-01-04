@@ -13,9 +13,11 @@
     
     <select name="teams" size ="10">
         {% for team in teams_list %}
-            <option value="{{ team.id }}">
-            {{ team.team_name}}  
-            </option>
+	    {% if team.owned %}
+	      <option value="{{ team.id }}">
+	      {{ team.team_name}}  
+	      </option>
+	    {% endif %}  
         {% endfor %}
     </select>
     

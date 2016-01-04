@@ -224,6 +224,7 @@ def create_team(request):
     temp = Team(team_name=title)
     if 'image' in request.FILES:
       temp.image = new_photo
+    temp.owned = True
     temp.save()
 
     return HttpResponseRedirect(reverse('AthleticTeamApp:ShowTeams'))
