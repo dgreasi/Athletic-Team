@@ -1,6 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
 import datetime
+
 from django.core.urlresolvers import reverse_lazy
 from django.forms import Form
 from django.http import *
@@ -8,12 +9,22 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.views import generic
 from django.views.generic.edit import ModelFormMixin
-from AthleticTeamApp.forms import TrainingForm, LeagueForm
+from AthleticTeamApp.forms import TrainingForm, LeagueForm, ContactForm
+
 from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team, TeamPlay, Exercise, Training, \
     MatchPlayerStatistics, \
     League, LeagueTeamRel
 
+from AthleticTeamApp.models import  OrganisationalChart
 
+from django.template.loader import get_template
+from django.core.mail import EmailMessage
+from django.template import Context
+from django.views.generic import TemplateView
+from django.views.generic.detail import SingleObjectMixin
+from django.http import *
+from django.template import RequestContext
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 class ShowCoachingStaffMembers(generic.ListView):
@@ -652,3 +663,47 @@ class DeleteLeague(generic.DeleteView):
     def get(self, *args, **kwargs):
         raise Http404
 
+
+#####################################
+# Contact Us and Organisation Chart #
+#####################################
+
+def contact(request):
+    form_class = ContactForm
+
+    if request.method == 'POST':
+        form = form_class(data=request.POST)
+
+        if form.is_valid():
+            contact_name = request.POST.get('contact_name', '')
+            contact_email = request.POST.get('contact_email', '')
+            form_content = request.POST.get('content', '')
+
+            # Email the profile with the
+            # contact information
+            template = get_template('home/contact_template.txt')
+            context = Context({
+                'contact_name': contact_name,
+                'contact_email': contact_email,
+                'form_content': form_content,
+            })
+            content = template.render(context)
+
+            email = EmailMessage( "New contact form submission", content, 'myteamvolos@gmail.com', [contact_email],
+                headers = {'Reply-To': contact_email }
+            )
+            email.send()
+            return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
+
+    return render(request, 'home/contact.html', {'form': form_class, })
+
+
+class ShowOrganisationalCharts(generic.ListView):
+    model = OrganisationalChart
+    template_name = 'organisational_chart/showall.html'
+    context_object_name = 'organisational_chart_list'
+
+
+class ShowOrganisationalChart(generic.DetailView):
+    model = OrganisationalChart
+    template_name = 'organisational_chart/show.html'

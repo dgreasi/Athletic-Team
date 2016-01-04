@@ -1,6 +1,7 @@
 {% extends "container.html" %}
 
 {% block head %}
+{% load staticfiles %}
     <title>Show All Teams</title>
 {% endblock %}
 
@@ -15,19 +16,22 @@
       </tr>
   {% if team_players_list%}
       {% for team in team_players_list %}
-        <tr>
-        <div class="row top-buffer">
-    <td><div class="col-md-0"><img src={{ team.image.url }} class="img-rounded" height="100" width="100"></div></td>
+      <tr>
+      <div class="row top-buffer">
+        <td><div class="col-md-0"><img src={{ team.image.url }} class="img-rounded" height="100" width="100"></div></td>
           <td><div class="col-md-1"> <a href="{% url 'AthleticTeamApp:ShowTeam' team.id %}">{{ team.team_name}}</a></div></td>
-    <td><div class="col-md-2">No category yet</div></td>
-        </div>
-        </tr>
+        <td><div class="col-md-2">No category yet</div></td>
+      </div>
+      </tr>
       {% endfor %}
-      </table>
+      
   {% else %}
       <p>No teams.</p>
   {% endif %}
-      
+    </div>
+    </table>
+    
+
   {% load filters %}
     {% if request.user|has_group:"Match Creator" %}
         <form action="{% url 'AthleticTeamApp:edit_team'  %}" method="get">
@@ -35,4 +39,10 @@
                 <input type="submit" name="submit" value="Edit/Create Team" class="btn btn-success" />
         </form>
     {% endif %}
+
+  <button class="btn btn-lg btn-primary" name="players" id="players" type="submit">Show all players</button>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript"  src="{% static 'js/myscript.js' %}"></script>
 {% endblock %}

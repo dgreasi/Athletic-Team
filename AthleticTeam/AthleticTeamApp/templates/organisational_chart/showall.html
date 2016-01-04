@@ -1,0 +1,32 @@
+{% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+    <title>Organisational Chart</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+{% endblock %}
+
+{% block container %}
+
+<h2 align="center">Organisational Chart </h2>
+{% if organisational_chart_list %}
+    <table align="center">
+    {% for organisationalchart in organisational_chart_list %}
+        <tr>
+            <td style="text-align:left; padding: 5px;"> <strong> {{ organisationalchart.position }} </strong> </td>
+            <td style="text-align:left; padding: 5px;"> {{ organisationalchart.first_name }}  </td>
+            <td style="text-align:left; padding: 5px;"> {{ organisationalchart.last_name }} </td>
+        </tr>
+    {% endfor %}
+    </table>
+{% else %}
+    <p>No Organisational Chart is available.</p>
+{% endif %}
+
+<button class="btn btn-lg btn-primary" name="dev" id="developers" type="submit">Learn about the developers of this page!</button>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript"  src="{% static 'js/myscript.js' %}"></script>
+{% endblock %}

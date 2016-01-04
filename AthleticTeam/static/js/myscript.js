@@ -12,6 +12,14 @@ $('#visitor').click(function() {
   window.location='/home';
 });
 
+$('#developers').click(function() {
+  window.location='/about';
+});
+
+$('#players').click(function() {
+  window.location='/players';
+});
+
 $('#create_match').click(function() {
   window.location='/create_match';
 });

@@ -1,67 +1,77 @@
 li a {
-	color: green;
+    color: green;
 }
 
 
 a {
-	color: green;
+    color: green;
 }
 
 h1 {
-	color: blue;
+    color: blue;
 }
 
 h2 {
-	color: blue;
+    color: blue;
+}
+
+#players {
+    position: fixed;
+    bottom: 62px;
+}
+
+#developers {
+    position: fixed;
+    bottom: 62px;
 }
 
 .button-rov {
-	margin: 5px;
+    margin: 5px;
 }
 
 .margin-top-small {
-	margin-top: 5px;
+    margin-top: 5px;
 }
 
 .margin-top-medium {
-	margin-top: 20px;
+    margin-top: 20px;
 }
 
 .margin-top-large {
-	margin-top: 40px;
+    margin-top: 40px;
 }
 
 .submenu {
-	background: #fff;
-	position: absolute;
-	top: -12px;
-	left: -20px;
-	z-index: 100;
-	width: 135px;
-	display: none;
-	margin-left: 10px;
-	padding: 40px 0 5px;
-	border-radius: 6px;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+    background: #fff;
+    position: absolute;
+    top: -12px;
+    left: -20px;
+    z-index: 100;
+    width: 135px;
+    display: none;
+    margin-left: 10px;
+    padding: 40px 0 5px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
 }
 
 .text_title {
-	width: 600px;
-	height: 40px;
-	resize: none;
+    width: 600px;
+    height: 40px;
+    resize: none;
 }
 
 .text_edit {
-	width: 600px;
-	height: 100px;
-	resize: none;
+    width: 600px;
+    height: 100px;
+    resize: none;
 }
 
 #view_text {
-	width: 500px;
+    width: 500px;
 }
 textarea {
-	vertical-align: top;
+    vertical-align: top;
 }
 
 html, body {
@@ -72,18 +82,18 @@ html, body {
 }
 
 #page-container {
-	height: auto;
-	min-height: 100%;
-	margin-bottom: -11px;
+    height: auto;
+    min-height: 100%;
+    margin-bottom: -11px;
 }
 
 #page-container > .container {
-	padding-bottom: 61px; /* 51 + 10 aera */
+    padding-bottom: 61px; /* 51 + 10 aera */
 }
 
 #page-footer {
-	border-top: 1px solid #999;
-	background-color: #FFF;
-	padding-top: 10px;
-	padding-bottom: 10px;
+    border-top: 1px solid #999;
+    background-color: #FFF;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }

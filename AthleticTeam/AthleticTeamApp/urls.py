@@ -80,5 +80,10 @@ urlpatterns = [
     url(r'^league/(?P<pk>[0-9]+)/edit$', views.edit_league, name='EditLeague'),
     url(r'^league/(?P<pk>[0-9]+)/edit_data$', views.edit_league_data, name='EditLeagueData'),
     url(r'^league/(?P<pk>[0-9]+)/delete$', views.DeleteLeague.as_view(), name='DeleteLeague'),
+
+    url(r'^contact/$', views.contact, name='contact'),
+    url(r'^organisationalCharts$', views.ShowOrganisationalCharts.as_view(), name='ShowOrganisationalCharts'),
+    url(r'^organisationalChart/(?P<pk>[0-9]+)$', views.ShowOrganisationalChart.as_view(), name='ShowOrganisationalChart'),
+    
 ]
 

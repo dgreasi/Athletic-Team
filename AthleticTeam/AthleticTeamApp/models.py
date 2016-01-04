@@ -249,3 +249,43 @@ class LeagueTeamRel(models.Model):
         return self.league.name + ' TO ' + self.team.team_name + ' RELATIONSHIP'
 
 
+class OrganisationalChart(Person):
+
+
+    SOM= 'Sports Organizational Manager'
+    YDTM= 'Youth Department Techincal Manager'
+    YDOM = 'Youth Department Organization Manager'
+    SCM = 'Sports Communications Manager'
+    TM = 'Team Manager'
+    TS = 'Technical Secretariat'
+    GOSPM = 'General Operations & Special Projects Manager'
+    DSOM = 'Developement & Stadium Operation Manager'
+    CM = 'Commercial Manager'
+    ICM = 'Institutional Communication Manager'
+    FGSD = 'Facilities & General Services Director'
+    SM = 'Security Manager'
+    SOM = 'Stadium Operation Manager'
+    SaSM = 'Sponsorship & Sales Manager'
+    # model fields
+    available_positions = (
+                            (SOM,'Sports Organizational Manager'),
+                            (YDTM,'Youth Department Techincal Manager'),
+                            (YDOM, 'Youth Department Organization Manager'),
+                            (SCM, 'Sports Communications Manager'),
+                            (TM, 'Team Manager'),
+                            (TS,'Technical Secretariat'),
+                            (GOSPM,'General Operations & Special Projects Manager'),
+                            (DSOM, 'Developement & Stadium Operation Manager'),
+                            (CM, 'Commercial Manager'),
+                            (ICM, 'Institutional Communication Manager'),
+                            (FGSD,'Facilities & General Services Director'),
+                            (SM, 'Security Manager'),
+                            (SOM, 'Stadium Operation Manager'),
+                            (SaSM,'Sponsorship & Sales Manager'),
+
+                        )
+    position = models.CharField(max_length=50, choices=available_positions, blank=True)
+
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self)) for field in OrganisationalChart._meta.fields]
+

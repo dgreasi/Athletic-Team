@@ -20,9 +20,9 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li>
+                <!-- <li>
                     <a href="/players" title="Show all players of our Team!">Players</a>
-                </li>
+                </li> -->
                 {% if user.is_authenticated %}
                     <li>
                         <a href="{% url 'AthleticTeamApp:ShowTeamPlays'%}">Team Plays</a>
@@ -42,10 +42,10 @@
                     <a href="/matches" title="Show matches">Matches</a>
                 </li>
                 <li>
-                    <a href="#" title="Contact the Start Bootstrap Team">Contact</a>
+                    <a href="/contact" title="Contact Us">Contact</a>
                 </li>
                 <li>
-                    <a href="/about" title="Our creators!!!">Developers</a>
+                    <a href="/organisationalCharts" title="Team Members">Team Members</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
