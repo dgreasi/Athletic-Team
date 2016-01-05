@@ -23,6 +23,9 @@ urlpatterns = [
     url(r'^announcements/', include('announcementsApp.urls', namespace="announcementsApp")),
     url(r'^pages/', include('SinglePagesApp.urls', namespace='SinglePagesApp')),
     url(r'^', include('AthleticTeamApp.urls', namespace='AthleticTeamApp')),
+    url(r'^', include('AdministrationApp.urls', namespace='AdministrationApp')),
+    url(r'^', include('SponsorsApp.urls', namespace='SponsorsApp')),
+
 
 ]
 

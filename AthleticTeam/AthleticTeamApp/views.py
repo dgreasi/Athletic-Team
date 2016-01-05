@@ -4,7 +4,7 @@ from django.views import generic
 
 
 from AthleticTeamApp.forms import TrainingForm
-from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team, Ranking, TeamPlay, Exercise, Training, MatchPlayerStatistics, OrganisationalChart
+from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team, Ranking, TeamPlay, Exercise, Training, MatchPlayerStatistics
 
 from AthleticTeamApp.forms import ContactForm
 
@@ -117,7 +117,7 @@ def create_a_player(request):
     new_weight = request.POST['weight']
     new_nationality = request.POST['nationality']
     new_birth_date = request.POST['date']
-    #new_photo = request.FILES['photo']
+  #  new_photo = request.FILES['photo']
     
     temp = Player(first_name = new_first_name,team_id = selected_team.id)
     temp.last_name = new_last_name
@@ -523,14 +523,4 @@ def contact(request):
 
     return render(request, 'home/contact.html', {'form': form_class, })
 
-
-class ShowOrganisationalCharts(generic.ListView):
-    model = OrganisationalChart
-    template_name = 'organisational_chart/showall.html'
-    context_object_name = 'organisational_chart_list'
-
-
-class ShowOrganisationalChart(generic.DetailView):
-    model = OrganisationalChart
-    template_name = 'organisational_chart/show.html'
 

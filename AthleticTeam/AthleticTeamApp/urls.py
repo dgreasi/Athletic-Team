@@ -73,12 +73,6 @@ urlpatterns = [
 
     url(r'^contact/$', views.contact, name='contact'),
 
-    url(r'^organisationalCharts$', views.ShowOrganisationalCharts.as_view(), name='ShowOrganisationalCharts'),
-    url(r'^organisationalChart/(?P<pk>[0-9]+)$', views.ShowOrganisationalChart.as_view(), name='ShowOrganisationalChart'),
-
-    #url(r'^OrganisationalCharts/$', views.ShowOrganisationalCharts.as_view(), name='OrganisationalCharts'),
-    #url(r'^OrganisationalChart/(?P<pk>[0-9]+)$', views.ShowOrganisationalChart.as_view(), name='OrganisationalChart'),
-
 
 ]
 

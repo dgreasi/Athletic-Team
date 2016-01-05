@@ -42,7 +42,10 @@
                     <a href="/contact" title="Contact the Start Bootstrap Team &amp; Themes">Contact Us</a>
                 </li>
                 <li>
-                    <a href="/organisationalCharts" title="Contact the Start Bootstrap Team &amp; Themes">Organizational Chart</a>
+                    <a href="{% url 'AdministrationApp:ShowAdministrations'%}">Administration</a>
+                </li>
+                <li>
+                    <a href="{% url 'SponsorsApp:ShowSponsors'%}">Sponsors</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
