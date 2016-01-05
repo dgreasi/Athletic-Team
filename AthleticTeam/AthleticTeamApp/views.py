@@ -4,6 +4,7 @@ from django.views import generic
 
 from AthleticTeamApp.forms import TrainingForm
 from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team, Ranking, TeamPlay, Exercise, Training, MatchPlayerStatistics
+from calendarium.models import Event,EventCategory
 
 from django.http import *
 from django.template import RequestContext
@@ -392,6 +393,11 @@ def match_creator(request):
     match_to_send = Match(home_pts=points_a, away_pts=points_b, stadium=stadium, date=date_match, time=time_match, info=info, home_team=team_a, away_team=team_b, home_away=home_away_team)
 
     match_to_send.save()  
+    
+    start_date = date_match +' '+ time_match
+    katigoria = get_object_or_404(EventCategory, name='MATCH')
+    event = Event(title = team_a.team_name + ' VS ' + team_b,category = katigoria,start =start_date[0:15],description = stadium)
+    event.save()
 
     # list1 = Player.objects.filter(team=team_a)
 
