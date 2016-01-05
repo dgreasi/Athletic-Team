@@ -30,3 +30,8 @@ class EditEventsForm(forms.Form):
 class EditFacilitiesForm(forms.Form):
     visible = forms.ChoiceField(label='Visible:', choices=(('Visible', 'Visible'), ('', 'Hidden')), required=False)
     info = forms.CharField(label='info:', required=False,max_length=30)
+
+class EditSponsorshipsForm(forms.Form):
+    visible = forms.ChoiceField(label='Visible:', choices=(('Visible', 'Visible'), ('', 'Hidden')), required=False)
+    first_name = forms.CharField(label='Company:', max_length=30, required=False)
+    #add photo

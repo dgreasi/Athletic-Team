@@ -47,6 +47,13 @@
                 <li>
                     <a href="/organisationalCharts" title="Team Members">Team Members</a>
                 </li>
+                {% if user.is_authenticated %}
+                    
+                {% else %}
+                    <li>
+                        <a href="/pages/tickets" title="Tickets">Tickets</a>
+                    </li>
+                {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">

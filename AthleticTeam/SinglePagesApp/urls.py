@@ -15,4 +15,7 @@ urlpatterns = [
     url(r'^events/edit$', views.edit_events, name='edit_events'),
     url(r'^facilities$', views.facilities, name='facilities'),
     url(r'^facilities/edit$', views.edit_facilities, name='edit_facilities'),
+    url(r'^sponsorships$', views.sponsorships, name='sponsorships'),
+    url(r'^sponsorships/edit$', views.edit_sponsorships, name='edit_sponsorships'),
+    
 ]

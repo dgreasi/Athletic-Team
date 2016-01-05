@@ -4,7 +4,7 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 # Create your views here.
 from AthleticTeam.settings import MEDIA_ROOT
-from SinglePagesApp.forms import EditContactUsForm, EditHistoryForm, EditTicketsForm, EditFacilitiesForm
+from SinglePagesApp.forms import EditContactUsForm, EditHistoryForm, EditTicketsForm, EditFacilitiesForm, EditSponsorshipsForm
 
 def history(request):
     data = read_file('history.json')
@@ -151,4 +151,30 @@ def edit_facilities(request):
         form = EditFacilitiesForm(data)
         return render(request, 'single_pages/edit.html', context={'name': name, 'form': form})
 
+
+
+def sponsorships(request):
+    data = read_file('sponsorships.json')
+
+    if data['visible'] != '':
+        return render(request, 'single_pages/sponsorships.html', context={'data': data})
+    else:
+        name = 'history'
+        data = read_file('history.json')
+        form = EditHistoryForm(data)
+        return render(request, 'single_pages/edit.html', context={'name': name, 'form': form})
+
+
+def edit_sponsorships(request):
+    if request.method == 'POST':
+        data = request.POST
+        data = data.copy()
+        data.pop('csrfmiddlewaretoken', None)
+        write_file('sponsorships.json', data)
+        return redirect('SinglePagesApp:sponsorships')
+    else:
+        name = 'sponsorships'
+        data = read_file('sponsorships.json')
+        form = EditSponsorshipsForm(data)
+        return render(request, 'single_pages/edit.html', context={'name': name, 'form': form})
 

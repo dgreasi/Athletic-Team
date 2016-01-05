@@ -20,6 +20,15 @@ h2 {
     bottom: 62px;
 }
 
+#sponsors {
+    position: fixed;
+    bottom: 62px;
+}
+
+#facilities {
+    position: fixed;
+    bottom: 115px;
+}
 
 #developers {
     position: fixed;

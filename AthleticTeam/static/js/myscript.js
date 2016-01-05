@@ -1,5 +1,13 @@
 //My jquey
 
+$('#facilities').click(function() {
+  window.location='/pages/facilities';
+});
+
+$('#sponsors').click(function() {
+  window.location='/pages/sponsorships';
+});
+
 $('#best_players').click(function() {
   window.location='/best_players';
 });
