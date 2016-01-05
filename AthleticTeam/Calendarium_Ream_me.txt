@@ -1,0 +1,5 @@
+1)Create 1 EventCategory object (admin site) with Name : 'MATCH', slug: (empty),Color : (pick one :P ) , Parent: (empty)
+2)/calendar to see the result
+
+**Do not forget**
+Instalation info: https://django-calendarium.readthedocs.org/en/latest/installation.html
