@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from AthleticTeamApp.models import MatchPlayerStatistics, Match, Player, Team, CoachingStaffMember, Ranking, Exercise, Training, OrganisationalChart
+from AthleticTeamApp.models import MatchPlayerStatistics, Match, Player, Team, CoachingStaffMember, Ranking, Exercise, Training
 
 
 # Register your models here.
@@ -52,6 +52,6 @@ admin.site.register(Player)
 admin.site.register(Ranking, RankingAdmin)
 admin.site.register(Exercise)
 admin.site.register(MatchPlayerStatistics)
-admin.site.register(OrganisationalChart)
+
 
 

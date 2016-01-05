@@ -45,6 +45,8 @@ INSTALLED_APPS = (
     'multiselectfield',
     'crispy_forms',
     'datetimewidget',
+    'AdministrationApp',
+    'SponsorsApp',
 )
 
 MIDDLEWARE_CLASSES = (
