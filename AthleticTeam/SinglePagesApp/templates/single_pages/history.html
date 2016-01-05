@@ -5,15 +5,17 @@
 <title>history page</title>
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/style1.css' %}" />
 {% endblock %}
 
 
 {% block container %}
-    <h2>History Page</h2>
-    <ul>
-    {% for key, value in data.items %}
-      <li>{{key}} - {{value}}</li>
-     {% endfor %}
-    </ul>
+    <div id="n">
+        <h3>History Page new</h3>
+        <p align="center">{{ data.info }}</p>
+        <div class="image" align="center">
+            <img src="{% static "a.jpg" %}" alt="My image"/>
+        </div>
+    </div>
 {% endblock %}
 

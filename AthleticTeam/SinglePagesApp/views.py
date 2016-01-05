@@ -4,7 +4,7 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 # Create your views here.
 from AthleticTeam.settings import MEDIA_ROOT
-from SinglePagesApp.forms import EditContactUsForm, EditHistoryForm, EditTicketsForm, EditFacilitiesForm, EditSponsorshipsForm
+from SinglePagesApp.forms import EditContactUsForm, EditAboutUsForm, EditHistoryForm, EditTicketsForm, EditFacilitiesForm, EditSponsorshipsForm
 
 def history(request):
     data = read_file('history.json')
