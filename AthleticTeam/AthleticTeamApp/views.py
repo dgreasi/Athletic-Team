@@ -10,13 +10,12 @@ from django.utils import timezone
 from django.views import generic
 from django.views.generic.edit import ModelFormMixin
 from AthleticTeamApp.forms import TrainingForm, LeagueForm, ContactForm
-
+from AthleticTeamApp.models import  OrganisationalChart
 from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team, TeamPlay, Exercise, Training, \
     MatchPlayerStatistics, \
     League, LeagueTeamRel
 
-from AthleticTeamApp.models import  OrganisationalChart
-
+from calendarium.models import Event,EventCategory
 from django.template.loader import get_template
 from django.core.mail import EmailMessage
 from django.template import Context
@@ -421,7 +420,14 @@ def match_creator(request):
     match_to_send = Match(home_pts=points_a, away_pts=points_b, stadium=stadium, date=date_match, time=time_match,
                           info=info, home_team=team_a, away_team=team_b, home_away=home_away_team)
 
-    match_to_send.save()
+    match_to_send.save() 
+    
+    start_date = date_match +' '+ time_match
+    titlos = team_a.team_name + ' VS ' +  team_b.team_name
+    katigoria = get_object_or_404(EventCategory, name='MATCH')
+    
+    event = Event(title = titlos,category = katigoria,start =start_date[0:15],description = stadium)
+    event.save()
 
     # list1 = Player.objects.filter(team=team_a)
 

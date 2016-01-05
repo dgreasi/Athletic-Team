@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import migrations, models
+from django.db import models, migrations
 import multiselectfield.db.fields
 from django.conf import settings
 
@@ -71,7 +71,6 @@ class Migration(migrations.Migration):
                 ('date', models.DateField(null=True)),
                 ('time', models.TimeField(null=True)),
                 ('info', models.TextField()),
-                ('away_team', models.CharField(max_length=30)),
                 ('home_away', models.CharField(max_length=30)),
             ],
         ),
@@ -157,6 +156,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('team_name', models.CharField(max_length=30)),
                 ('image', models.ImageField(default=b'photos/index.png', upload_to=b'photos/', blank=True)),
+                ('owned', models.BooleanField()),
             ],
         ),
         migrations.CreateModel(
@@ -189,6 +189,11 @@ class Migration(migrations.Migration):
             model_name='matchplayerstatistics',
             name='player',
             field=models.ForeignKey(to='AthleticTeamApp.Player'),
+        ),
+        migrations.AddField(
+            model_name='match',
+            name='away_team',
+            field=models.ForeignKey(related_name='away_team', to='AthleticTeamApp.Team', null=True),
         ),
         migrations.AddField(
             model_name='match',
