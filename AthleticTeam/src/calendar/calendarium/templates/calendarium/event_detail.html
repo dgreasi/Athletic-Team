@@ -3,27 +3,24 @@
 
 {% block main %}
 <h1>{{ object }}</h1>
-<table>
-    <tr>
-        <th>{% trans "Start" %}</th>
-        <td>{{ object.start }}</td>
-    </tr>
-    <tr>
-        <th>{% trans "End" %}</th>
-        <td>{{ object.end }}</td>
-    </tr>
-    <tr>
-        <th>{% trans "Category" %}</th>
-        <td>{{ object.category }}</td>
-    </tr>
-    <tr>
-        <th>{% trans "Description" %}</th>
-        <td>{{ object.description }}</td>
-    </tr>
-</table>
-<a href="javascript:history.back();">{% trans "back" %}</a>
-{% if request.user.is_staff %}
-    <a href="{% url "calendar_event_update" pk=object.pk %}">{% trans "Edit" %}</a>
-    <a href="{% url "calendar_event_delete" pk=object.pk %}">{% trans "Delete" %}</a>
-{% endif %}
+<div style="float:left; padding: 0; height="500" width="1000"">
+     <table class="table table table-hover" >
+            <tr>
+             <div class="row top-buffer" >
+		 <td><div class="col-md-0">{% trans "DateTime" %}</div></td>
+                 <td><div class="col-md-1">{{ object.start }}</div></td>
+            </tr>
+             <tr>
+             <div class="row top-buffer">
+		 <td><div class="col-md-0">{% trans "Category" %} </div></td>
+                 <td><div class="col-md-1">{{ object.category }}</div></td>
+            </tr>
+             <tr>
+             <div class="row top-buffer">
+		 <td><div class="col-md-0">{% trans "Stadium" %}</div></td>
+                 <td><div class="col-md-1">{{ object.description }}</div></td>
+            </tr>
+    </table>
+    </div>
+
 {% endblock %}
