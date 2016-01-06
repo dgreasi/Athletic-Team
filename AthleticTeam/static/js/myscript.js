@@ -5,7 +5,7 @@ $('#facilities').click(function() {
 });
 
 $('#sponsors').click(function() {
-  window.location='/pages/sponsorships';
+  window.location='/sponsors';
 });
 
 $('#best_players').click(function() {

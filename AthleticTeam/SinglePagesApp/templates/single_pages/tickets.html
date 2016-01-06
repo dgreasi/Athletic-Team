@@ -16,6 +16,14 @@
 {% endfor %}
 </ul>
 
+{% load filters %}
+    {% if request.user|has_group:"Coaching Staff Member" %}
+        <br>
+        <a type="button" class="btn btn-default" aria-label="Create Tickets" href="{% url 'SinglePagesApp:edit_tickets' %}">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create Tickets
+        </a>
+        <hr>
+    {% endif %}
 
 <button class="btn btn-lg btn-primary" name="sp" id="facilities" type="submit" >Check our facilities</button>
 
