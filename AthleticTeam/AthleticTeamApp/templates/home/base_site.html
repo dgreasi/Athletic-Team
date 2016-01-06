@@ -90,8 +90,6 @@
             <p>System for our team, better communication, efficient, worthy. Watch your investments</p>
             {% if user.is_authenticated %}
               <p><a class="btn btn-lg btn-primary" href="/announcements/" role="button">Recent Announcements</a></p>
-              <p><a class="btn btn-lg btn-primary" href="/pages/facilities" role="button">Facilities</a></p>
-              <p><a class="btn btn-lg btn-primary" href="/sponsors" role="button">Sponsors</a></p>
             {% endif %}
           </div>
         </div>
@@ -106,6 +104,9 @@
       <span class="sr-only">Next</span>
     </a>
   </div><!-- /.carousel -->
+
+  <p><a class="btn btn-lg btn-primary btn-block" href="/pages/facilities" role="button">Facilities</a></p>
+  <p><a class="btn btn-lg btn-primary btn-block" href="/sponsors" role="button">Sponsors</a></p>
 {% endblock %}
 
 {% block scripts %}
