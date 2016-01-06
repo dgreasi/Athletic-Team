@@ -8,7 +8,7 @@ from multiselectfield import MultiSelectField
 
 
 class Sponsor(models.Model):
-    image = models.ImageField(upload_to='photos/', blank=True ,default = 'photos/index.png')
+    image_model = models.ImageField(upload_to='photos/', blank=True ,default = 'photos/index.png')
     name = models.CharField(max_length=30, blank=True)
     info = models.TextField(blank=True)
 
