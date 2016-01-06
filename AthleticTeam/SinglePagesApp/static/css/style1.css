@@ -12,3 +12,19 @@ height:350px;
 width:350px;
 margin:0 auto;
 }
+
+.grow img {
+  height: 170px;
+  width: 550px;*/
+ 
+  -webkit-transition: all 1s ease;
+     -moz-transition: all 1s ease;
+       -o-transition: all 1s ease;
+      -ms-transition: all 1s ease;
+          transition: all 1s ease;
+}
+ 
+.grow img:hover {
+  width: 685px;
+  height: 200px;
+}
