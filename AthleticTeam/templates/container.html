@@ -24,17 +24,28 @@
                     <a href="/players" title="Show all players of our Team!">Players</a>
                 </li> -->
                 {% if user.is_authenticated %}
-                    <li>
-                        <a href="{% url 'AthleticTeamApp:ShowTeamPlays'%}">Team Plays</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'AthleticTeamApp:ShowExercises'%}">Exercises</a>
-                    </li>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown">
+                                Train
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu btn-info">
+                                <li>
+                                    <a href="{% url 'AthleticTeamApp:ShowTeamPlays'%}">Team Plays</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'AthleticTeamApp:ShowExercises'%}">Exercises</a>
+                                </li>
 
-                    <li>
-                        <a href="{% url 'AthleticTeamApp:ShowTrainings'%}">Trainings</a>
-                    </li>
+                                <li>
+                                    <a href="{% url 'AthleticTeamApp:ShowTrainings'%}">Trainings</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
                 {% endif %}
+
                 <li>
                     <a href="{% url 'AthleticTeamApp:ShowLeagues'%}">Leagues</a>
                 </li>
@@ -51,6 +62,7 @@
                     <a href="/pages/tickets" title="Tickets">Tickets</a>
                 </li>
             </ul>
+
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                 {% if user.is_authenticated %}
