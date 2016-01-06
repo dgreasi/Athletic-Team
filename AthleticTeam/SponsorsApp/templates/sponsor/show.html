@@ -11,18 +11,25 @@
     <div class="row">
         <div class="col-lg-12">
             <h1>
-                Sponsor: {{ sponsor.name }}
+                Sponsor : {{ sponsor.name }}
                 <a type="button" class="btn btn-default pull-right" aria-label="Create Sponsor" href="{% url 'SponsorsApp:EditSponsor' sponsor.id %}">
                   <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
                 </a>
             </h1>
             <br>
-         <div class="col-md-0">
+
+        {% if  sponsor.image %}
+        <div class="col-md-0">
             <img src={{ sponsor.image.url }} class="img-rounded" height="100" width="100">
         </div>
-            {% if sponsor.info %}
-            <h2>{{ sponsor.info}}</h2>
-            {% endif %}
+        {% else %}
+            <h3> No photo available </h3>    
+        {% endif %}
+
+        {% if sponsor.info %}
+            <h2>Sponsor Info</h2>
+            <h3>{{ sponsor.info}}</h3>
+        {% endif %}
         </div>
     </div>
     <hr>
