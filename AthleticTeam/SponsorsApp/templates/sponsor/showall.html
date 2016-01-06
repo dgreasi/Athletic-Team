@@ -22,13 +22,9 @@
     {% else %}
         <h1>No Sponsor is available.</h1>
     {% endif %}
-    {% load filters %}
-    
-    {% if request.user|has_group:"Match Creator" %}
-        <br>
-        <a type="button" class="btn btn-default" aria-label="Create Sponsor" href="{% url 'SponsorsApp:CreateSponsor' %}">
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create
-        </a>
-        <hr>
-    {% endif %}
+    <br>
+    <a type="button" class="btn btn-default" aria-label="Create Sponsor" href="{% url 'SponsorsApp:CreateSponsor' %}">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create
+    </a>
+    <hr>
 {% endblock %}
