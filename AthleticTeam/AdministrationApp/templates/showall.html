@@ -22,9 +22,14 @@
     {% else %}
         <h1>No Administration is available.</h1>
     {% endif %}
-    <br>
-    <a type="button" class="btn btn-default" aria-label="Create Administration" href="{% url 'AdministrationApp:CreateAdministration' %}">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create
-    </a>
-    <hr>
+
+    {% load filters %}
+    {% if request.user|has_group:"Match Creator" %}
+        <br>
+        <a type="button" class="btn btn-default" aria-label="Create Administration" href="{% url 'AdministrationApp:CreateAdministration' %}">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create
+        </a>
+        <hr>
+    {% endif %}
+    
 {% endblock %}
