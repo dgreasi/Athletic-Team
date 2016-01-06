@@ -13,7 +13,7 @@ width:350px;
 margin:0 auto;
 }
 
-.grow img {
+.growing img {
   height: 170px;
   width: 550px;*/
  
@@ -24,7 +24,7 @@ margin:0 auto;
           transition: all 1s ease;
 }
  
-.grow img:hover {
+.growing img:hover {
   width: 685px;
   height: 200px;
 }
