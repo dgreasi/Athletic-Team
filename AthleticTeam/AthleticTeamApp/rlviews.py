@@ -183,7 +183,7 @@ def rank(request, player_id):
         p.save()
         p.average_rank = p.ranking_algo()
         p.save()
-        player_ranked.overall_rank = pl_ranking.ranking_algorithm()
+        player_ranked.overall_rank = p.ranking_algorithm()
         player_ranked.save()
 
 
