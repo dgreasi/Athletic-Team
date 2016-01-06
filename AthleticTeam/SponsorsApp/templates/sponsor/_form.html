@@ -1,0 +1,9 @@
+{% load crispy_forms_filters %}
+
+<form action="" method="post">{% csrf_token %}
+    {{ form |crispy }}
+    <input class="btn btn-success pull-right" type="submit" value="{{ submitName }}" />
+</form>
+{% if sponsor %}
+    {% include "sponsor/_delete.html" %}
+{% endif %}

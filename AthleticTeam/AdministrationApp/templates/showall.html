@@ -1,0 +1,30 @@
+{% extends "container.html" %}
+
+{% block head %}
+    {% load staticfiles %}
+    <title>Administration</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+{% endblock %}
+
+{% block container %}
+    {% if administration_list %}
+        <h1>Administration:</h1>
+        <ul>
+        {% for administration in administration_list %}
+            <li>
+                <a href="{% url 'AdministrationApp:ShowAdministration' administration.id %}">
+                    {{ administration.last_name }}
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <h1>No Administration is available.</h1>
+    {% endif %}
+    <br>
+    <a type="button" class="btn btn-default" aria-label="Create Administration" href="{% url 'AdministrationApp:CreateAdministration' %}">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create
+    </a>
+    <hr>
+{% endblock %}

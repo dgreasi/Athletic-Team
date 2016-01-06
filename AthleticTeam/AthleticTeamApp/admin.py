@@ -54,6 +54,7 @@ class OrganisationalChartInline(admin.TabularInline):
    model = OrganisationalChart
    extra = 1
 
+admin.site.register(CoachingStaffMember)
 admin.site.register(Team, TeamAdmin)
 admin.site.register(Match, MatchAdmin)
 admin.site.register(Training)

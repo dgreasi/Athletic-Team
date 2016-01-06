@@ -1,0 +1,30 @@
+{% extends "container.html" %}
+
+{% block head %}
+    {% load staticfiles %}
+    <title>Sponsors</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+{% endblock %}
+
+{% block container %}
+    {% if sponsor_list %}
+        <h1>Sponsors:</h1>
+        <ul>
+        {% for sponsor in sponsor_list %}
+            <li>
+                <a href="{% url 'SponsorsApp:ShowSponsor' sponsor.id %}">
+                    {{ sponsor.name }}
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <h1>No Sponsor is available.</h1>
+    {% endif %}
+    <br>
+    <a type="button" class="btn btn-default" aria-label="Create Sponsor" href="{% url 'SponsorsApp:CreateSponsor' %}">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create
+    </a>
+    <hr>
+{% endblock %}
