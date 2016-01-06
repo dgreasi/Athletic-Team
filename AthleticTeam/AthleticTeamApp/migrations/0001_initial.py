@@ -58,7 +58,6 @@ class Migration(migrations.Migration):
                 ('loses', models.PositiveSmallIntegerField(default=0)),
                 ('pts_difference', models.SmallIntegerField(default=0)),
                 ('pts', models.SmallIntegerField(default=0)),
-                ('league', models.ForeignKey(to='AthleticTeamApp.League')),
             ],
         ),
         migrations.CreateModel(
@@ -73,6 +72,9 @@ class Migration(migrations.Migration):
                 ('info', models.TextField()),
                 ('home_away', models.CharField(max_length=30)),
             ],
+            options={
+                'abstract': False,
+            },
         ),
         migrations.CreateModel(
             name='MatchPlayerStatistics',
@@ -194,34 +196,5 @@ class Migration(migrations.Migration):
             model_name='match',
             name='away_team',
             field=models.ForeignKey(related_name='away_team', to='AthleticTeamApp.Team', null=True),
-        ),
-        migrations.AddField(
-            model_name='match',
-            name='home_team',
-            field=models.ForeignKey(related_name='home_team', to='AthleticTeamApp.Team', null=True),
-        ),
-        migrations.AddField(
-            model_name='match',
-            name='players',
-            field=models.ManyToManyField(to='AthleticTeamApp.Player', through='AthleticTeamApp.MatchPlayerStatistics'),
-        ),
-        migrations.AddField(
-            model_name='leagueteamrel',
-            name='team',
-            field=models.ForeignKey(to='AthleticTeamApp.Team'),
-        ),
-        migrations.AddField(
-            model_name='league',
-            name='teams',
-            field=models.ManyToManyField(to='AthleticTeamApp.Team', through='AthleticTeamApp.LeagueTeamRel'),
-        ),
-        migrations.AddField(
-            model_name='coachingstaffmember',
-            name='team',
-            field=models.ForeignKey(to='AthleticTeamApp.Team'),
-        ),
-        migrations.AlterUniqueTogether(
-            name='ranking',
-            unique_together=set([('player', 'owner')]),
         ),
     ]

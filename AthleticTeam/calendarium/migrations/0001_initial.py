@@ -1,20 +1,18 @@
-# flake8: noqa
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.conf import settings
-from django.db import models, migrations
-
+from django.db import migrations, models
 import filer.fields.image
+from django.conf import settings
 import calendarium.models
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('contenttypes', '0001_initial'),
+        ('contenttypes', '0002_remove_content_type_name'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('filer', '0001_initial'),
+        ('filer', '0002_auto_20150606_2003'),
     ]
 
     operations = [
@@ -78,7 +76,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=32, verbose_name='name')),
                 ('description', models.TextField(verbose_name='description')),
-                ('frequency', models.CharField(max_length=10, verbose_name='frequency', choices=[('YEARLY', 'Yearly'), ('MONTHLY', 'Monthly'), ('WEEKLY', 'Weekly'), ('DAILY', 'Daily')])),
+                ('frequency', models.CharField(max_length=10, verbose_name='frequency', choices=[(b'YEARLY', 'Yearly'), (b'MONTHLY', 'Monthly'), (b'WEEKLY', 'Weekly'), (b'DAILY', 'Daily')])),
                 ('params', models.TextField(null=True, verbose_name='params', blank=True)),
             ],
         ),

@@ -15,7 +15,7 @@ from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team, Tea
     MatchPlayerStatistics, \
     League, LeagueTeamRel
 
-from calendarium.models import Event,EventCategory
+from calendarium.models import Event, EventCategory
 from django.template.loader import get_template
 from django.core.mail import EmailMessage
 from django.template import Context
@@ -371,6 +371,11 @@ class CreateTraining(generic.CreateView):
     template_name = 'training/create_form.html'
 
     def get_success_url(self):
+        start = self.object.date.__str__() + ' ' + self.object.start.__str__()
+        title = self.object.location
+        event = create_event(category='TRAINING', start=start, title=title)
+        self.object.event_object = event
+        self.object.save()
         return reverse('AthleticTeamApp:ShowTraining', args=(self.object.id,))
 
 
@@ -417,17 +422,14 @@ def match_creator(request):
 
     home_away_team = request.POST['home_away']
 
-    match_to_send = Match(home_pts=points_a, away_pts=points_b, stadium=stadium, date=date_match, time=time_match,
-                          info=info, home_team=team_a, away_team=team_b, home_away=home_away_team)
+    start = date_match + ' ' + time_match
+    title = team_a.team_name + ' VS ' + team_b.team_name
+    event = create_event(category='MATCH', start=start, title=title)
 
-    match_to_send.save() 
-    
-    start_date = date_match +' '+ time_match
-    titlos = team_a.team_name + ' VS ' +  team_b.team_name
-    katigoria = get_object_or_404(EventCategory, name='MATCH')
-    
-    event = Event(title = titlos,category = katigoria,start =start_date[0:15],description = stadium)
-    event.save()
+    match_to_send = Match(home_pts=points_a, away_pts=points_b, stadium=stadium, date=date_match, time=time_match,
+                          info=info, home_team=team_a, away_team=team_b, home_away=home_away_team, event_object=event)
+
+    match_to_send.save()
 
     # list1 = Player.objects.filter(team=team_a)
 
@@ -716,3 +718,11 @@ class ShowOrganisationalCharts(generic.ListView):
 class ShowOrganisationalChart(generic.DetailView):
     model = OrganisationalChart
     template_name = 'organisational_chart/show.html'
+
+
+def create_event(category, start, title):
+    category_object = get_object_or_404(EventCategory, name=category)
+
+    event = Event(title=title, category=category_object, start=start[0:15])
+    event.save()
+    return event

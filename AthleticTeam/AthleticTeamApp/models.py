@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 # Create your models here.
 from multiselectfield import MultiSelectField
 
+from calendarium.models import EventObject
+
 
 class Person(models.Model):
     first_name = models.CharField(max_length=30,)
@@ -76,8 +78,9 @@ class Player(Person):
 
     def __str__(self):              # __unicode__ on Python 2
         return self.last_name
-  
-class Match(models.Model):
+
+
+class Match(EventObject):
     # model fields
     home_pts = models.PositiveSmallIntegerField(null=True)
     away_pts = models.PositiveSmallIntegerField(null=True)
@@ -207,7 +210,7 @@ class Exercise(models.Model):
         return [(field.name, field.value_to_string(self)) for field in TeamPlay._meta.fields]
 
 
-class Training(models.Model):
+class Training(EventObject):
     date = models.DateField()
     start = models.TimeField()
     end = models.TimeField()
