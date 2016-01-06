@@ -28,6 +28,12 @@
         </div>
         <div align="center" class="category">
         
-    
+{% load filters %}
+    {% if request.user|has_group:"Coaching Staff Member" %}
+        <br>
+        <a type="button" class="btn btn-default" aria-label="Create facilities" href="{% url 'SinglePagesApp:edit_facilities' %}">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create facilities
+        </a>
+    {% endif %}
         
 {% endblock %}
