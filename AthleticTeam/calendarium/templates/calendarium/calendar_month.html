@@ -1,5 +1,7 @@
 {% extends "base.html" %}
+
 {% load i18n calendarium_tags %}
+
 {% block main %}
 <h1>{{ date|date:"F Y" }}</h1>
 {% include "calendarium/partials/category_list.html" %}
@@ -12,7 +14,6 @@
 <h1>PAOK</h1>
 <table class="table" id="calendar-month">
     <tr>
-        <th></th>
         {% for weekday in weekdays %}
             <th>{{ weekday }}</th>
         {% endfor %}
@@ -20,15 +21,19 @@
     {% for week in month %}
         {% if week %}
             <tr>
-                <td class="calendarium-week-link"><a href="{{ date|get_week_URL:week.0.0 }}">{% trans "View" %}</a></td>
                 {% for day, occurrences, current in week %}
                     <td class="{% if day == 0 %}calendarium-empty{% elif current %}calendarium-current{% else %}calendarium-day{% endif %}">
                         <div class="calendarium-relative">
                             {% if day != 0 %}
                                 <span class="calendarium-date">{{ day }}</span>
                                 {% for occurrence in occurrences %}
-                                    <p class="alert" style="background-color: #{{ occurrence.event.category.color }}" height = '200'>
-                                        <a title="{{ occurrence }}" href="{% url "calendar_occurrence_detail" pk=occurrence.event.pk year=occurrence.start.year month=occurrence.start.month day=occurrence.start.day %}">{{ occurrence|truncatechars:22 }}</a>
+                                    <p class="alert" style="background-color: #{{ occurrence.event.category.color }}">
+                                        {% if occurrence.category.name == 'MATCH'  %}
+                                            <a title="{{ occurrence }}" href="{% url "AthleticTeamApp:ShowMatch" occurrence.event.match_set.first.id %}">{{ occurrence|truncatechars:22 }}</a>
+                                        {% endif %}
+                                        {% if occurrence.category.name == 'TRAINING'  %}
+                                            <a title="{{ occurrence }}" href="{% url "AthleticTeamApp:ShowTraining" occurrence.event.training_set.first.id %}">{{ occurrence|truncatechars:22 }}</a>
+                                        {% endif %}
                                     </p>
                                 {% endfor %}
                             {% endif %}
@@ -39,6 +44,6 @@
         {% endif %}
     {% endfor %}
 </table>
-<h1>Upcoming Events</h1>
+<h3>Upcoming Events:</h3>
 {% render_upcoming_events 5 current_category %}
 {% endblock %}

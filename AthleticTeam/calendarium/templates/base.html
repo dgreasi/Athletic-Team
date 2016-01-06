@@ -1,0 +1,10 @@
+{% extends "container.html" %}
+
+{% block head %}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static "calendarium/css/calendar.css" %}">
+{% endblock %}
+
+{% block container %}
+    {% block main %}{% endblock %}
+{% endblock %}

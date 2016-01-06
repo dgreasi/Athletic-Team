@@ -286,6 +286,17 @@ class Event(EventModelMixin):
             return rrule.rrule(eval(frequency), dtstart=self.start, **params)
 
 
+class EventObject(models.Model):
+
+    event_object = models.ForeignKey(
+        Event,
+        null=True
+    )
+
+    class Meta:
+        abstract = True
+
+
 class EventCategory(models.Model):
     """
     The category of an event.

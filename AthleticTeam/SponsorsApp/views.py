@@ -35,7 +35,7 @@ class ShowSponsor(generic.DetailView):
 
 class CreateSponsor(generic.CreateView):
     model = Sponsor
-    fields = ['name', 'info']
+    fields = ['name', 'info', 'image']
     template_name = 'sponsor/create_form.html'
 
     def get_success_url(self):
@@ -44,7 +44,7 @@ class CreateSponsor(generic.CreateView):
 
 class EditSponsor(generic.UpdateView):
     model = Sponsor
-    fields = ['name', 'info']
+    fields = ['name', 'info', 'image']
     template_name = 'sponsor/edit_form.html'
 
     def get_success_url(self):

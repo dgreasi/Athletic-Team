@@ -1,6 +1,6 @@
 {% load crispy_forms_filters %}
 
-<form action="" method="post">{% csrf_token %}
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     {{ form |crispy }}
     <input class="btn btn-success pull-right" type="submit" value="{{ submitName }}" />
 </form>

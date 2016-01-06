@@ -1,0 +1,7 @@
+{% load i18n %}
+<select class="form-control" onChange="window.location.href=this.value">
+    <option value="{% url "calendar_current_month" %}" {% if current_category %}selected="selected"{% endif %}>{% trans "All events" %}{% if not current_category %}</>{% endif %}</option>
+    {% for category in categories %}
+        <option value=".?category={{ category.pk }}" {% if category == current_category %}selected="selected"{% endif %}>{% if category == current_category %}<strong>{% endif %}{{ category.name }}{% if category == current_category %}</strong>{% endif %}</option>
+    {% endfor %}
+</select>
