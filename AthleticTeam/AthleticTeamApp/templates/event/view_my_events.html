@@ -17,23 +17,6 @@
         {% endif %}
       {% endfor %}
     {% endfor %}
-
-    {# .... **Now the pagination section** .... #}
-    {% if is_paginated %}
-        <div class="pagination">
-            <span class="page-links">
-                {% if page_obj.has_previous %}
-                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-                {% endif %}
-                <span class="page-current">
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                </span>
-                {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}">next</a>
-                {% endif %}
-            </span>
-        </div>
-    {% endif %}
     </ul>
     <br />
     <form action="{% url 'AthleticTeamApp:LeaveEvents' %}" method="get">
@@ -59,42 +42,43 @@
     <h2>Created Events</h2>
 
     {% if events_list %}
-    <ul>
-      {% for event in events_list %}
-        {% if user == event.creator %}
-          <li><a href="{% url 'AthleticTeamApp:ShowEvent' event.id %}">{{ event.title}}</a></li>
-        {% endif %}
-      {% endfor %}
-    </ul>
+      <ul>
+        {% for event in events_list %}
+          {% if user == event.creator %}
+            <li><a href="{% url 'AthleticTeamApp:ShowEvent' event.id %}">{{ event.title}}</a></li>
+          {% endif %}
+        {% endfor %}
+      </ul>
     {% else %}
         <p>No events yet.</p>
     {% endif %}
     </br>
-  {% endif %} 
-  
-  <form action="{% url 'AthleticTeamApp:LeaveEvents' %}" method="post">
-      {% csrf_token %}    
-      {% if events_list %}
-        <select  name="events" id="events" size ="20">
-          {% for event in events_list %}
-              {% if event.creator == user %}
-          <option value="{{ event.id }}"> 
-              {{event.title}}
-          </option>
-              {% endif%}
-            {% endfor %}    
-        </select>    
-      {% else %}
-        <p>No events yet.</p>
-      {% endif %}
-    
-      <br />
-      <div class="margin-top-small">
-        <a class="btn btn-primary " href="{% url 'AthleticTeamApp:remove_user' %}">Remove User From Event</a>
-      </div>   
+   
+    <h2>Edit Participants of your Events</h2>
+    <form action="{% url 'AthleticTeamApp:LeaveEvents' %}" method="post">
+        {% csrf_token %}    
+        {% if events_list %}
+          <select  name="events" id="events" size ="20">
+            {% for event in events_list %}
+                {% if event.creator == user %}
+            <option value="{{ event.id }}"> 
+                {{event.title}}
+            </option>
+                {% endif%}
+              {% endfor %}    
+          </select>    
+        {% else %}
+          <p>No events yet.</p>
+        {% endif %}
       
-      <div class="margin-top-small">
-        <a class="btn btn-primary " href="{% url 'AthleticTeamApp:add_user' %}">Add User To Event</a>
-      </div>
-  </form> 
+        <br />
+        <div class="margin-top-small">
+          <a class="btn btn-primary " href="{% url 'AthleticTeamApp:remove_user' %}">Remove User From Event</a>
+        </div>   
+        
+        <div class="margin-top-small">
+          <a class="btn btn-primary " href="{% url 'AthleticTeamApp:add_user' %}">Add User To Event</a>
+        </div>
+    </form>
+  {% endif %}
 {% endblock %}
