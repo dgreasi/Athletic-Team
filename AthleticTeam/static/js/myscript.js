@@ -1,4 +1,4 @@
-//My jquey
+//My jquery
 
 $('#facilities').click(function() {
   window.location='/pages/facilities';
