@@ -12,17 +12,14 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="/home/">Home</a>
-            {% if user.is_authenticated %}
-                <a class="navbar-brand" href="/announcements/">Announcements</a>
-            {% endif %}
             <a class="navbar-brand" href="/teams">Teams</a>
         </div>
+
+
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <!-- TRAINS -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">   
             <ul class="nav navbar-nav">
-                <!-- <li>
-                    <a href="/players" title="Show all players of our Team!">Players</a>
-                </li> -->
                 {% if user.is_authenticated %}
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
@@ -30,6 +27,7 @@
                                 Train
                                 <b class="caret"></b>
                             </a>
+
                             <ul class="dropdown-menu btn-info">
                                 <li>
                                     <a href="{% url 'AthleticTeamApp:ShowTeamPlays'%}">Team Plays</a>
@@ -42,32 +40,36 @@
                                     <a href="{% url 'AthleticTeamApp:ShowTrainings'%}">Trainings</a>
                                 </li>
                             </ul>
+
                         </li>
                     </ul>
                 {% endif %}
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <!-- <li>
-                    <a href="/players" title="Show all players of our Team!">Players</a>
-                </li> -->
+            
+                <!-- NEWS -->
                 {% if user.is_authenticated %}
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
                             <a href="#" data-toggle="dropdown">
-                                Events
+                                News
                                 <b class="caret"></b>
                             </a>
+
                             <ul class="dropdown-menu btn-info">
                                 <li>
-                                    <a href="{% url 'AthleticTeamApp:ShowEvents'%}">All Events</a>
+                                    <a href="{% url 'announcementsApp:index'%}">Announcements</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'AthleticTeamApp:ShowEvents'%}">Events</a>
                                 </li>
                                 <li>
                                     <a href="{% url 'AthleticTeamApp:JoinEvents'%}">Join Events</a>
                                 </li>
                             </ul>
+
                         </li>
                     </ul>
-                {% endif %}                
+                {% endif %}    
+                            
                 <li>
                     <a href="{% url 'AthleticTeamApp:ShowLeagues'%}">Leagues</a>
                 </li>
@@ -84,6 +86,8 @@
                     <a href="/pages/tickets" title="Tickets">Tickets</a>
                 </li>
             </ul>
+
+
 
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
@@ -124,6 +128,8 @@
                     </ul>
                 </li>
             </ul>
+
+
         </div>
         <!-- /.navbar-collapse -->
     </div>
