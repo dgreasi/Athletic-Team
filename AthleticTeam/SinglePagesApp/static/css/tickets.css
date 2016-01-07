@@ -7,10 +7,15 @@ li {
 color: #660033
 }
 
-
-
-    width: 50%;
-    height: 50%;
+/*.box {
+    width: 450px;
+    height: 120px;
+}
+*/
+ 
+.box img {
+    width: 65%;
+    height: auto;
 }
 
 
