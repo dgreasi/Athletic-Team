@@ -12,16 +12,67 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="/home/">Home</a>
-            <a class="navbar-brand" href="/teams">Teams</a>
         </div>
 
 
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <!-- TRAINS -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">   
             <ul class="nav navbar-nav">
+                
+            
+                <!-- NEWS -->
                 {% if user.is_authenticated %}
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown">
+                                News
+                                <b class="caret"></b>
+                            </a>
+
+                            <ul class="dropdown-menu btn-info">
+                                <li>
+                                    <a href="{% url 'announcementsApp:index'%}">Announcements</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'AthleticTeamApp:ShowEvents'%}">Events</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'AthleticTeamApp:JoinEvents'%}">Join Events</a>
+                                </li>
+                            </ul>
+
+                        </li>
+                    </ul>
+                {% endif %}
+
+
+                <!-- TEAM -->
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" data-toggle="dropdown">
+                            Team
+                            <b class="caret"></b>
+                        </a>
+
+                        <ul class="dropdown-menu btn-info">
+                            <li>
+                                <a href="{% url 'AthleticTeamApp:ShowLeagues'%}">Leagues</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'AthleticTeamApp:ShowTeams'%}">Our Teams</a>
+                            </li>
+                            <li>
+                                <a href="/matches" title="Show matches">Matches</a>
+                            </li>
+                        </ul>
+
+                    </li>
+                </ul>
+
+
+                <!-- TRAINS -->
+                {% if user.is_authenticated %}
+                    <ul class="nav navbar-nav">
                         <li class="dropdown">
                             <a href="#" data-toggle="dropdown">
                                 Train
@@ -44,51 +95,22 @@
                         </li>
                     </ul>
                 {% endif %}
-            
-                <!-- NEWS -->
-                {% if user.is_authenticated %}
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a href="#" data-toggle="dropdown">
-                                News
-                                <b class="caret"></b>
-                            </a>
 
-                            <ul class="dropdown-menu btn-info">
-                                <li>
-                                    <a href="{% url 'announcementsApp:index'%}">Announcements</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'AthleticTeamApp:ShowEvents'%}">Events</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'AthleticTeamApp:JoinEvents'%}">Join Events</a>
-                                </li>
-                            </ul>
 
-                        </li>
-                    </ul>
-                {% endif %}    
-                            
-                <li>
-                    <a href="{% url 'AthleticTeamApp:ShowLeagues'%}">Leagues</a>
-                </li>
-                <li>
-                    <a href="/matches" title="Show matches">Matches</a>
-                </li>
-                <li>
-                    <a href="/contact" title="Contact Us">Contact</a>
-                </li>
+                <!-- Rest Buttons -->
                 <li>
                     <a href="/administrations" title="Team Members">Team Members</a>
                 </li>
                 <li>
                     <a href="/pages/tickets" title="Tickets">Tickets</a>
                 </li>
+                <li>
+                    <a href="/contact" title="Contact Us">Contact</a>
+                </li>
             </ul>
 
 
-
+            <!-- Account button -->
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                 {% if user.is_authenticated %}

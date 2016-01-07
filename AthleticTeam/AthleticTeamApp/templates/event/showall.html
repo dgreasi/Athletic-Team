@@ -6,15 +6,24 @@
 {% endblock %}
 
 {% block container %}
-  <h2>Events</h2>
+    <h2>Events</h2>
 
-  {% if events_list %}
-      {% for event in events_list %}
-	  <li><a href="{% url 'AthleticTeamApp:ShowEvent' event.id %}">{{ event.title}}</a></li>
-      {% endfor %}
+    {% if events_list %}
+        {% for event in events_list %}
+            <li><a href="{% url 'AthleticTeamApp:ShowEvent' event.id %}">{{ event.title}}</a></li>
+        {% endfor %}
       
-  {% else %}
-      <p>No events yet.</p>
-  {% endif %}
+    {% else %}
+        <p>No events yet.</p>
+    {% endif %}
     
+    {% load filters %}
+    {% if request.user|has_group:"Match Creator" %}
+        <br>
+            <a type="button" class="btn btn-default" aria-label="Create Event" href="{% url 'AthleticTeamApp:create_event' %}">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create
+            </a>
+        <hr>
+    {% endif %}
+    <p>Added filter Match Creator</p>
 {% endblock %}
