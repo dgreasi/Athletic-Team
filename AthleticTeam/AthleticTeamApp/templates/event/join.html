@@ -1,0 +1,29 @@
+{% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+    <title>Join Events</title>
+{% endblock %}
+
+{% block container %}
+  <h2>Available Events</h2>
+
+  <form action="{% url 'AthleticTeamApp:join_event' %}" method="post">
+      {% csrf_token %}
+      {% if events_list %}
+	<select  multiple='multiple' name="events" id="events" size ="30">
+	  {% for event in events_list %}
+	      {% if event.approved_by_owner == False %}
+		<option value="{{ event.id }}"> 
+		    {{event.title}} by {{event.creator.username}} 
+		</option>
+	      {% endif%}
+	    {% endfor %}    
+	</select>    
+      {% else %}
+	  <p>No events yet.</p>
+      {% endif %}
+   <input type="hidden" name="user" value= {{user}} />
+  <td class='tdinput'><input size = 2 type="submit" name="submit" value="Join" class="btn btn-success"/>
+   </form> 
+{% endblock %}

@@ -13,7 +13,7 @@ class Person(models.Model):
     last_name = models.CharField(max_length=30)
     info = models.TextField()
     image = models.ImageField(upload_to='photos/', blank=True ,default = 'photos/index.png')
-    #user = models.ForeignKey(User, default='')
+    account = models.OneToOneField(User,null = True)
 
     def __str__(self):              # __unicode__ on Python 2
         return self.last_name
@@ -22,7 +22,27 @@ class Person(models.Model):
     class Meta:
         abstract = True
 
-
+  
+class Event(models.Model):
+    title = models.CharField(max_length=30)
+    info = models.TextField()
+    date = models.DateField()
+    time = models.TimeField()
+    approved_by_owner = models.BooleanField()
+    
+    #owner = models.ForeignKey(User, null=True)
+    #participats = models.ManyToManyField(User)
+    creator = models.ForeignKey(User, null=True, related_name='creator')
+    participants = models.ManyToManyField(User, related_name='participants')
+    
+    def __str__(self):              # __unicode__ on Python 2
+        return self.title
+      
+    
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self)) for field in Event._meta.fields]  
+  
+    
 class Team(models.Model):
     team_name = models.CharField(max_length=30)
     image = models.ImageField(upload_to='photos/', blank=True ,default = 'photos/index.png')
@@ -41,6 +61,7 @@ class CoachingStaffMember(Person):
 
     # model relationships
     team = models.ForeignKey(Team)
+    #event = models.ManyToManyField(Event)
 
     def get_fields(self):
         return [(field.name, field.value_to_string(self)) for field in CoachingStaffMember._meta.fields]
@@ -72,6 +93,7 @@ class Player(Person):
 
     # model relationships
     team = models.ForeignKey(Team)
+    #event = models.ForeignKey(Event)
 
     def get_fields(self):
         return [(field.name, field.value_to_string(self)) for field in Player._meta.fields]
@@ -289,7 +311,11 @@ class OrganisationalChart(Person):
 
                         )
     position = models.CharField(max_length=50, choices=available_positions, blank=True)
+    #event = models.ForeignKey(Event,null=True)
 
     def get_fields(self):
         return [(field.name, field.value_to_string(self)) for field in OrganisationalChart._meta.fields]
+
+     
+    
 

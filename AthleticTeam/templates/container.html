@@ -45,7 +45,29 @@
                         </li>
                     </ul>
                 {% endif %}
-
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <!-- <li>
+                    <a href="/players" title="Show all players of our Team!">Players</a>
+                </li> -->
+                {% if user.is_authenticated %}
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown">
+                                Events
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu btn-info">
+                                <li>
+                                    <a href="{% url 'AthleticTeamApp:ShowEvents'%}">All Events</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'AthleticTeamApp:JoinEvents'%}">Join Events</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                {% endif %}                
                 <li>
                     <a href="{% url 'AthleticTeamApp:ShowLeagues'%}">Leagues</a>
                 </li>
@@ -83,6 +105,12 @@
                                 <form action="{% url 'AthleticTeamApp:profile' %}"  method="get">
                                     {% csrf_token %}
                                     <input type="submit" name="profile" value="Profile" class="btn btn-primary btn-block" />
+                                </form>
+                            </li>
+                            <li>
+                                <form action="{% url 'AthleticTeamApp:ViewMyEvents' %}"  method="get">
+                                    {% csrf_token %}
+                                    <input type="submit" name="profile" value="View my Events" class="btn btn-primary btn-block" />
                                 </form>
                             </li>
                         {% endif %}

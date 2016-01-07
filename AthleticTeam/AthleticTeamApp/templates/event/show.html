@@ -1,0 +1,57 @@
+{% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+    <title>Show Event</title>
+{% endblock %}
+
+{% block container %}
+<h2>Event Details</h2>
+    <div style="float:left; padding: 0; height="500" width="1000"">
+    <table class="table table table-hover" >
+            <tr>
+             <div class="row top-buffer" >
+		 <td><div class="col-md-0">Title</div></td>
+                 <td><div class="col-md-1">{{event.title}}</div></td>
+            </tr>
+             <tr>
+             <div class="row top-buffer">
+		 <td><div class="col-md-0">Date </div></td>
+                 <td><div class="col-md-1">{{event.date}}</div></td>
+            </tr>
+             <tr>
+             <div class="row top-buffer">
+		 <td><div class="col-md-0">Time</div></td>
+                 <td><div class="col-md-1">{{event.time}}</div></td>
+            </tr>
+             <tr>
+             <div class="row top-buffer">
+		 <td><div class="col-md-0">Creator</div></td>
+                 <td><div class="col-md-1">{{event.creator}}</div></td>
+            </tr>            
+            <tr>
+            <div class="row top-buffer">
+		 <td><div class="col-md-0">Status</div></td>
+		 {% if event.approved_by_owner %}
+		    <td><div class="col-md-1">Approved</div></td>
+		 {% else %}
+		    <td><div class="col-md-1">On progress</div></td>
+		 {% endif %}
+            </tr>
+            <div class="row top-buffer">
+		 <td><div class="col-md-0">Participants</div></td>
+		 
+		    <td><div class="col-md-1">  
+		      {% for participant in event.participants.all %}
+			<li>{{ participant.username }}</li>
+		      {% endfor %}</div></td>
+
+            </tr> 
+             <div class="row top-buffer">
+		 <td><div class="col-md-0">Info</div></td>
+                 <td><div class="col-md-1"> {{event.info}}</div></td>
+            </tr> 
+    </table>
+    </div> 
+
+{% endblock %}

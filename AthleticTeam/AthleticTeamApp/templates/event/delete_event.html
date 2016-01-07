@@ -1,0 +1,28 @@
+{% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+    <title>Join Events</title>
+{% endblock %}
+
+{% block container %}
+  <h2>Available Events</h2>
+
+  <form action="{% url 'AthleticTeamApp:delete_event_post' %}" method="post">
+      {% csrf_token %}
+      {% if events_list %}
+	<select  multiple='multiple' name="events" id="events" size 20">
+	  {% for event in events_list %}
+	      {% if user == event.creator %}
+		<option value="{{ event.id }}"> 
+		    {{event.title}}  
+		</option>
+	      {% endif%}
+	    {% endfor %}    
+	</select>    
+      {% else %}
+	  <p>No events yet.</p>
+      {% endif %}
+  <td class='tdinput'><input size = 2 type="submit" name="submit" value="Delete" class="btn btn-success"/>
+   </form> 
+{% endblock %}
