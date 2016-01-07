@@ -39,7 +39,6 @@
         <p>No events yet.</p>
     {% endif %}
   {% endif %}
-  
       <form action="{% url 'AthleticTeamApp:LeaveEvents' %}" method="get">
         {% csrf_token %}
         <td class='tdinput'><input size = 2 type="submit" name="submit" value="Leave from an event" class="btn btn-primary"/>
@@ -51,10 +50,11 @@
         <a class="btn btn-primary " href="{% url 'AthleticTeamApp:create_event' %}">Create Event</a>
         <a class="btn btn-primary " href="{% url 'AthleticTeamApp:delete_event' %}">Delete Event</a>
         </br></br></br>
+        <h2>Choose an Event To Edit</h2>
         <form action="{% url 'AthleticTeamApp:edit_event' %}" method="post">
         {% csrf_token %}
         {% if events_list %}
-        <select  name="events" size = 5>
+        <select  name="events" size = 5 required autofocus>
             {% for event in events_list %}
                 {% if event.creator == user %}
                     <option value="{{ event.id }}"> 
