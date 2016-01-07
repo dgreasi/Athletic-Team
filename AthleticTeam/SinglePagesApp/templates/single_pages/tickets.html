@@ -13,33 +13,37 @@
 <h2> Tickets Store!!</h2>
 <ul>
 {% for key, value in data.items %}
-{%if key != "visible" %}
+{% if key != "visible" %}
   <li>{{key}} - {{value}}</li>
 {% endif %}
 {% endfor %}
 
 </ul>
 
+<h4>
+
+Όλοι οι κάτοχοι εισιτηρίου διαρκείας σε κάθε περίπτωση πρέπει να είναι οικονομικά ενήμερα Μέλη του Ερασιτέχνη.Για την παραλαβή του εισιτηρίου στο  γήπεδο, στον ίδιο χώρο διάθεσης εισιτηρίων διαρκείας λειτουργεί τμήμα εγγραφής / ανανέωσης μελών.
+Διαθέσιμες θύρες για τον αγώνα με την ΑΕΚ: 1, 2, 8, 10, 14, 15, 18, 20, 21, 22, 23, 30, 33, 34, 35, 53 , 55
+
+Για την αγορά μεμονωμένων εισιτηρίων είναι απαραίτητη η συμπλήρωση κάρτας φιλάθλου. Εάν δεν έχετε μπορείτε να την προμηθευτείτε ηλεκτρονικά με χρήση πιστωτικής/χρεωστικής κάρτας πατώντας εδώ
+</h4>
+
 {% load filters %}
     {% if request.user|has_group:"Coaching Staff Member" %}
         <br>
         <a type="button" class="btn btn-default" aria-label="Create Tickets" href="{% url 'SinglePagesApp:edit_tickets' %}">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create Tickets
-        </a><h4>
+        </a>
 
-Όλοι οι κάτοχοι εισιτηρίου διαρκείας σε κάθε περίπτωση πρέπει να είναι οικονομικά ενήμερα Μέλη του Ερασιτέχνη.Για την παραλαβή του εισιτηρίου στο  γήπεδο, στον ίδιο χώρο διάθεσης εισιτηρίων διαρκείας λειτουργεί τμήμα εγγραφής / ανανέωσης μελών.
-Διαθέσιμες θύρες για τον αγώνα με την ΑΕΚ: 1, 2, 8, 10, 14, 15, 18, 20, 21, 22, 23, 30, 33, 34, 35, 53 & 55
-
-Για την αγορά μεμονωμένων εισιτηρίων είναι απαραίτητη η συμπλήρωση κάρτας φιλάθλου. Εάν δεν έχετε μπορείτε να την προμηθευτείτε ηλεκτρονικά με χρήση πιστωτικής/χρεωστικής κάρτας πατώντας εδώ
-</h4>
-        <hr>
+        
     {% endif %}
 
+<hr>
 <button class="btn btn-lg btn-primary" name="sp" id="facilities" type="submit" >Check our facilities</button>
 
 <button class="btn btn-lg btn-primary" name="sp" id="sponsors" type="submit" >Check the Sponsors of our Team </button>
 <div class="box" align="center">
-<img src="{% static "gates.jpg" %}" alt="My image"/>
+	<img src="{% static "images/basketball.png" %}" alt="My image"/>
 </div>
 {% endblock %}
 
