@@ -9,34 +9,33 @@
 <form action="{% url 'AthleticTeamApp:all_teams'%}" method="post">
     {% csrf_token %} 
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-    <h3> Choose a team to move the selected players(ctrl + click ) </h3> 
-    
-    <select name="teams" size ="10">
-        {% for team in teams_list %}
-	    {% if team.owned %}
-	      <option value="{{ team.id }}">
-	      {{ team.team_name}}  
-	      </option>
-	    {% endif %}  
-        {% endfor %}
-    </select>
-    
-<!--     <div align="right"> -->
-    <select multiple='multiple' name="players" id="players" size ="10">
-      {% for team in teams_list %}
-	{% for player in team.player_set.all %}
-	  <option value="{{ player.id }}"> 
-	      {{player.first_name}} {{player.last_name}} {{player.team}}
-	  </option>
-	{% endfor %}  
-      {% endfor %}  
-    </select>
-    <br>
-<!--     </div> -->
-    
-    <div align="middle">
-    <input type="submit" name="submit" value="Move Selected Players" class="btn btn-success" />
+    <h3> Choose a team to move the selected players(ctrl + click )</h3> 
+    <div>
+        <select name="teams" size ="10">
+            {% for team in teams_list %}
+                {% if team.owned %}
+                  <option value="{{ team.id }}">
+                  {{ team.team_name}}  
+                  </option>
+                {% endif %}  
+            {% endfor %}
+        </select>
+        
+
+        <select multiple='multiple' name="players" id="aplayers" size ="10">
+            {% for team in teams_list %}
+            {% for player in team.player_set.all %}
+                <option value="{{ player.id }}"> 
+                   {{player.first_name}} {{player.last_name}} {{player.team}}
+                </option>
+            {% endfor %}  
+            {% endfor %}  
+        </select>
     </div>
+    <br />
+
+    <input type="submit" name="submit" value="Move Selected Players" class="btn btn-success" />
+</form>
 {% endblock %}
 
 
