@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'datetimewidget',
     'AdministrationApp',
     'SponsorsApp',
+    'EventsApp',
 )
 
 MIDDLEWARE_CLASSES = (

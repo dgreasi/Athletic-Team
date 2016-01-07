@@ -1,0 +1,25 @@
+
+<title>My Events</title>
+
+
+{% block container %}
+
+
+     {% if not event_list1 %}
+        There is no event.
+    {% else %}
+         <div >
+         <br />
+        <h2>{{user1.username}} is going in:  </h2>
+         {% for event in event_list1 %}
+             {% if event.ACTIVATE %}
+             <ul>
+               <li>
+               {{ event.name }}
+               </li>
+             </ul>
+              {%endif%}
+         {% endfor %}
+        </div>
+  {% endif %}
+{% endblock %}

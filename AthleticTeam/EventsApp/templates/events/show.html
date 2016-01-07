@@ -1,0 +1,59 @@
+{% extends "container.html" %}
+
+{% block head %}
+     {% load staticfiles %}
+    <title>Event: {{ event.date }}</title>
+       <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+     <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+{% endblock %}
+
+{% block container %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>
+                Event: {{ event.date }}
+                <a type="button" class="btn btn-default pull-right" aria-label="Create Event" href="{% url 'EventsApp:EditEvent' event.id %}">
+                  <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
+                </a>
+            </h1>
+            <br>
+            <h1>Event Title: {{ event.name }}</h1>
+            <hr>
+            <!-- <h2>Created: {<{ event.created }}</h2>
+           <!--  {<% if event.modified %}
+               <h2>Modified: {<{ event.modified }}</h2>
+            <!-- {<% endif %}
+            <!-- <h2>Created by:
+            <!--{<{ event.owner }}</h2> >-->
+            {% if event.ACTIVATE %}
+               <h2>Status: ACTIVE</h2>
+
+               <p clss="msg">{% if request.GET.msg %} {{request.GET.msg }} {% endif %}</p>
+               {% if not joined %}
+                    <a type="button" class="btn btn-default pull-right" href="{% url 'EventsApp:event_join' event.id %}" class="btn join">Yes, Attend</a>
+               {% else %}
+                    <a type="button" class="btn btn-default pull-right" href="{% url 'EventsApp:event_cancel' event.id %}" class="btn join">No, Not Attend</a>
+               {% endif %}
+
+           {% else %}
+                 <h2>Status: INACTIVE</h2>
+           {% endif %}
+
+             <h2>Start time: {{ event.start }}</h2>
+             <h2>End time: {{ event.end }}</h2>
+             <h2>Location: {{ event.location }}</h2>
+            <h2>Description: {{ event.event_content }}</h2>
+            <!-- <h2>-->
+
+               <!--<div class="user">
+                    <ul>
+                        {<% for attendee in event.attendee.all %}
+                            <li> {<{ attendee.username }} </li>
+                        {<% endfor %}
+                    </ul>
+               </div> -->
+
+        </div>
+    </div>
+    <hr>
+{% endblock %}

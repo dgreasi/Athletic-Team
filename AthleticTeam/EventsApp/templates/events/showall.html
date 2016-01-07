@@ -1,0 +1,44 @@
+{% extends "container.html" %}
+
+{% block head %}
+    {% load staticfiles %}
+    <title>Events</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+     <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+{% endblock %}
+
+{% block container %}
+    {% if event_list %}
+        <h1>Events:</h1>
+        <!--<ul> -->
+        {% for event in event_list %}
+            {% if event.ACTIVATE %}
+                <ul class="checkmark" style="list-style-type:none">
+                <li>
+                <a href="{% url 'EventsApp:ShowEvent' event.id %}">
+                    {{ event.date }} , {{ event.start }} - {{ event.end }} , {{ event.name }}
+                </a>
+                </li>
+                </ul>
+            {%else%}
+                <ul class="ballot" style="list-style-type:none">
+                <li>
+                <a href="{% url 'EventsApp:ShowEvent' event.id %}">
+                    {{ event.date }} , {{ event.start }} - {{ event.end }} , {{ event.name }}
+                </a>
+               </li>
+            </ul>
+            {% endif %}
+        {% endfor %}
+      <!--  </ul> -->
+    {% else %}
+        <h1>No Events are available.</h1>
+    {% endif %}
+    <br>
+
+    <a type="button" class="btn btn-default" aria-label="Create Event" href="{% url 'EventsApp:CreateEvent' %}">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create
+    </a>
+    <hr>
+{% endblock %}
+

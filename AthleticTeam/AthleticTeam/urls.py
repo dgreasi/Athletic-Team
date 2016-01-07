@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^', include('AthleticTeamApp.urls', namespace='AthleticTeamApp')),
     url(r'^', include('AdministrationApp.urls', namespace='AdministrationApp')),
     url(r'^', include('SponsorsApp.urls', namespace='SponsorsApp')),
+    url(r'^', include('EventsApp.urls', namespace='EventsApp')),
 
 
 ]

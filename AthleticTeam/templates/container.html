@@ -47,6 +47,10 @@
                 <li>
                     <a href="{% url 'SponsorsApp:ShowSponsors'%}">Sponsors</a>
                 </li>
+                <li>
+                    <a href="{% url 'EventsApp:ShowEvents'%}">Events</a>
+                </li>
+                <li><a href="{% url 'EventsApp:user_event' request.user.id %}">My Events</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">

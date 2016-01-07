@@ -1,3 +1,15 @@
+
+ul.checkmark li:before{
+    content:"\2713\0020";
+    color: green;
+}
+
+ul.ballot li:before{
+    content:"\2717\0020";
+	color: red;
+}
+
+
 li a {
 	color: green;
 }
