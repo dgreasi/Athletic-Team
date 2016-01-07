@@ -1,0 +1,31 @@
+{% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+    <title>Leave Events</title>
+{% endblock %}
+
+{% block container %}
+  <h2>Available Events</h2>
+
+  <form action="{% url 'AthleticTeamApp:LeaveSomeEvents' %}" method="post">
+      {% csrf_token %}
+      {% if events_list %}
+	<select  multiple='multiple' name="events" id="events" size ="30">
+	  {% for event in events_list %}
+	      {% for xristi  in event.participants.all %}
+		   {% if user == xristi %}
+		      <option value="{{ event.id }}"> 
+			  {{event.title}} by {{event.creator.username}} 
+		      </option>
+		    {% endif%}
+	      {% endfor %}
+	  {% endfor %}    
+	</select>    
+      {% else %}
+	  <p>No events yet.</p>
+      {% endif %}
+   <input type="hidden" name="user" value= {{user}} />
+  <td class='tdinput'><input size = 2 type="submit" name="submit" value="Leave" class="btn btn-success"/>
+   </form> 
+{% endblock %}

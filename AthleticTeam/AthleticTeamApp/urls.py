@@ -85,5 +85,19 @@ urlpatterns = [
     url(r'^organisationalCharts$', views.ShowOrganisationalCharts.as_view(), name='ShowOrganisationalCharts'),
     url(r'^organisationalChart/(?P<pk>[0-9]+)$', views.ShowOrganisationalChart.as_view(), name='ShowOrganisationalChart'),
     
+    url(r'^events$', views.ShowEvents.as_view(), name='ShowEvents'),
+    url(r'^events/(?P<pk>[0-9]+)$', views.ShowEvent.as_view(), name='ShowEvent'),
+    url(r'^join_events$', views.JoinEvents.as_view(), name='JoinEvents'),
+    url(r'^join_event$', views.join_event, name='join_event'),
+    url(r'^view_my_events$', views.ViewMyEvents.as_view(), name='ViewMyEvents'),
+    url(r'^leave_event$', views.ShowLeaveEvents.as_view(), name='LeaveEvents'),
+    url(r'^join__some_event$', views.LeaveSomeEvents, name='LeaveSomeEvents'),
+    url(r'^create_event$', views.CreateEvent.as_view(), name='create_event'),
+    url(r'^create_event_post$', views.create_event_post, name='create_event_post'),  
+    url(r'^delete_event$', views.DeleteEvent.as_view(), name='delete_event'),
+    url(r'^delete_event_post$', views.delete_event_post, name='delete_event_post'),
+    url(r'^remove_user$', views.RemoveUser.as_view(), name='remove_user'),
+    url(r'^add_user$', views.AddUser.as_view(), name='add_user'),
+    
 ]
 

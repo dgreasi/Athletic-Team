@@ -1,0 +1,45 @@
+{% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+    <title>Create a Player</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.timepicker.css' %}" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+{% endblock %}
+
+{% block container %}
+
+    <form action="{% url 'AthleticTeamApp:create_event_post' %}" method="post">
+        {% csrf_token %}
+    <h2>Create new Event</h2>
+    <hr/>
+    <h3>Enter Event's Title</h3>
+    <input  type="text" class="text_title" id="my_text_title" name="title" required autofocus />
+    <h3>Enter Info</h3>
+    <p><textarea type="textarea" class="text_edit" id="my_text" name="info" required autofocus></textarea></p>
+    <h3>Enter Time</h3>
+     <input type="text" id="durationExample" name="time" required autofocus />
+    <h3>Enter Date</h3>
+    <input type="text" id="datepicker" name="date" required autofocus />
+    </br>
+    <h3>Add Users to Event</h3>
+        <select multiple='multiple' name="users" size ="5" required autofocus>
+	  {% for xristi in users_list %}
+	    <option value="{{ xristi.id }}"> 
+		{{xristi.username}}
+	    </option>
+	  {% endfor %}  
+    </select>
+    </br>
+    </br>
+    <input type="submit" name="submit" value="Submit" class="btn btn-success" />
+    <input type="hidden" name="xristis" value= {{user}} />
+    </form> 
+{% endblock %}    
+
+{% block scripts %}
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script type="text/javascript" src="{% static 'js/myscript.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.timepicker.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+    <title>All Events</title>
+{% endblock %}
+
+{% block container %}
+  <h2>Events</h2>
+
+  {% if events_list %}
+      {% for event in events_list %}
+	  <li><a href="{% url 'AthleticTeamApp:ShowEvent' event.id %}">{{ event.title}}</a></li>
+      {% endfor %}
+      
+  {% else %}
+      <p>No events yet.</p>
+  {% endif %}
+    
+{% endblock %}

@@ -24,6 +24,8 @@ from django.views.generic.detail import SingleObjectMixin
 from django.http import *
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from AthleticTeamApp.models import Event as TeamEvent
 
 # Create your views here.
 class ShowCoachingStaffMembers(generic.ListView):
@@ -125,6 +127,11 @@ def create_a_player(request):
     if 'image' in request.FILES:
       temp.image =new_photo 
     temp.save()
+    
+    #user = User.objects.create_user(username=new_first_name + new_last_name,
+                                 #email='',
+                                 #password='12345')
+    #user.save()
     
     return HttpResponseRedirect(reverse('AthleticTeamApp:ShowPlayers'))
 
@@ -673,7 +680,113 @@ class DeleteLeague(generic.DeleteView):
     def get(self, *args, **kwargs):
         raise Http404
 
+##################
+# Events Views.
+##################
 
+class ShowEvents(generic.ListView):
+    model = TeamEvent
+    template_name = 'event/showall.html'
+    context_object_name = 'events_list'
+    
+class ShowEvent(generic.DetailView):
+    model = TeamEvent
+    template_name = 'event/show.html'  
+    
+class JoinEvents(generic.ListView):
+    model = TeamEvent
+    template_name = 'event/join.html'
+    context_object_name = 'events_list' 
+    
+def join_event(request):
+  
+  ev = request.POST.getlist('events')
+  extra_user =request.POST['user']
+  xristis = get_object_or_404(User, username = extra_user)
+  for i in range(len(ev)):
+    updated_event = get_object_or_404(TeamEvent,pk= int(ev[i]))
+    updated_event.participants.add( xristis);
+  
+  updated_event.save()
+  
+  return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
+
+class ViewMyEvents(generic.ListView):
+    model = TeamEvent
+    template_name = 'event/view_my_events.html'
+    context_object_name = 'events_list'
+
+class ShowLeaveEvents(generic.ListView):
+    model = TeamEvent
+    template_name = 'event/leave_event.html'
+    context_object_name = 'events_list'
+
+def LeaveSomeEvents(request):
+  
+  ev = request.POST.getlist('events')
+  extra_user =request.POST['user']
+  xristis = get_object_or_404(User, username = extra_user)
+  for i in range(len(ev)):
+    updated_event = get_object_or_404(TeamEvent,pk= int(ev[i]))
+    updated_event.participants.remove(xristis)
+  
+  updated_event.save()
+  
+  return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
+
+class AddUser(generic.ListView):
+    model = TeamEvent
+    template_name = 'event/add_user.html'
+    context_object_name = 'events_list'
+    
+class RemoveUser(generic.ListView):
+    model = TeamEvent
+    template_name = 'event/remove_user.html'
+    context_object_name = 'events_list'    
+
+class CreateEvent(generic.ListView):
+    model = User
+    template_name = 'event/create_event.html'
+    context_object_name = "users_list"
+
+def create_event_post(request):
+  
+  users =request.POST.getlist('users')
+  info =request.POST['info']
+  title =request.POST['title']
+  date =request.POST['date']
+  time =request.POST['time']
+  user = request.POST['xristis']
+  xristis  = get_object_or_404(User, username =user)
+  temp = TeamEvent(title=title,info=info,date=date,time=time,creator=xristis,approved_by_owner=False)
+  temp.save()
+  
+  for i in range(len(users)):
+    xristis = get_object_or_404(User, pk = int(users[i]))
+    temp.participants.add(xristis)
+  
+  temp.save()
+  
+  start = date + ' ' + time
+  ev_title = title 
+  event = create_event(category='EVENT', start=start, title=ev_title )
+
+  return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
+
+class DeleteEvent(generic.ListView):
+    model = TeamEvent
+    template_name = 'event/delete_event.html'
+    context_object_name = 'events_list'
+    
+def delete_event_post(request):
+  
+  del_event = request.POST.getlist('events')
+  
+  for event in del_event:
+    temp = get_object_or_404(TeamEvent, pk = int(event))
+    temp.delete()
+  
+  return HttpResponseRedirect(reverse('AthleticTeamApp:home'))  
 #####################################
 # Contact Us and Organisation Chart #
 #####################################
@@ -726,3 +839,5 @@ def create_event(category, start, title):
     event = Event(title=title, category=category_object, start=start[0:15])
     event.save()
     return event
+
+    
