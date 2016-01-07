@@ -728,6 +728,12 @@ class ViewMyEvents(generic.ListView):
     model = TeamEvent
     template_name = 'event/view_my_events.html'
     context_object_name = 'events_list'
+    paginate_by = 3
+
+    #U can come here only if u are logged in
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ViewMyEvents, self).dispatch(*args, **kwargs)
 
 class ShowLeaveEvents(generic.ListView):
     model = TeamEvent
