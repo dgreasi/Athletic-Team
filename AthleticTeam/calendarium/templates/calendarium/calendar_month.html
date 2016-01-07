@@ -11,7 +11,6 @@
     <input class="btn btn-default" type="submit" name="next" value="{% trans "Next" %}" />
     <input class="btn btn-default" type="submit" name="today" value="{% trans "Today" %}" />
 </form>
-<h1>PAOK</h1>
 <table class="table" id="calendar-month">
     <tr>
         {% for weekday in weekdays %}
@@ -29,10 +28,10 @@
                                 {% for occurrence in occurrences %}
                                     <p class="alert" style="background-color: #{{ occurrence.event.category.color }}">
                                         {% if occurrence.category.name == 'MATCH'  %}
-                                            <a title="{{ occurrence }}" href="{% url "AthleticTeamApp:ShowMatch" occurrence.event.match_set.first.id %}">{{ occurrence|truncatechars:22 }}</a>
+                                            <a title="{{ occurrence }}" href="{% url "AthleticTeamApp:ShowMatch" occurrence.event.match_set.first.id %}">Match :{{ occurrence|truncatechars:22 }}</a>
                                         {% endif %}
                                         {% if occurrence.category.name == 'TRAINING'  %}
-                                            <a title="{{ occurrence }}" href="{% url "AthleticTeamApp:ShowTraining" occurrence.event.training_set.first.id %}">{{ occurrence|truncatechars:22 }}</a>
+                                            <a title="{{ occurrence }}" href="{% url "AthleticTeamApp:ShowTraining" occurrence.event.training_set.first.id %}">Training:{{ occurrence|truncatechars:22 }}</a>
                                         {% endif %}
                                     </p>
                                 {% endfor %}

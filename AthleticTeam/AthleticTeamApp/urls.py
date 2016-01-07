@@ -96,8 +96,9 @@ urlpatterns = [
     url(r'^create_event_post$', views.create_event_post, name='create_event_post'),  
     url(r'^delete_event$', views.DeleteEvent.as_view(), name='delete_event'),
     url(r'^delete_event_post$', views.delete_event_post, name='delete_event_post'),
-    url(r'^remove_user$', views.RemoveUser.as_view(), name='remove_user'),
-    url(r'^add_user$', views.AddUser.as_view(), name='add_user'),
+    url(r'^edit_event$', views.EditEvent, name='edit_event'),
+    url(r'^edit_an_event/(?P<pk>[0-9]+)$', views.EditAnEvent.as_view(), name='edit_an_event'),
+    url(r'^edit_event_post$', views.edit_event, name='edit_event_post'), 
     
 ]
 

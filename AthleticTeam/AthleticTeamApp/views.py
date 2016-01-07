@@ -753,15 +753,14 @@ def LeaveSomeEvents(request):
   
   return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
 
-class AddUser(generic.ListView):
+def EditEvent(request):
+    event =request.POST['events']
+    return HttpResponseRedirect(reverse('AthleticTeamApp:edit_an_event', args=(event,)))
+
+class EditAnEvent(generic.DetailView):
     model = TeamEvent
-    template_name = 'event/add_user.html'
-    context_object_name = 'events_list'
+    template_name = 'event/edit_event.html'
     
-class RemoveUser(generic.ListView):
-    model = TeamEvent
-    template_name = 'event/remove_user.html'
-    context_object_name = 'events_list'    
 
 class CreateEvent(generic.ListView):
     model = User
@@ -785,10 +784,6 @@ def create_event_post(request):
     temp.participants.add(xristis)
   
   temp.save()
-  
-  start = date + ' ' + time
-  ev_title = title 
-  event = create_event(category='EVENT', start=start, title=ev_title )
 
   return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
 
@@ -806,6 +801,37 @@ def delete_event_post(request):
     temp.delete()
   
   return HttpResponseRedirect(reverse('AthleticTeamApp:home'))  
+
+def edit_event(request):
+  approved =request.POST.getlist('approve')
+  users =request.POST.getlist('xristes')
+  info =request.POST['info']
+  title =request.POST['title']
+  date =request.POST['date']
+  time =request.POST['time']
+
+  temp=get_object_or_404(TeamEvent, title =title)
+  temp.title=title
+  temp.info=info
+  temp.date=date
+  temp.time=time
+  
+  if  users :
+    for xristi in users:
+      xristis = get_object_or_404(User, username =(xristi))
+      temp.participants.remove(xristis)
+  
+  if approved[0] == 'Approve':
+    temp.approved_by_owner = True
+    start = date + ' ' + time
+    ev_title = title 
+    event = create_event(category='EVENT', start=start, title=ev_title )
+  
+  temp.save()
+
+  return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
+
+
 #####################################
 # Contact Us and Organisation Chart #
 #####################################

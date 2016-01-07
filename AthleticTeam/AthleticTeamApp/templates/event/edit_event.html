@@ -1,0 +1,51 @@
+{% extends "container.html" %}
+
+{% block head %}
+{% load staticfiles %}
+<title>Edit a Player</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/jquery.timepicker.css' %}" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+{% endblock %}
+
+
+{% block container %}
+
+    <form action="{% url 'AthleticTeamApp:edit_event_post' %}" method="post">
+        {% csrf_token %}
+    <h1>Edit {{event.title}}</h1>
+    <h3>Enter New Event Title</h3>  
+    <input value={{event.title}} type="text" class="text_title" id="my_text_title" name="title" required autofocus />
+    <h3>Enter New Event info</h3>
+    <p><textarea type="textarea" class="text_edit" id="my_text" name="info" required autofocus>{{ event.info}}</textarea></p>
+    <h3>Enter Time of Event</h3>
+    <input type="text" id="durationExample" name="time" value="{{ event.time }}" required autofocus />
+    <h3>Enter New Event Date</h3>
+    <input type="text" id="datepicker" name="date" value="{{ event.date|date:"Y-m-d" }}"  required autofocus />
+    <h3>Event Status</h3>
+    <select  name="approve" size ="3" selected="selected" required autofocus >
+	  <option> 
+	      Approve
+	  </option>
+	  <option> 
+	      Stand By
+	  </option>	  
+    </select> 
+    <h3>Remove Event's Participants</h3>
+    <select  multiple='multiple' name="xristes" id="events" size ="10">
+      {% for xristi in event.participants.all %}
+	  <option > 
+	    {{xristi}} 
+	</option> 
+      {% endfor %}    
+    </select>
+    </br></br>
+    <input type="submit" name="submit" value="Submit" class="btn btn-success" />
+    </form>
+{% endblock %}
+
+{% block scripts %}
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script type="text/javascript" src="{% static 'js/myscript.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.timepicker.js' %}"></script>
+{% endblock %}
