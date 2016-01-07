@@ -14,7 +14,7 @@
             <li><a href="{% url 'AthleticTeamApp:ShowEvent' event.id %}">{{ event.title}}</a></li>
         {% endfor %}
         </ul>
-        
+
         {# .... **Now the pagination section** .... #}
         {% if is_paginated %}
             <div class="pagination">
@@ -36,12 +36,12 @@
     {% endif %}
     
     {% load filters %}
-    {% if request.user|has_group:"Match Creator" %}
+    {% if request.user|has_group:"Create Event" %}
         <br>
             <a type="button" class="btn btn-default" aria-label="Create Event" href="{% url 'AthleticTeamApp:create_event' %}">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create
             </a>
         <hr>
     {% endif %}
-    <p>Added filter Match Creator</p>
+    <p>Added filter Create Event</p>
 {% endblock %}

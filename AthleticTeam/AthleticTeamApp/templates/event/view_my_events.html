@@ -9,71 +9,75 @@
   <h2>My Events as Participant</h2>
 
   {% if events_list %}
-      {% for event in events_list %}
-	{% for xristi  in event.participants.all %}
-	  {% if user == xristi %}
-	  <li><a href="{% url 'AthleticTeamApp:ShowEvent' event.id %}">{{ event.title}}</a></li>
-	  {% endif %}
+    <ul>
+    {% for event in events_list %}
+      {% for xristi  in event.participants.all %}
+        {% if user == xristi %}
+          <li><a href="{% url 'AthleticTeamApp:ShowEvent' event.id %}">{{ event.title}}</a></li>
+        {% endif %}
       {% endfor %}
-	{% endfor %}
+    {% endfor %}
+    </ul>
+    <br />
+    <form action="{% url 'AthleticTeamApp:LeaveEvents' %}" method="get">
+        {% csrf_token %}
+        <td class='tdinput'><input size = 2 type="submit" name="submit" value="Leave from an event" class="btn btn-primary"/>
+    </form>
   {% else %}
       <p>No events yet.</p>
   {% endif %}
   
-  <h2>Created Events</h2>
-
-  {% if events_list %}
-      {% for event in events_list %}
-	  {% if user == event.creator %}
-	  <li><a href="{% url 'AthleticTeamApp:ShowEvent' event.id %}">{{ event.title}}</a></li>
-	  {% endif %}
-      {% endfor %}
-  {% else %}
-      <p>No events yet.</p>
-  {% endif %}
-  </br>
-
-  <form action="{% url 'AthleticTeamApp:LeaveEvents' %}" method="get">
-      {% csrf_token %}
-  <td class='tdinput'><input size = 2 type="submit" name="submit" value="Leave" class="btn btn-success"/>
-  </form> 
-  
-    {% load filters %}
-    {% if request.user|has_group:"Create Event" %}
-    <div class="button-rov">
+  {% load filters %}
+  {% if request.user|has_group:"Create Event" %}
+    <div class="margin-top-small">
         <a class="btn btn-primary " href="{% url 'AthleticTeamApp:create_event' %}">Create Event</a>
-    </div>
-        <div class="button-rov">
         <a class="btn btn-primary " href="{% url 'AthleticTeamApp:delete_event' %}">Delete Event</a>
-    </div>
-        </div>
-        <div class="button-rov">
         <a class="btn btn-primary " href="{% url 'AthleticTeamApp:home' %}">Edit Event</a>
     </div>
-    </form>
+  {% endif %}
+
+
+  {% load filters %}
+  {% if request.user|has_group:"Create Event" %}
+    <h2>Created Events</h2>
+
+    {% if events_list %}
+    <ul>
+      {% for event in events_list %}
+        {% if user == event.creator %}
+          <li><a href="{% url 'AthleticTeamApp:ShowEvent' event.id %}">{{ event.title}}</a></li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+    {% else %}
+        <p>No events yet.</p>
+    {% endif %}
+    </br>
+  {% endif %} 
   
   <form action="{% url 'AthleticTeamApp:LeaveEvents' %}" method="post">
       {% csrf_token %}    
       {% if events_list %}
-	<select  name="events" id="events" size ="20">
-	  {% for event in events_list %}
-	      {% if event.creator == user %}
-		<option value="{{ event.id }}"> 
-		    {{event.title}}
-		</option>
-	      {% endif%}
-	    {% endfor %}    
-	</select>    
+        <select  name="events" id="events" size ="20">
+          {% for event in events_list %}
+              {% if event.creator == user %}
+          <option value="{{ event.id }}"> 
+              {{event.title}}
+          </option>
+              {% endif%}
+            {% endfor %}    
+        </select>    
       {% else %}
-	  <p>No events yet.</p>
-      {% endif %}    
+        <p>No events yet.</p>
+      {% endif %}
     
-        </div>
-        <div class="button-rov">
+      <br />
+      <div class="margin-top-small">
         <a class="btn btn-primary " href="{% url 'AthleticTeamApp:remove_user' %}">Remove User From Event</a>
-    </div>   
-        <div class="button-rov">
+      </div>   
+      
+      <div class="margin-top-small">
         <a class="btn btn-primary " href="{% url 'AthleticTeamApp:add_user' %}">Add User To Event</a>
-    </div>
-    {% endif %}
+      </div>
+  </form> 
 {% endblock %}
