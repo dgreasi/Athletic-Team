@@ -688,10 +688,23 @@ class ShowEvents(generic.ListView):
     model = TeamEvent
     template_name = 'event/showall.html'
     context_object_name = 'events_list'
-    
+    paginate_by = 3
+
+    #U can come here only if u are logged in
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ShowEvents, self).dispatch(*args, **kwargs)
+
+
 class ShowEvent(generic.DetailView):
     model = TeamEvent
-    template_name = 'event/show.html'  
+    template_name = 'event/show.html'
+
+    #U can come here only if u are logged in
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ShowEvent, self).dispatch(*args, **kwargs)
+
     
 class JoinEvents(generic.ListView):
     model = TeamEvent
