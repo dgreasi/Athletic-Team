@@ -54,7 +54,7 @@
         <form action="{% url 'AthleticTeamApp:edit_event' %}" method="post">
         {% csrf_token %}
         {% if events_list %}
-        <select  name="events" size = 5 required autofocus>
+        <select  name="events"  required autofocus>
             {% for event in events_list %}
                 {% if event.creator == user %}
                     <option value="{{ event.id }}"> 
