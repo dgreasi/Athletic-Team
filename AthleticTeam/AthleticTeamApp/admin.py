@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from AthleticTeamApp.models import MatchPlayerStatistics, Match, Player, Team, CoachingStaffMember, Ranking, Exercise, \
-    Training, League, LeagueTeamRel, OrganisationalChart , Event
+    Training, League, LeagueTeamRel, Event
 
 
 # Register your models here.
@@ -50,9 +50,7 @@ class LeagueAdmin(admin.ModelAdmin):
     model = League
     inlines = [LeagueTeamRelInline]
 
-class OrganisationalChartInline(admin.TabularInline):
-   model = OrganisationalChart
-   extra = 1
+
 
 admin.site.register(CoachingStaffMember)
 admin.site.register(Team, TeamAdmin)
@@ -63,5 +61,4 @@ admin.site.register(Ranking, RankingAdmin)
 admin.site.register(Exercise)
 admin.site.register(MatchPlayerStatistics)
 admin.site.register(League, LeagueAdmin)
-admin.site.register(OrganisationalChart)
 admin.site.register(Event)
