@@ -5,11 +5,13 @@
     <title>Sponsors</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sponsors.css' %}" />
 {% endblock %}
 
 {% block container %}
+<h5> proudly supported by </h5>
     {% if sponsor_list %}
-        <h1>Sponsors:</h1>
+        <h1>our Sponsors:</h1>
         <ul>
         {% for sponsor in sponsor_list %}
             <li>
@@ -27,4 +29,5 @@
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create
     </a>
     <hr>
+<h4>Για προσθήκη της εταιρίας σας στη λίστα με τους sponsors επικοινωνήστε με το τμήμα marketing μας admin@myteam.gr</h4>
 {% endblock %}
