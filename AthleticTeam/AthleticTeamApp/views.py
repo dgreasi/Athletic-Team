@@ -10,7 +10,6 @@ from django.utils import timezone
 from django.views import generic
 from django.views.generic.edit import ModelFormMixin
 from AthleticTeamApp.forms import TrainingForm, LeagueForm, ContactForm
-from AthleticTeamApp.models import  OrganisationalChart
 from AthleticTeamApp.models import Player, Match, CoachingStaffMember, Team, TeamPlay, Exercise, Training, \
     MatchPlayerStatistics, \
     League, LeagueTeamRel
@@ -832,9 +831,9 @@ def edit_event(request):
   return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
 
 
-#####################################
-# Contact Us and Organisation Chart #
-#####################################
+##############
+# Contact Us #
+##############
 
 def contact(request):
     form_class = ContactForm
@@ -866,16 +865,6 @@ def contact(request):
 
     return render(request, 'home/contact.html', {'form': form_class, })
 
-
-class ShowOrganisationalCharts(generic.ListView):
-    model = OrganisationalChart
-    template_name = 'organisational_chart/showall.html'
-    context_object_name = 'organisational_chart_list'
-
-
-class ShowOrganisationalChart(generic.DetailView):
-    model = OrganisationalChart
-    template_name = 'organisational_chart/show.html'
 
 
 def create_event(category, start, title):

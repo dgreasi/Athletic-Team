@@ -3,8 +3,6 @@
 {% block head %}
     {% load staticfiles %}
     <title>Administration</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
 {% endblock %}
 
 {% block container %}
@@ -32,4 +30,10 @@
         <hr>
     {% endif %}
     
+    <button class="btn btn-lg btn-primary" name="dev" id="developers" type="submit">Learn about the developers of this page!</button>
 {% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript"  src="{% static 'js/myscript.js' %}"></script>
+{% endblock %}
+

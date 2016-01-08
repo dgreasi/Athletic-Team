@@ -82,8 +82,6 @@ urlpatterns = [
     url(r'^league/(?P<pk>[0-9]+)/delete$', views.DeleteLeague.as_view(), name='DeleteLeague'),
 
     url(r'^contact/$', views.contact, name='contact'),
-    url(r'^organisationalCharts$', views.ShowOrganisationalCharts.as_view(), name='ShowOrganisationalCharts'),
-    url(r'^organisationalChart/(?P<pk>[0-9]+)$', views.ShowOrganisationalChart.as_view(), name='ShowOrganisationalChart'),
     
     url(r'^events$', views.ShowEvents.as_view(), name='ShowEvents'),
     url(r'^events/(?P<pk>[0-9]+)$', views.ShowEvent.as_view(), name='ShowEvent'),
