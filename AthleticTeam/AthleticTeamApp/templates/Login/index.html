@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load staticfiles %}
+
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,9 +10,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="{% static 'images/favicon.ico' %}" />
-
+    <link rel="stylesheet" type="text/css" href="{% static 'Login/css/alt.css' %}">
     <title>Signin</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" />
+    <link href='https://fonts.googleapis.com/css?family=Luckiest+Guy' rel='stylesheet' type='text/css'>
+  </head>
 
     <!-- Custom styles for this template -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/signin.css' %}" />
@@ -22,7 +25,8 @@
 
   <body>
     <div class="container">
-      <h1 class = "title">Athletic Team</h1>
+      
+      <div class="hoja text-primary" align="center">Athletic <span style="color:#99FF00;font-weight:light">Team</span></div>
       <form class="form-signin" name="LoginForm" action="{% url 'AthleticTeamApp:login_user' %}" method="post">
         {% csrf_token %}
         <h2 class="form-signin-heading">Please sign in</h2>
