@@ -1052,7 +1052,6 @@ function saveData(svgData){
         var x = parseInt(svgData.playerWithTheBall[0].elem.attr('cx')) + r / 2;
         var y = parseInt(svgData.playerWithTheBall[0].elem.attr('cy')) + r / 2;
     }
-    alert([svgData.ball.attr('cx'), x]);
     ball.attr({'cx' : x, 'cy' : y});
     ball.remove();
     var output = {
