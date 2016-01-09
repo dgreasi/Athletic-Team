@@ -25,7 +25,7 @@ SECRET_KEY = '-ck%veh4x_6ozzine+3bhnvu3=j1-%r+nimp$gq#3*5-*)epks'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['athleticteam.pythonanywhere.com']
 
 
 # Application definition
@@ -51,7 +51,6 @@ INSTALLED_APPS = (
     'calendarium',
     'AdministrationApp',
     'SponsorsApp',
-
 )
 
 MIDDLEWARE_CLASSES = (
@@ -117,10 +116,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATIC_ROOT = '/var/www/athleticTeam/static/'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-    '/var/www/static/',
+    os.path.join(BASE_DIR, 'static/'),
+    # '/var/www/static/',
 )
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
