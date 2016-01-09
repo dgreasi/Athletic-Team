@@ -379,7 +379,7 @@ class CreateTraining(generic.CreateView):
     def get_success_url(self):
         start = self.object.date.__str__() + ' ' + self.object.start.__str__()
         title = self.object.location
-        event = create_event(category='TRAINING', start=start, title=title)
+        event = create_calendarium_event(category='TRAINING', start=start, title=title)
         self.object.event_object = event
         self.object.save()
         return reverse('AthleticTeamApp:ShowTraining', args=(self.object.id,))
@@ -391,6 +391,11 @@ class EditTraining(generic.UpdateView):
     template_name = 'training/edit_form.html'
 
     def get_success_url(self):
+        start = self.object.date.__str__() + ' ' + self.object.start.__str__()
+        title = self.object.location
+        event = edit_calendarium_event(self.object.event_object, start=start, title=title)
+        self.object.event_object = event
+        self.object.save()
         return reverse('AthleticTeamApp:ShowTraining', args=(self.object.id,))
 
 
@@ -430,7 +435,7 @@ def match_creator(request):
 
     start = date_match + ' ' + time_match
     title = team_a.team_name + ' VS ' + team_b.team_name
-    event = create_event(category='MATCH', start=start, title=title)
+    event = create_calendarium_event(category='MATCH', start=start, title=title)
 
     match_to_send = Match(home_pts=points_a, away_pts=points_b, stadium=stadium, date=date_match, time=time_match,
                           info=info, home_team=team_a, away_team=team_b, home_away=home_away_team, event_object=event)
@@ -824,7 +829,7 @@ def edit_event(request):
     temp.approved_by_owner = True
     start = date + ' ' + time
     ev_title = title 
-    event = create_event(category='EVENT', start=start, title=ev_title )
+    event = create_calendarium_event(category='EVENT', start=start, title=ev_title )
   
   temp.save()
 
@@ -866,12 +871,17 @@ def contact(request):
     return render(request, 'home/contact.html', {'form': form_class, })
 
 
-
-def create_event(category, start, title):
+def create_calendarium_event(category, start, title):
     category_object = get_object_or_404(EventCategory, name=category)
 
     event = Event(title=title, category=category_object, start=start[0:15])
     event.save()
     return event
 
-    
+
+def edit_calendarium_event(event, start, title):
+    event.start = start[0:15]
+    event.end = event.start
+    event.title = title
+    event.save()
+    return event

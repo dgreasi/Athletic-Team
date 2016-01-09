@@ -23,7 +23,7 @@ class Person(models.Model):
         abstract = True
 
   
-class Event(models.Model):
+class Event(EventObject):
     title = models.CharField(max_length=30)
     info = models.TextField()
     date = models.DateField()
