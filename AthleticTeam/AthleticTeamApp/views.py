@@ -403,6 +403,12 @@ class DeleteTraining(generic.DeleteView):
     model = Training
     success_url = reverse_lazy('AthleticTeamApp:ShowTrainings')
 
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        success_url = self.get_success_url()
+        self.object.event_object.delete()
+        return HttpResponseRedirect(success_url)
+
     def get(self, *args, **kwargs):
         raise Http404
 
