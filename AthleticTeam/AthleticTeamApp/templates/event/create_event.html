@@ -23,7 +23,7 @@
     <input type="text" id="datepicker" name="date" required autofocus />
     </br>
     <h3>Add Users to Event</h3>
-        <select multiple='multiple' name="users" size ="5" required autofocus>
+        <select multiple='multiple' name="users" size ="5" >
 	  {% for xristi in users_list %}
 	    <option value="{{ xristi.id }}"> 
 		{{xristi.username}}

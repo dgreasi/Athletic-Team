@@ -462,7 +462,8 @@ def match_edit(request, match_id):
 
     team_a_id = request.POST['team_a']
     team_a = get_object_or_404(Team, pk=team_a_id)
-    team_b = request.POST['team_b']
+    team_b_id = request.POST['team_b']
+    team_b = get_object_or_404(Team, pk=int(team_b_id))
     points_a = int(request.POST.get('points_a', False))
     points_b = int(request.POST.get('points_b', False))
     date_match = request.POST['date_match']
@@ -470,7 +471,10 @@ def match_edit(request, match_id):
     stadium = request.POST['stadium']
     info = request.POST['info']
     home_away_team = request.POST['home_away']
-
+    
+    title_ev = team_a.team_name + ' VS ' + team_b.team_name 
+    start_ev = date_match + ' ' + time_match
+    event = edit_calendarium_event(match_to_edit.event_object, start=start_ev, title=title_ev)
     # EDIT FIELDS
     match_to_edit.home_pts = points_a
     match_to_edit.away_pts = points_b
@@ -483,6 +487,9 @@ def match_edit(request, match_id):
     match_to_edit.home_away = home_away_team
 
     match_to_edit.save()
+      
+      
+    #event = edit_calendarium_event(self.object.event_object, start=start, title=title)
 
     return HttpResponseRedirect(reverse('AthleticTeamApp:ShowMatches'))
 
@@ -495,6 +502,7 @@ def edit_match(request, match_id):
     elif 'edit_stats' in request.POST:
 	return HttpResponseRedirect(reverse('AthleticTeamApp:EditMatchStats', args=(selected_match.id,)))
     elif 'delete' in request.POST:
+        selected_match.event_object.delete()
         selected_match.delete()
         return HttpResponseRedirect(reverse('AthleticTeamApp:ShowMatches'))
 
@@ -825,7 +833,6 @@ def edit_event(request):
   temp.info=info
   temp.date=date
   temp.time=time
-  
   if  users :
     for xristi in users:
       xristis = get_object_or_404(User, username =(xristi))
@@ -836,6 +843,9 @@ def edit_event(request):
     start = date + ' ' + time
     ev_title = title 
     event = create_calendarium_event(category='EVENT', start=start, title=ev_title )
+  else :
+    temp.approved_by_owner = False
+    #temp.event_object.delete()
   
   temp.save()
 

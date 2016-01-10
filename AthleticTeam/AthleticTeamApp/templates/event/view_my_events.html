@@ -24,9 +24,8 @@
   {% endif %}
 
   {% load filters %}
-  {% if request.user|has_group:"Create Event" %}
+  {% if request.user|has_group:"Create Event" %} 
     <h2>Created Events</h2>
-
     {% if events_list %}
       <ul>
         {% for event in events_list %}

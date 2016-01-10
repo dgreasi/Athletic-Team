@@ -21,10 +21,12 @@
             </option>
         </select>
         <br />
-
-        <h3>Name of Team B</h3>
-        <input type="text" class="text_title" id="TeamB" name="team_b" value="{{ match.away_team }}" required autofocus />
-        <br />
+        <h3>Select Team A from opponents' teams</h3>
+        <select name="team_b">
+            <option value="{{ match.away_team.id }}">
+	      {{ match.away_team }}
+            </option>
+        </select>
 
         <h3>Enter Points of Team A</h3>
         <input type="number" id="points_team_a" name="points_a" value="{{ match.home_pts }}" required autofocus />
@@ -66,12 +68,6 @@
             <input type="submit" name="submit" value="Submit" class="btn btn-success btn-lg" />
         </div>
     </form>
-
-
-
-
-
-
 
     {% load filters %}
     {% if request.user|has_group:"Match Creator" %}
