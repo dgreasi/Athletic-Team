@@ -290,7 +290,8 @@ class EventObject(models.Model):
 
     event_object = models.ForeignKey(
         Event,
-        null=True
+        null=True,
+        on_delete=models.SET_NULL,
     )
 
     class Meta:

@@ -33,7 +33,7 @@
                                         {% if occurrence.category.name == 'TRAINING'  %}
                                             <a title="{{ occurrence }}" href="{% url "AthleticTeamApp:ShowTraining" occurrence.event.training_set.first.id %}">Training:{{ occurrence|truncatechars:22 }}</a>
                                         {% endif %}
-					{% if occurrence.category.name == 'EVENT'  %}
+					                    {% if occurrence.category.name == 'EVENT'  %}
                                             <a title="{{ occurrence }}" href="{% url "AthleticTeamApp:ShowEvent"  occurrence.event.event_set.first.id  %}">Event:{{ occurrence|truncatechars:22 }}</a>
                                         {% endif %}
                                     </p>

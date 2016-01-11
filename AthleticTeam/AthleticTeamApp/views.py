@@ -407,6 +407,7 @@ class DeleteTraining(generic.DeleteView):
         self.object = self.get_object()
         success_url = self.get_success_url()
         self.object.event_object.delete()
+        self.object.delete()
         return HttpResponseRedirect(success_url)
 
     def get(self, *args, **kwargs):
@@ -439,7 +440,7 @@ def match_creator(request):
 
     home_away_team = request.POST['home_away']
 
-    start = date_match + ' ' + time_match
+    start = date_match + ' ' + time_match[0:3]
     title = team_a.team_name + ' VS ' + team_b.team_name
     event = create_calendarium_event(category='MATCH', start=start, title=title)
 
@@ -473,7 +474,7 @@ def match_edit(request, match_id):
     home_away_team = request.POST['home_away']
     
     title_ev = team_a.team_name + ' VS ' + team_b.team_name 
-    start_ev = date_match + ' ' + time_match
+    start_ev = date_match + ' ' + time_match[0:3]
     event = edit_calendarium_event(match_to_edit.event_object, start=start_ev, title=title_ev)
     # EDIT FIELDS
     match_to_edit.home_pts = points_a
@@ -487,9 +488,6 @@ def match_edit(request, match_id):
     match_to_edit.home_away = home_away_team
 
     match_to_edit.save()
-      
-      
-    #event = edit_calendarium_event(self.object.event_object, start=start, title=title)
 
     return HttpResponseRedirect(reverse('AthleticTeamApp:ShowMatches'))
 
@@ -500,7 +498,7 @@ def edit_match(request, match_id):
     if 'edit' in request.POST:
         return HttpResponseRedirect(reverse('AthleticTeamApp:EditMatch', args=(selected_match.id,)))
     elif 'edit_stats' in request.POST:
-	return HttpResponseRedirect(reverse('AthleticTeamApp:EditMatchStats', args=(selected_match.id,)))
+        return HttpResponseRedirect(reverse('AthleticTeamApp:EditMatchStats', args=(selected_match.id,)))
     elif 'delete' in request.POST:
         selected_match.event_object.delete()
         selected_match.delete()
@@ -805,51 +803,59 @@ def create_event_post(request):
 
   return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
 
+
 class DeleteEvent(generic.ListView):
     model = TeamEvent
     template_name = 'event/delete_event.html'
     context_object_name = 'events_list'
-    
+
+
 def delete_event_post(request):
+    del_event = request.POST.getlist('events')
   
-  del_event = request.POST.getlist('events')
+    for event in del_event:
+        temp = get_object_or_404(TeamEvent, pk = int(event))
+        if temp.event_object is not None:
+            temp.event_object.delete()
+        temp.delete()
   
-  for event in del_event:
-    temp = get_object_or_404(TeamEvent, pk = int(event))
-    temp.delete()
-  
-  return HttpResponseRedirect(reverse('AthleticTeamApp:home'))  
+    return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
+
 
 def edit_event(request):
-  approved =request.POST.getlist('approve')
-  users =request.POST.getlist('xristes')
-  info =request.POST['info']
-  title =request.POST['title']
-  date =request.POST['date']
-  time =request.POST['time']
+    approved =request.POST.getlist('approve')
+    users =request.POST.getlist('xristes')
+    info =request.POST['info']
+    title =request.POST['title']
+    date =request.POST['date']
+    time =request.POST['time']
 
-  temp=get_object_or_404(TeamEvent, title =title)
-  temp.title=title
-  temp.info=info
-  temp.date=date
-  temp.time=time
-  if  users :
-    for xristi in users:
-      xristis = get_object_or_404(User, username =(xristi))
-      temp.participants.remove(xristis)
-  
-  if approved[0] == 'Approve':
-    temp.approved_by_owner = True
-    start = date + ' ' + time
-    ev_title = title 
-    event = create_calendarium_event(category='EVENT', start=start, title=ev_title )
-  else :
-    temp.approved_by_owner = False
-    #temp.event_object.delete()
-  
-  temp.save()
+    temp=get_object_or_404(TeamEvent, title =title)
+    temp.title=title
+    temp.info=info
+    temp.date=date
+    temp.time=time
+    if  users :
+        for xristi in users:
+            xristis = get_object_or_404(User, username =(xristi))
+            temp.participants.remove(xristis)
 
-  return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
+    if approved[0] == 'Approve':
+        temp.approved_by_owner = True
+        start = date + ' ' + time[0:3]
+        ev_title = title
+        if temp.event_object is None:
+            temp.event_object = create_calendarium_event(category='EVENT', start=start, title=ev_title)
+        else:
+            edit_calendarium_event(temp.event_object, start=start, title=ev_title)
+        temp.save()
+    else:
+        temp.approved_by_owner = False
+        if temp.event_object is not None:
+            temp.save()
+            temp.event_object.delete()
+
+    return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
 
 
 ##############
@@ -896,7 +902,7 @@ def create_calendarium_event(category, start, title):
 
 
 def edit_calendarium_event(event, start, title):
-    event.start = start[0:15]
+    event.start = start
     event.end = event.start
     event.title = title
     event.save()
