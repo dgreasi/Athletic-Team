@@ -292,6 +292,7 @@ class EventObject(models.Model):
         Event,
         null=True,
         on_delete=models.SET_NULL,
+        blank=True,
     )
 
     class Meta:

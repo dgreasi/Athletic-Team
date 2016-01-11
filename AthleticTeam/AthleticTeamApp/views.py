@@ -474,7 +474,7 @@ def match_edit(request, match_id):
     home_away_team = request.POST['home_away']
     
     title_ev = team_a.team_name + ' VS ' + team_b.team_name 
-    start_ev = date_match + ' ' + time_match[0:3]
+    start_ev = date_match + ' ' + time_match
     event = edit_calendarium_event(match_to_edit.event_object, start=start_ev, title=title_ev)
     # EDIT FIELDS
     match_to_edit.home_pts = points_a
@@ -744,12 +744,7 @@ class ViewMyEvents(generic.ListView):
     model = TeamEvent
     template_name = 'event/view_my_events.html'
     context_object_name = 'events_list'
-    paginate_by = 3
 
-    #U can come here only if u are logged in
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(ViewMyEvents, self).dispatch(*args, **kwargs)
 
 class ShowLeaveEvents(generic.ListView):
     model = TeamEvent
