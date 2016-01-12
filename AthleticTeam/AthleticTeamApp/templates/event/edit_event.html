@@ -10,7 +10,7 @@
 
 {% block container %}
 
-    <form action="{% url 'AthleticTeamApp:edit_event_post' %}" method="post">
+    <form action="{% url 'AthleticTeamApp:edit_event_post' event.id %}" method="post">
         {% csrf_token %}
     <h1>Edit {{event.title}}</h1>
     <h3>Enter New Event Title</h3>  

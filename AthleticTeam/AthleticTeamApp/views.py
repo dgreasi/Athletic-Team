@@ -817,7 +817,7 @@ def delete_event_post(request):
     return HttpResponseRedirect(reverse('AthleticTeamApp:home'))
 
 
-def edit_event(request):
+def edit_event(request, pk):
     approved =request.POST.getlist('approve')
     users =request.POST.getlist('xristes')
     info =request.POST['info']
@@ -825,7 +825,7 @@ def edit_event(request):
     date =request.POST['date']
     time =request.POST['time']
 
-    temp=get_object_or_404(TeamEvent, title =title)
+    temp=get_object_or_404(TeamEvent, pk=pk)
     temp.title=title
     temp.info=info
     temp.date=date
