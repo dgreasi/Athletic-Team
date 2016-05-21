@@ -1,4 +1,15 @@
+Description
+
+A full Information system for a basketball team in Django
+Created to help the communication of a basketball team.
+1)Schedule: Maches - Events - Announcements
+2)Train: Team Plays - Exercises - Training
+3)Tickets
+4)Info about the team
+5)Evaluation of the players from coaches, so the administration of the team can acquaint if their investments are going well.
+
 Link to site:
 http://athleticteam.pythonanywhere.com
-user: admin
-password: 12345
+
+Username - Password
+admin - 12345
