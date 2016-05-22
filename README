@@ -2,7 +2,7 @@ Description
 
 A full Information system for a basketball team in Django
 Created to help the communication of a basketball team.
-1)Schedule: Maches - Events - Announcements
+1)Schedule: Matches - Events - Announcements
 2)Train: Team Plays - Exercises - Training
 3)Tickets
 4)Info about the team
